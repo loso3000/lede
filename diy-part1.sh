@@ -1,7 +1,10 @@
 #!/bin/bash
 #=================================================
-cp -Rf ./.github/tmp/* .
-ls ./.github/tmp
+cp -Rf ../lede/.github/tmp/* .  ||true
+ls ../lede/.github/tmp
+echo '-------------------------------'
+cp -Rf ../.github/tmp/* .  ||true
+ls ./.github/tmp/
 echo '-------------------------------'
 ls
 chmod +x diy.sh
