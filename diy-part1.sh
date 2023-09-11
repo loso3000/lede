@@ -1,5 +1,8 @@
 #!/bin/bash
 #=================================================
 cp -Rf ./.github/tmp/* .
-chmod +x *.sh
+ls ./.github/tmp
+echo '-------------------------------'
+ls
+chmod +x diy.sh
 bash diy.sh
