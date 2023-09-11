@@ -14,19 +14,19 @@ config_generate=package/base-files/files/bin/config_generate
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-#É¾³ı³åÍ»²å¼ş
+#åˆ é™¤å†²çªæ’ä»¶
 #rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|default-settings\).*")
 
 # rm -rf  ./package/emortal/autocore package/feeds/packages/autocore
 # rm -rf  package/emortal/default-settings 
 
-#ĞŞ¸ÄÄ¬ÈÏÖ÷Ìâ
+#ä¿®æ”¹é»˜è®¤ä¸»é¢˜
 
-# Ê¹ÓÃÄ¬ÈÏÈ¡Ïû×Ô¶¯
+# ä½¿ç”¨é»˜è®¤å–æ¶ˆè‡ªåŠ¨
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
 # sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
-echo "ĞŞ¸ÄÄ¬ÈÏÖ÷Ìâ"
+echo "ä¿®æ”¹é»˜è®¤ä¸»é¢˜"
 sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
 # sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 # sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
@@ -35,19 +35,19 @@ sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci
 #rm -rf ./feeds/luci/themes/luci-theme-argon
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 
-#ĞŞ¸ÄÄ¬ÈÏIPµØÖ·
+#ä¿®æ”¹é»˜è®¤IPåœ°å€
 # sed -i "s/192\.168\.[0-9]*\.[0-9]*/$IPADDRESS/g" ./package/base-files/files/bin/config_generate
 #sed -i 's/US/CN/g ; s/OpenWrt/iNet/g ; s/none/psk2/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 # sed -i "s/192.168.6.1/192.168.10.1/g"  package/base-files/files/bin/config_generate
 
-#ĞŞ¸ÄÄ¬ÈÏÖ÷»úÃû
+#ä¿®æ”¹é»˜è®¤ä¸»æœºå
 # sed -i "s/hostname='.*'/hostname='$HOSTNAM'/g" ./package/base-files/files/bin/config_generate
-#ĞŞ¸ÄÄ¬ÈÏÊ±Çø
+#ä¿®æ”¹é»˜è®¤æ—¶åŒº
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
-# ÇåÀí
+# æ¸…ç†
 #rm -rf feeds/*/*/{smartdns,wrtbwmon,luci-app-smartdns,luci-app-timecontrol,luci-app-ikoolproxy,luci-app-smartinfo,luci-app-socat,luci-app-netdata,luci-app-wolplus,luci-app-arpbind,luci-app-baidupcs-web}
 # rm -rf package/*/{autocore,autosamba,default-settings}
 # rm -rf feeds/*/*/{luci-app-dockerman,luci-app-aria2,luci-app-beardropper,oaf,luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-bypass,luci-app-wrtbwmon,luci-app-samba,luci-app-samba4,luci-app-unblockneteasemusic}
@@ -80,7 +80,7 @@ git clone https://github.com/sirpdboy/luci-app-lucky ./package/lucky
 
 # nlbwmon
 sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
-# ¿ÉÒÔÉèÖÃºº×ÖÃû×Ö
+# å¯ä»¥è®¾ç½®æ±‰å­—åå­—
 sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
@@ -107,7 +107,7 @@ git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodat
 
 # alist 
 git clone https://github.com/sbwml/luci-app-alist package/alist
-sed -i 's/ÍøÂç´æ´¢/´æ´¢/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
+sed -i 's/ç½‘ç»œå­˜å‚¨/å­˜å‚¨/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
 rm -rf feeds/packages/lang/golang
 # svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
@@ -128,18 +128,18 @@ sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/c
 rm -rf ./feeds/luci/applications/luci-app-upnp  package/feeds/packages/luci-app-upnp
 svn export https://github.com/sirpdboy/sirpdboy-package/trunk/upnpd/luci-app-upnp ./feeds/luci/applications/luci-app-upnp
 
-#ÎŞÁ´½Ó
+#æ— é“¾æ¥
 # mv -f ./package/other/patch/index.htm ./package/lean/autocore/files/x86/index.htm
 
 
-#ÉèÖÃ
+#è®¾ç½®
 sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 
 sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
 
-echo 'Ìæ»»smartdns'
+echo 'æ›¿æ¢smartdns'
 rm -rf ./feeds/packages/net/smartdns package/feeds/packages/smartdns
 svn export https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns ./feeds/packages/net/smartdns
 
@@ -190,7 +190,7 @@ svn export https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app
 s# vn export https://github.com/loso3000/other/trunk/up/luci-app-samba4 ./feeds/luci/applications/luci-app-samba4
 
 #zerotier 
-# rm -rf  luci-app-zerotier && git clone https://github.com/rufengsuixing/luci-app-zerotier.git feeds/luci/applications/luci-app-zerotier  #È¡Ïû·À»ğÇ½
+# rm -rf  luci-app-zerotier && git clone https://github.com/rufengsuixing/luci-app-zerotier.git feeds/luci/applications/luci-app-zerotier  #å–æ¶ˆé˜²ç«å¢™
 # svn export https://github.com/immortalwrt/luci/trunk/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
 # ln -sf ../../../feeds/luci/applications/luci-app-zerotier ./package/feeds/luci/luci-app-zerotier
 # rm -rf ./feeds/packages/net/zerotier
@@ -205,42 +205,42 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 
 # rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 # svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-socat ./feeds/luci/applications/luci-app-socat
-sed -i 's/msgstr "Socat"/msgstr "¶Ë¿Ú×ª·¢"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
+sed -i 's/msgstr "Socat"/msgstr "ç«¯å£è½¬å‘"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
 # ln -sf ../../../feeds/luci/applications/luci-app-socat ./package/feeds/luci/luci-app-socat
 
-sed -i 's/"Argon Ö÷ÌâÉèÖÃ"/"ArgonÉèÖÃ"/g' `grep "Argon Ö÷ÌâÉèÖÃ" -rl ./`
-sed -i 's/"Turbo ACC ÍøÂç¼ÓËÙ"/"ÍøÂç¼ÓËÙ"/g' `grep "Turbo ACC ÍøÂç¼ÓËÙ" -rl ./`
-sed -i 's/"ÍøÂç´æ´¢"/"´æ´¢"/g' `grep "ÍøÂç´æ´¢" -rl ./`
-sed -i 's/"USB ´òÓ¡·şÎñÆ÷"/"´òÓ¡·şÎñ"/g' `grep "USB ´òÓ¡·şÎñÆ÷" -rl ./`
-sed -i 's/"´ø¿í¼à¿Ø"/"¼à¿Ø"/g' `grep "´ø¿í¼à¿Ø" -rl ./`
-sed -i 's/ÊµÊ±Á÷Á¿¼à²â/Á÷Á¿/g'  `grep "ÊµÊ±Á÷Á¿¼à²â" -rl ./`
-sed -i 's/½âËøÍøÒ×ÔÆ»ÒÉ«¸èÇú/½âËø»ÒÉ«¸èÇú/g'  `grep "½âËøÍøÒ×ÔÆ»ÒÉ«¸èÇú" -rl ./`
-sed -i 's/½â³ıÍøÒ×ÔÆÒôÀÖ²¥·ÅÏŞÖÆ/½âËø»ÒÉ«¸èÇú/g'  `grep "½â³ıÍøÒ×ÔÆÒôÀÖ²¥·ÅÏŞÖÆ" -rl ./`
-sed -i 's/¼ÒÍ¥ÔÆ//g'  `grep "¼ÒÍ¥ÔÆ" -rl ./`
+sed -i 's/"Argon ä¸»é¢˜è®¾ç½®"/"Argonè®¾ç½®"/g' `grep "Argon ä¸»é¢˜è®¾ç½®" -rl ./`
+sed -i 's/"Turbo ACC ç½‘ç»œåŠ é€Ÿ"/"ç½‘ç»œåŠ é€Ÿ"/g' `grep "Turbo ACC ç½‘ç»œåŠ é€Ÿ" -rl ./`
+sed -i 's/"ç½‘ç»œå­˜å‚¨"/"å­˜å‚¨"/g' `grep "ç½‘ç»œå­˜å‚¨" -rl ./`
+sed -i 's/"USB æ‰“å°æœåŠ¡å™¨"/"æ‰“å°æœåŠ¡"/g' `grep "USB æ‰“å°æœåŠ¡å™¨" -rl ./`
+sed -i 's/"å¸¦å®½ç›‘æ§"/"ç›‘æ§"/g' `grep "å¸¦å®½ç›‘æ§" -rl ./`
+sed -i 's/å®æ—¶æµé‡ç›‘æµ‹/æµé‡/g'  `grep "å®æ—¶æµé‡ç›‘æµ‹" -rl ./`
+sed -i 's/è§£é”ç½‘æ˜“äº‘ç°è‰²æ­Œæ›²/è§£é”ç°è‰²æ­Œæ›²/g'  `grep "è§£é”ç½‘æ˜“äº‘ç°è‰²æ­Œæ›²" -rl ./`
+sed -i 's/è§£é™¤ç½‘æ˜“äº‘éŸ³ä¹æ’­æ”¾é™åˆ¶/è§£é”ç°è‰²æ­Œæ›²/g'  `grep "è§£é™¤ç½‘æ˜“äº‘éŸ³ä¹æ’­æ”¾é™åˆ¶" -rl ./`
+sed -i 's/å®¶åº­äº‘//g'  `grep "å®¶åº­äº‘" -rl ./`
 
-sed -i 's/¼àÌı¶Ë¿Ú/¼àÌı¶Ë¿Ú ÓÃ»§ÃûadminÃÜÂëadminadmin/g' ./feeds/luci/applications/luci-app-qbittorrent/po/*/qbittorrent.po
-# echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRP´©Í¸ÎÊÌâ
-sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #¹²ÏíÎÊÌâ
-sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #ĞŞ¸´UDPXYÉèÖÃÑÓÊ±55µÄ´íÎó
-sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP½ûÓÃIPV6ÎÊÌâ
-sed -i 's/ÇëÊäÈëÓÃ»§ÃûºÍÃÜÂë¡£/¹ÜÀíµÇÂ½/g' ./feeds/luci/modules/luci-base/po/*/base.po   #ÓÃ»§ÃûÃÜÂë
+sed -i 's/ç›‘å¬ç«¯å£/ç›‘å¬ç«¯å£ ç”¨æˆ·åadminå¯†ç adminadmin/g' ./feeds/luci/applications/luci-app-qbittorrent/po/*/qbittorrent.po
+# echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRPç©¿é€é—®é¢˜
+sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #å…±äº«é—®é¢˜
+sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #ä¿®å¤UDPXYè®¾ç½®å»¶æ—¶55çš„é”™è¯¯
+sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCPç¦ç”¨IPV6é—®é¢˜
+sed -i 's/è¯·è¾“å…¥ç”¨æˆ·åå’Œå¯†ç ã€‚/ç®¡ç†ç™»é™†/g' ./feeds/luci/modules/luci-base/po/*/base.po   #ç”¨æˆ·åå¯†ç 
 
 #cifs
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua   #dnsfilter
-sed -i 's/a.default = "0"/a.default = "1"/g' ./feeds/luci/applications/luci-app-cifsd/luasrc/controller/cifsd.lua   #¹ÒÎÊÌâ
-echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRP´©Í¸ÎÊÌâ
-sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #¹²ÏíÎÊÌâ
-sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #ĞŞ¸´UDPXYÉèÖÃÑÓÊ±55µÄ´íÎó
+sed -i 's/a.default = "0"/a.default = "1"/g' ./feeds/luci/applications/luci-app-cifsd/luasrc/controller/cifsd.lua   #æŒ‚é—®é¢˜
+echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRPç©¿é€é—®é¢˜
+sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #å…±äº«é—®é¢˜
+sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #ä¿®å¤UDPXYè®¾ç½®å»¶æ—¶55çš„é”™è¯¯
 
 
-#¶ÏÏß²»ÖØ²¦
+#æ–­çº¿ä¸é‡æ‹¨
 sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
 
-#echo "ÆäËûĞŞ¸Ä"
-sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #ĞŞ¸ÄÁ÷Á¿Í³¼ÆĞ´ÈëÎª1h
-# sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #ĞŞ¸ÄÁ÷Á¿Í³¼ÆÊı¾İ´æ·ÅÄ¬ÈÏÎ»ÖÃ
+#echo "å…¶ä»–ä¿®æ”¹"
+sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #ä¿®æ”¹æµé‡ç»Ÿè®¡å†™å…¥ä¸º1h
+# sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #ä¿®æ”¹æµé‡ç»Ÿè®¡æ•°æ®å­˜æ”¾é»˜è®¤ä½ç½®
 
-# echo 'Ä¬ÈÏ¿ªÆô Irqbalance'
+# echo 'é»˜è®¤å¼€å¯ Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
 
 
@@ -279,7 +279,7 @@ svn export https://github.com/loso3000/openwrt-passwall/trunk/xray-core  package
 svn export https://github.com/loso3000/openwrt-passwall/trunk/xray-plugin  package/xray-plugin
 
 
-# ÔÚ X86 ¼Ü¹¹ÏÂÒÆ³ı Shadowsocks-rust
+# åœ¨ X86 æ¶æ„ä¸‹ç§»é™¤ Shadowsocks-rust
 sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
 sed -i '/Rust:/d' package/diy/luci-app-vssr/Makefile
 sed -i '/Rust:/d' ./package/other/up/pass/luci-app-bypass/Makefile
@@ -307,17 +307,17 @@ sed -i "/dep.*INCLUDE_.*=n/d" `find package/ -follow -type f -path '*/luci-app-t
 sed -i "s/option limit_enable '1'/option limit_enable '0'/" `find package/ -follow -type f -path '*/nft-qos/files/nft-qos.config'`
 sed -i "s/option enabled '1'/option enabled '0'/" `find package/ -follow -type f -path '*/vsftpd-alt/files/vsftpd.uci'`
 
-#ÉèÖÃ
+#è®¾ç½®
 sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 # sed -i 's/option dports.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
-# ĞŞ¸Ämakefile
+# ä¿®æ”¹makefile
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 
-sed -i '/check_signature/d' ./package/system/opkg/Makefile   # É¾³ıIPK°²×°Ç©Ãû
+sed -i '/check_signature/d' ./package/system/opkg/Makefile   # åˆ é™¤IPKå®‰è£…ç­¾å
 
 # sed -i 's/kmod-usb-net-rtl8152/kmod-usb-net-rtl8152-vendor/' target/linux/rockchip/image/armv8.mk target/linux/sunxi/image/cortexa53.mk target/linux/sunxi/image/cortexa7.mk
 
@@ -332,14 +332,14 @@ sed -i 's/KERNEL_PATCHVER:=6.1/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
 # curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/default-settings/zzz-default-settingsim > ./package/lean/default-settings/files/zzz-default-settings
 # curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/default-settings/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
 
-# Ô¤´¦ÀíÏÂÔØÏà¹ØÎÄ¼ş£¬±£Ö¤´ò°ü¹Ì¼ş²»ÓÃµ¥¶ÀÏÂÔØ
+# é¢„å¤„ç†ä¸‹è½½ç›¸å…³æ–‡ä»¶ï¼Œä¿è¯æ‰“åŒ…å›ºä»¶ä¸ç”¨å•ç‹¬ä¸‹è½½
 for sh_file in `ls ${GITHUB_WORKSPACE}/common/*.sh`;do
     source $sh_file
 done
 
 
-# echo 'Ä¬ÈÏ¿ªÆô Irqbalance'
-ver1=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2` #ÅĞ¶Ïµ±Ç°Ä¬ÈÏÄÚºË°æ±¾ºÅÈç5.10
+# echo 'é»˜è®¤å¼€å¯ Irqbalance'
+ver1=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2` #åˆ¤æ–­å½“å‰é»˜è®¤å†…æ ¸ç‰ˆæœ¬å·å¦‚5.10
 export VER2="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 
 date1='Ipv6-Bypass-Vip-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
