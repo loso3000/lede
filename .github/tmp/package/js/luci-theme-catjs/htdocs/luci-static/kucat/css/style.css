@@ -725,7 +725,7 @@ span[data-indicator="poll-status"] {
     cursor: pointer;
     line-height: 0.9;
     border-radius: 1rem;
-    padding: 0.4rem 0rem!important;
+    padding: 0.5rem 0rem!important;
     background-repeat: no-repeat;
     background-position: center;
     color: transparent !important;
@@ -781,13 +781,11 @@ span[data-indicator="uci-changes"] {
 }
 [data-indicator]:not([data-style="inactive"]) {
     background-color: #f8f8f8 !important;
-    /* padding: 0.5rem 0rem; */
-    background-size: 25px 25px;
+    background-size: 23px 23px;
 }
 
 [data-indicator]:not([data-style="active"]) {
     background-color: #9f9f9f !important;
-    /* padding: 0.5rem 0rem; */
     background-size: 20px 20px;
 background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ9Ijc2OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiPgogPHRpdGxlLz4KCiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgaWQ9Imljb21vb24taWdub3JlIi8+CiAgPHBhdGggZmlsbD0iIzY2NjY2NiIgaWQ9InN2Z18xIiBkPSJtMTU0LjU3MywzMDIuOTczYzIyLjQwNSwtNjMuMzIzIDY4LjMwOSwtMTExLjUzNyAxMjQuNTE4LC0xMzguMzhzMTIyLjU3MiwtMzIuMTkzIDE4NS44NjQsLTkuNzg5YzM2LjA1NCwxMi43NjggNjcuMDYyLDMzLjA3NSA5MC42ODMsNTcuMTUxbDg2LjAzMiw4MC44NjNsLTEwNS42NywwYy0xNi43OCwwIC0zMC40LDEzLjYxOSAtMzAuNCwzMC40czEzLjYxOSwzMC40IDMwLjQsMzAuNGwxODIuMzA4LDBjMC4xNTIsMCAwLjI3NCwwIDAuNDI1LDBjNC4xNjUsLTAuMDMxIDguMTQ3LC0wLjk0MyAxMS43MzQsLTIuNDkzYzMuNjE3LC0xLjU1IDYuOTYyLC0zLjgzIDkuODUsLTYuODRjMC4zNjQsLTAuMzk1IDAuNzMsLTAuNzkgMS4wOTQsLTEuMTg2YzIuMjgsLTIuNjQ1IDQuMDQzLC01LjU2NCA1LjI1OSwtOC42NjRzMS45NDYsLTYuNDE1IDIuMDk4LC05LjkxYzAuMDMxLC0wLjQ1NiAwLjAzMSwtMC44ODEgMC4wMzEsLTEuMzA3bDAsLTE4Mi4zOTljMCwtMTYuNzgxIC0xMy42MTksLTMwLjQgLTMwLjQsLTMwLjRzLTMwLjQsMTMuNjE5IC0zMC40LDMwLjRsMCwxMTIuMTQ1bC04OC45NSwtODMuNTY5Yy0zMC4xNTYsLTMwLjcwNCAtNjkuMDM4LC01Ni4wMjcgLTExMy43ODYsLTcxLjg2NWMtNzkuMTMsLTI3Ljk5OCAtMTYyLjE4MywtMjEuMjUgLTIzMi4zNDUsMTIuMjIxcy0xMjcuNjQ5LDkzLjgxNCAtMTU1LjY0NywxNzIuOTQ1Yy01LjYyNCwxNS44MDggMi42NzUsMzMuMTY2IDE4LjQ4MywzOC43OXMzMy4xOTYsLTIuNjc1IDM4Ljc5LC0xOC41MTRsMC4wMjksMC4wMDF6bS03NC41NzIsMjEyLjEyOWw4OS44MzEsODQuNDJjNTguNjQxLDU4LjcwMiAxMzYuNDk1LDg4LjQwMyAyMTQuMjU4LDg4LjQzM3MxNTUuNjE3LC0yOS42NCAyMTQuOTg3LC04OC45OGMzMy41NjEsLTMzLjU2MSA1Ny43OSwtNzMuMTcyIDcxLjc3NCwtMTEzLjg0OGM1LjQ3MiwtMTUuODY4IC0yLjk3OSwtMzMuMTY2IC0xOC44NzgsLTM4LjYzOHMtMzMuMTY2LDIuOTc5IC0zOC42MzgsMTguODc4Yy0xMC45NzUsMzEuOTIgLTMwLjE4Nyw2My41NjYgLTU3LjI0Miw5MC42MjJjLTQ3LjUxNSw0Ny40ODQgLTEwOS43MTMsNzEuMTk2IC0xNzEuOTcxLDcxLjE5NnMtMTI0LjQ1NywtMjMuNzczIC0xNzIuNjQsLTcxLjkyNmwtODUuMTIsLTgwLjA0MmwxMDUuNjQsMGMxNi43ODEsMCAzMC40LC0xMy42MTkgMzAuNCwtMzAuNHMtMTMuNjE5LC0zMC40IC0zMC40LC0zMC40bC0xODIuMzA4LDBjLTAuMTUxLDAgLTAuMjc0LDAgLTAuNDI1LDBjLTQuMTY1LDAuMDMxIC04LjE0NywwLjk0MyAtMTEuNzM0LDIuNDkzYy0zLjYxNywxLjU1IC02Ljk2MSwzLjgzIC05Ljg1LDYuODRjLTAuMzY0LDAuMzk1IC0wLjczLDAuNzkxIC0xLjA5NCwxLjE4NmMtMi4yOCwyLjY0NCAtNC4wNDMsNS41NjMgLTUuMjU5LDguNjY0cy0xLjk0NSw2LjQxNSAtMi4wOTgsOS45MWMtMC4wMzEsMC40NTYgLTAuMDMxLDAuODgxIC0wLjAzMSwxLjMwN2wwLDE4Mi4zOTljMCwxNi43OCAxMy42MTksMzAuNCAzMC40LDMwLjRzMzAuNCwtMTMuNjE5IDMwLjQsLTMwLjRsLTAuMDAyLC0xMTIuMTE0eiIvPgogPC9nPgo8L3N2Zz4=");
 }
@@ -1930,6 +1928,18 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	padding-left: .25rem;
 	word-break: break-word;
 }
+.modal.alert-message.warning.spinning ,.modal.alert-message.notice.spinning {
+    background-color: #b98413 !important;
+    color: #eee;
+}
+#modal_overlay .modal.alert-message.warning.spinning>p ,.modal.alert-message.notice.spinning>p  {
+    font-size: var(--font-z);
+    text-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+}
 .modal .label {
 	font-size: var(--font-x);
 	font-weight: normal;
@@ -1959,18 +1969,24 @@ body.modal-overlay-active #modal_overlay {
 	display: inline-block;
 }
 .spinning {
-	position: relative;
-	padding-left: 32px !important;
+    position: relative;
+    font-size: 1rem;
+    padding-left: 32px !important;
 }
 .spinning::before {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: .2em;
-	width: 32px;
-	content: "";
-	background: url(../../resources/icons/loading.gif) no-repeat center;
-	background-size: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: .2em;
+    width: 32px;
+    content: "";
+    background: url(../../resources/icons/loading.gif) no-repeat center;
+    background-size: 20px;
+    text-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
 }
 /* luci */
 .hidden {
@@ -3250,9 +3266,6 @@ input[name="ping"], input[name="traceroute"], input[name="nslookup"] {
 .td.cbi-section-actions > * > *, .td.cbi-section-actions > * > form > * {
 	margin: 2.1px 3px;
 }
-.table {
-    display: block;
-}
 
 .commandbox {
 	width: 100% !important;
@@ -3299,6 +3312,10 @@ table>tbody>tr>td, table>tfoot>tr>td, table>thead>tr>td {
     width: calc(0% + 17rem);
     overflow: hidden;
 }
+.table {
+    display: block;
+}
+
 .mobile-hide {
 	display: none
 }
