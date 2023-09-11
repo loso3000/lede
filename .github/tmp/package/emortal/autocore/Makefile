@@ -21,7 +21,6 @@ define Package/autocore-arm
   TITLE:=ARM auto core script.
   MAINTAINER:=CN_SZTL
   DEPENDS:=@(arm||aarch64) \
-    +ethtool \
     +TARGET_bcm27xx:bcm27xx-userland \
     +TARGET_bcm53xx:nvram \
     +TARGET_mvebu:mhz
@@ -52,6 +51,9 @@ define Package/autocore/install/Default
 
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(CP) ./files/generic/luci-mod-status-autocore.json $(1)/usr/share/rpcd/acl.d/
+	
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/admin_status/index/
+	$(CP) ./files/generic/inlink.htm  $(1)/usr/lib/lua/luci/view/admin_status/index/
 
 ifeq ($(filter ipq%, $(TARGETID)),)
 	$(INSTALL_BIN) ./files/generic/ethinfo $(1)/sbin/
