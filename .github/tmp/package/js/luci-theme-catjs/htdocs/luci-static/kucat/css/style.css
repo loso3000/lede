@@ -1928,11 +1928,13 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	padding-left: .25rem;
 	word-break: break-word;
 }
-.modal.alert-message.warning.spinning ,.modal.alert-message.notice.spinning {
+/*
+.modal.alert-message.warning ,.modal.alert-message.notice {
     background-color: #b98413 !important;
     color: #eee;
 }
-#modal_overlay .modal.alert-message.warning.spinning>p ,.modal.alert-message.notice.spinning>p  {
+*/
+#modal_overlay .modal>p ,.modal>p  {
     font-size: var(--font-z);
     text-align: center;
     -webkit-box-align: center;
