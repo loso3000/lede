@@ -7,6 +7,7 @@ if ! uci -q get system.@imm_init[0].lang > "/dev/null"; then
 	uci -q commit system
 fi
 uci set luci.main.mediaurlbase='/luci-static/kucat'
+uci set luci.main.pollinterval='2'
 uci commit luci
 uci set dropbear.@dropbear[0].Interface='lan'
 uci commit dropbear
@@ -30,46 +31,73 @@ uci -q batch <<-EOF
 EOF
 uci commit system
 
-sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
 
 # log level
 uci set system.@system[0].conloglevel='1'
 uci set system.@system[0].cronloglevel='9'
 uci commit system
+
+sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
+# opkg mirror
+sed -i 's,downloads.openwrt.org,mirror.sjtu.edu.cn/openwrt,g' /etc/opkg/distfeeds.conf
 # docker mirror
-
-# firewall
-uci set firewall.@defaults[0].fullcone='1'
-[ $(grep -c shortcut_fe /etc/config/firewall) -eq '0' ] && uci set firewall.@defaults[0].flow_offloading='1'
-uci set firewall.@defaults[0].input='ACCEPT'
-uci commit firewall
-# upnp
-uci set upnpd.config.enabled='1'
-uci commit upnpd
-service miniupnpd restart
-
-ln -sf "/sbin/ip" "/usr/bin/ip"
 
 if [ -f /etc/config/dockerd ] && [ $(grep -c edu /etc/config/dockerd) -eq '0' ]; then
     uci add_list dockerd.globals.registry_mirrors='https://docker.mirrors.sjtug.sjtu.edu.cn'
     uci commit dockerd
 fi
 
+# upnp
+uci set upnpd.config.enabled='1'
+uci commit upnpd
+service miniupnpd restart
+# firewall
+uci set firewall.@defaults[0].fullcone='1'
+[ $(grep -c shortcut_fe /etc/config/firewall) -eq '0' ] && uci set firewall.@defaults[0].flow_offloading='1'
+uci set firewall.@defaults[0].input='ACCEPT'
+uci commit firewall
+
+
+ln -sf "/sbin/ip" "/usr/bin/ip"
+
+
 sed -i '/lcp-echo/d' /etc/ppp/options
 echo "lcp-echo-failure 10" >>  /etc/ppp/options 
 echo "lcp-echo-interval 200" >>  /etc/ppp/options
 sed -i 's/immortalwrt.org/openwrt.org/g'  /etc/config/luci
 
+# diagnostics
+if [ $(uci -q get luci.diag.ping) = "openwrt.org" ]; then
+    uci set luci.diag.dns='www.qq.com'
+    uci set luci.diag.ping='www.qq.com'
+    uci set luci.diag.route='www.qq.com'
+    uci commit luci
+fi
+
+# packet steering
+uci -q get network.globals.packet_steering > /dev/null || {
+    uci set network.globals='globals'
+    uci set network.globals.packet_steering=1
+    uci commit network
+}
+
+# disable coremark
+sed -i '/coremark/d' /etc/crontabs/root
+crontab /etc/crontabs/root
+
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
 sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-cat /etc/openwrt_release1 >> /etc/openwrt_release
+[ -f /etc/openwrt_release1 ] && cat /etc/openwrt_release1 >> /etc/openwrt_release
 echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
 sed -i "/log-facility/d" "/etc/dnsmasq.conf"
 echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
 
-# disable coremark
-sed -i '/coremark/d' /etc/crontabs/root
-
+# upgrade openwrt-22.03 -> 23.05
+if [ "$BUILD_DATE" -gt "1687019581" ]; then
+    [ $(grep -c "nsCertType" /etc/ssl/openssl.cnf) -gt '0' ] && [ -f /rom/etc/ssl/openssl.cnf ] && \
+        rm -f /etc/ssl/openssl.cnf && \cp -a /rom/etc/ssl/openssl.cnf /etc/ssl/openssl.cnf
+    [ $(grep -c "cryptodev_hw" /etc/config/cpufreq) -gt '0' ] && uci -q del cpufreq.cpufreq.cryptodev_hw && uci -q commit cpufreq
+fi
 rm -rf "/tmp/luci-modulecache"
 rm -f "/tmp/luci-indexcache"
 
