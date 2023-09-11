@@ -2,4 +2,4 @@
 #=================================================
 cp -Rf ./sc/.github/tmp/* .
 chmod +x openwrt/*.sh
-bash diy-part1.sh
+bash diy.sh
