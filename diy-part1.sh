@@ -1,5 +1,5 @@
 #!/bin/bash
 #=================================================
-cp -Rf ./sc/.github/tmp/* .
+cp -Rf ./.github/tmp/* .
 chmod +x openwrt/*.sh
 bash diy.sh
