@@ -2,7 +2,7 @@
 #=================================================
 # Description: Build OpenWrt using GitHub Actions
 WORKDIR=/workdir
-HOSTNAME=OpenWrt
+HOSTNAME=EzOpenWrt
 IPADDRESS=192.168.10.1
 OP_THEME=kucat
 SSID=Sirpdboy
@@ -42,7 +42,7 @@ sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_genera
 # sed -i "s/192.168.6.1/192.168.10.1/g"  package/base-files/files/bin/config_generate
 
 #修改默认主机名
-# sed -i "s/hostname='.*'/hostname='$HOSTNAM'/g" ./package/base-files/files/bin/config_generate
+sed -i "s/hostname='.*'/hostname='EzOpenWrt'/g" ./package/base-files/files/bin/config_generate
 #修改默认时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
@@ -318,8 +318,7 @@ done
 ver1=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2` #判断当前默认内核版本号如5.10
 export VER2="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 
-date1='Ipv6-Super-Vip-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-
+date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Ipv6-Super-Vip'
 #date1='Ipv6-Super-Vip-R2023.06.01'
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-Vip-5.10-/g' include/image.mk
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20230601-Ipv6-Super-Vip-5.10-/g' include/image.mk
@@ -335,9 +334,8 @@ elif [ "$VER2" = "6.1" ]; then
     sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-Vip-6.1-/g' include/image.mk
 fi
 
-echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
-echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
-
+echo "${date1}_by_Sirpdboy" > ./package/base-files/files/etc/EzOpenWrt_version
+echo "${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 
 ./scripts/feeds update -i
