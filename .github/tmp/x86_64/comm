@@ -207,35 +207,35 @@ CONFIG_PACKAGE_xz-utils=y
 CONFIG_PACKAGE_xz=y
 
 ### Shadow Utilities
-CONFIG_PACKAGE_shadow-groupadd=y
-CONFIG_PACKAGE_shadow-groupdel=y
-CONFIG_PACKAGE_shadow-groupmod=y
-CONFIG_PACKAGE_shadow-nologin=y
-CONFIG_PACKAGE_shadow-su=y
-CONFIG_PACKAGE_shadow-useradd=y
-CONFIG_PACKAGE_shadow-userdel=y
-CONFIG_PACKAGE_shadow-usermod=y
-CONFIG_PACKAGE_shadow-utils=y
+# CONFIG_PACKAGE_shadow-groupadd=y
+# CONFIG_PACKAGE_shadow-groupdel=y
+# CONFIG_PACKAGE_shadow-groupmod=y
+# CONFIG_PACKAGE_shadow-nologin=y
+# CONFIG_PACKAGE_shadow-su=y
+# CONFIG_PACKAGE_shadow-useradd=y
+# CONFIG_PACKAGE_shadow-userdel=y
+# CONFIG_PACKAGE_shadow-usermod=y
+# CONFIG_PACKAGE_shadow-utils=y
 # CONFIG_shadow-all is not set
 
 ### GNU Core Utilities
-CONFIG_PACKAGE_coreutils=y
-CONFIG_PACKAGE_coreutils-cp=y
-CONFIG_PACKAGE_coreutils-dd=y
-CONFIG_PACKAGE_coreutils-dircolors=y
-CONFIG_PACKAGE_coreutils-ls=y
-CONFIG_PACKAGE_coreutils-mkdir=y
-CONFIG_PACKAGE_coreutils-mv=y
-CONFIG_PACKAGE_coreutils-nproc=y
-CONFIG_PACKAGE_coreutils-rm=y
-CONFIG_PACKAGE_coreutils-sha1sum=y
-CONFIG_PACKAGE_coreutils-timeout=y
+# CONFIG_PACKAGE_coreutils=y
+# CONFIG_PACKAGE_coreutils-cp=y
+# CONFIG_PACKAGE_coreutils-dd=y
+# CONFIG_PACKAGE_coreutils-dircolors=y
+# CONFIG_PACKAGE_coreutils-ls=y
+# CONFIG_PACKAGE_coreutils-mkdir=y
+# CONFIG_PACKAGE_coreutils-mv=y
+# CONFIG_PACKAGE_coreutils-nproc=y
+# CONFIG_PACKAGE_coreutils-rm=y
+# CONFIG_PACKAGE_coreutils-sha1sum=y
+# CONFIG_PACKAGE_coreutils-timeout=y
 
 ### procps-ng Utilities
-CONFIG_PACKAGE_procps-ng=y
-CONFIG_PACKAGE_procps-ng-free=y
-CONFIG_PACKAGE_procps-ng-ps=y
-CONFIG_PACKAGE_procps-ng-top=y
+# CONFIG_PACKAGE_procps-ng=y
+# CONFIG_PACKAGE_procps-ng-free=y
+# CONFIG_PACKAGE_procps-ng-ps=y
+# CONFIG_PACKAGE_procps-ng-top=y
 
 # Version
 CONFIG_IMAGEOPT=y
@@ -244,7 +244,7 @@ CONFIG_VERSION_FILENAMES=y
 
 
 CONFIG_PACKAGE_luci-proto-ipv6=y
-CONFIG_PACKAGE_luci-proto-minieap=y
+# CONFIG_PACKAGE_luci-proto-minieap=y  #err
 CONFIG_PACKAGE_luci-proto-bonding=y
 CONFIG_PACKAGE_luci-proto-openconnect=y
 CONFIG_PACKAGE_luci-proto-relay=y
