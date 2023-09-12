@@ -311,7 +311,7 @@ sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装�
 
 # 预处理下载相关文件，保证打包固件不用单独下载
 for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/common/*.sh`;do
-    source $sh_file
+    source $sh_file amd64
 done
 
 # echo '默认开启 Irqbalance'
