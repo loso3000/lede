@@ -831,12 +831,23 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 .slide-menu {
 	overflow: hidden
 }
-.main .main-left .nav li a {
+.main .main-left .nav>li a {
 	display: block;
 	font-size: var(--font-d);
 	color: var(--menu-color)
 }
-.main .main-left .nav li.slide {
+.main .main-left .nav>li>a:first-child {
+    display: block;
+    font-size: var(--font-d);
+    color: var(--menu-color);
+    padding: 1rem 0rem 1rem 3rem;
+    margin-bottom: 0.1rem;
+    text-decoration: none;
+    cursor: default;
+    transition: all .2s;
+    position: relative;
+}
+.main .main-left .nav>li  {
 	padding: 0rem;
 	cursor: pointer
 }
@@ -847,7 +858,7 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 .main .main-left .nav .slide.active ul {
 	display: block;
 }
-.main .main-left .nav li.slide .menu {
+.main .main-left .nav>li>a {
 	display: block;
 	padding: 1rem 0rem 1rem 3rem;
 	margin-bottom: .1rem;
@@ -856,7 +867,10 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 	transition: all .1s;
 	position: relative
 }
-.main .main-left .nav .slide .menu::before {
+.main .main-left .nav>li>a:first-child.active::before {
+	color: var(--menu-hover-color);
+}
+.main .main-left .nav>li>a:first-child::before {
 	font-family: 'sirpdboy-kucat' !important;
 	font-style: normal;
 	font-weight: normal;
@@ -870,7 +884,21 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 	content: "\e91a";
 	color: var(--menu-color)
 }
-.main .main-left .nav .slide .menu:after, .main .main-left .nav li.slide .menu::after {
+.main .main-left .nav>.slide>a::before, .main .main-left .nav>li>a::before {
+	font-family: 'sirpdboy-kucat' !important;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	position: absolute;
+	left: .8rem;
+	content: "\e909";
+	color: var(--menu-color)
+}
+.main .main-left .nav>.slide>a::after, .main .main-left>.nav>li>a::after {
 	position: absolute;
 	right: .6rem;
 	top: 1rem;
@@ -888,83 +916,87 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 	-webkit-font-smoothing: antialiased;
 	transition: all .1s
 }
-.main .main-left .nav li.slide .menu:hover a::after, .main .main-left .nav li.slide .menu.active a::after {
+.main .main-left .nav>li>a:hover a::after, .main .main-left>.nav>li>a.active a::after {
 	cursor: pointer;
 	color: var(--menu-color);
 	width: 100%
 }
-.main>.main-left>.nav>.slide>.menu.active::before, .main .main-left .nav li.slide .menu:hover::after, .main .main-left .nav li.slide .menu.active::after {
+.main>.main-left .nav>.slide>a.active::before, .main .main-left .nav>li>a:hover::after, .main .main-left .nav>li>a.active::after {
 	cursor: pointer;
 	color: var(--menu-hover-color)
 }
-.main .main-left .nav li.slide .menu.active::after {
+.main .main-left .nav>li>a.active::after {
 	-ms-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	transform: rotate(180deg)
 }
-.main .main-left .nav li.slide .menu:hover, .main .main-left .nav li.slide .menu.active {
+
+.main .main-left .nav>li>a:hover, .main .main-left .nav>li>a.active {
 	cursor: pointer;
 	background-color: var(--menu-item-hover-bgcolor);
 	color: var(--menu-hover-color)
 }
-.main .main-left .nav li.slide .menu:hover a, .main .main-left .nav li.slide .menu.active a {
+.main .main-left .nav>li>a:hover a, .main .main-left .nav>li>a.active a {
 	color: var(--menu-hover-color)
 }
-.main .main-left .nav li.slide .menu:hover::before, .main .main-left .nav li.slide .menu.active::before {
+.main .main-left .nav>li>a:hover::before, .main .main-left .nav>li>a.active::before {
 	color: var(--menu-hover-color)
 }
-.main .main-left .nav li.slide .menu[data-title=Status]:before {
+.main .main-left .nav>li>a[data-title=Status]:before {
 	content: "\e90c"
 }
-.main .main-left .nav li.slide .menu[data-title=System]:before {
+.main .main-left .nav>li>a[data-title=System]:before {
 	content: "\e919"
 }
-.main .main-left .nav li.slide .menu[data-title=Services]:before {
+.main .main-left .nav>li>a[data-title=Services]:before {
 	content: "\e92a"
 }
-.main .main-left .nav li.slide .menu[data-title=NAS]:before {
+.main .main-left .nav>li>a[data-title=NAS]:before {
 	content: "\e907"
 }
-.main .main-left .nav li.slide .menu[data-title=VPN]:before {
+.main .main-left .nav>li>a[data-title=VPN]:before {
 	content: "\e917"
 }
-.main .main-left .nav li.slide .menu[data-title=Network]:before {
+.main .main-left .nav>li>a[data-title=Network]:before {
 	content: "\e90a"
 }
-.main .main-left .nav li.slide .menu[data-title=Bandwidth_Monitor]:before {
+.main .main-left .nav>li>a[data-title=Bandwidth_Monitor]:before {
 	content: "\e913"
 }
-.main .main-left .nav li.slide .menu[data-title=iStore]:before {
+.main .main-left .nav>li>a[data-title=iStore]:before {
 	content: "\e908"
 }
-.main .main-left .nav li.slide .menu[data-title=Wizard]:before {
+.main .main-left .nav>li>a[data-title=Inital_Setup]:before {
+	content: "\e93a"
+}
+.main .main-left .nav>li>a[data-title=Wizard]:before {
 	content: "\e90b"
 }
-.main .main-left .nav li.slide .menu[data-title=Docker]:before {
+.main .main-left .nav>li>a[data-title=Docker]:before {
 	content: "\e902"
 }
-.main .main-left .nav li.slide .menu[data-title=Statistics]:before {
+.main .main-left .nav>li>a[data-title=Statistics]:before {
 	content: "\e918"
 }
- .main .main-left .nav li.slide .menu[data -title=Control]:before {
+ .main .main-left .nav>li>a[data -title=Control]:before {
  content: "\e91a"
 }
- .main .main-left .nav li.slide .menu[data -title=control]:before {
+ .main .main-left .nav>li>a[data -title=control]:before {
  content: "\e91a"
 }
-.main .main-left .nav li.slide .menu[data-title=Asterisk]:before {
+.main .main-left .nav>li>a[data-title=Asterisk]:before {
 	content: "\e91c"
 }
-.main .main-left .nav li.slide .menu[data-title=Logout]:before {
+.main .main-left .nav>li>a[data-title=Logout]:before {
 	content: "\e915"
 }
-.main .main-left .nav li.slide .menu[data-title=Wizard]:after, .main .main-left .nav li.slide .menu[data-title=iStore]:after, .main .main-left .nav li.slide .menu[data-title=Logout]:after {
+.main .main-left .nav>li>a[data-title=Wizard]:after, .main .main-left .nav>li>a[data-title=iStore]:after, .main .main-left .nav>li>a[data-title=Logout]:after {
 	content: ""
 }
-.main .main-left .nav li [data-title=Logout], .main .main-left .nav li.slide .menu[data-title=Logout] {
+.main .main-left .nav>li [data-title=Logout], .main .main-left .nav>li>a[data-title=Logout] {
 	display: none
 }
-.main .main-left .nav li.slide .slide-menu li a {
+.main .main-left .nav>li  .slide-menu li a {
 	position: relative;
 	margin: 0rem 0rem .1rem 3rem;
 	padding: .7rem 0;
@@ -1320,14 +1352,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	opacity: .5;
 	box-shadow: none;
 }
-/*
-.btn:not(button), .cbi-button {
-    font-size: .8rem;
-}
-*/
-.btn:not(button), .label {
-    padding: 0.2rem 0.6rem;
-}
+
 .primary {
     line-height: 2;
 }
@@ -1717,18 +1742,17 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 }
 .cbi-dropdown > .open {
 	flex-basis: 0px;
+    font-size: 1.5rem;
 }
 .cbi-dropdown > .open, .cbi-dropdown > .more {
-    font-size: 1.5rem;
     font-weight: bolder;
-    /* line-height: 1; */
     background-color: rgba(255,255,255,0)!important;
     display: flex;
     flex-direction: column;
-    /* flex-grow: 0; */
-    /* flex-shrink: 0; */
     justify-content: center;
-    /* padding: 0 0 0 0.25rem; */
+}
+.cbi-dropdown > .more {
+    font-size: var(--font-z);
 }
 .cbi-dropdown.btn > .open {
 	padding: 0px;
@@ -1931,6 +1955,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 
 .notice {
     background-color: #b98413 !important;
+    background-color: rgba(var(--primary-rgbm), 1)!important;
     color: #eee;
 }
 
@@ -3101,6 +3126,10 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 
 @media screen and (max-width: 1280px) {
+.main>.main-left>.nav>li, .main>.main-left>.nav>li>a, .main .main-left .nav>li>a:first-child, .main>.main-left>.nav>.slide>.menu{
+    font-size: var(--font-d);
+}
+
 .node-admin-status-iptables>.main fieldset li>a {
 	padding: .3rem .6rem
 }

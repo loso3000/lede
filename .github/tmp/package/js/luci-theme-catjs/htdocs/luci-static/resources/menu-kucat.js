@@ -82,8 +82,8 @@ return baseclass.extend({
 			var isActive = ((L.env.dispatchpath[l] == children[i].name) && (L.env.dispatchpath[l - 1] == tree.name)),
 				submenu = this.renderMainMenu(children[i], url + '/' + children[i].name, l),
 				hasChildren = submenu.children.length,
-				slideClass = hasChildren ? 'slide' : '',
-				menuClass = hasChildren ? 'menu' : '';
+				slideClass = hasChildren ? 'slide' : null,
+				menuClass = hasChildren ? 'menu' : null;
 			if (isActive) {
 				ul.classList.add('active');
 				slideClass += " active";
