@@ -1,6 +1,6 @@
 
 #!/bin/bash
-OP=amd64
+OP=$1
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 #修改默认主题
