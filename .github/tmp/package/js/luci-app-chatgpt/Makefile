@@ -6,7 +6,7 @@
 #
 include $(TOPDIR)/rules.mk
 
-NAME:=chatgpt
+NAME:=chatgpt-web
 PKG_NAME:=luci-app-$(NAME)
 PKG_VERSION:=1.1.3
 PKG_RELEASE:=16
