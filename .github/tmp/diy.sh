@@ -18,9 +18,10 @@ config_generate=package/base-files/files/bin/config_generate
 #rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|default-settings\).*")
 
-# rm -rf  ./package/emortal/autocore package/feeds/packages/autocore
-# rm -rf  package/emortal/default-settings 
-
+rm -rf  {./package/emortal/autocore package/feeds/packages/autocore package/emortal/default-settings }
+rm -rf {feeds/packages/net/open-app-filter feeds/packages/net/oaf ./feeds/luci/applications/luci-app-oaf    }
+rm -rf {feeds/packages/net/open-app-wrtbwmon ./feeds/luci/applications/luci-app-wrtbwmon }
+rm -rf  ./feeds/luci/applications/luci-app-netdata
 #修改默认主题
 
 # 使用默认取消自动
@@ -319,12 +320,12 @@ done
 export VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 #date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Ipv6-Super-Vip'
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
-export date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Super-'${VER1}'.'${ver54}''
-export date1=`$(TZ=UTC-8 date +%Y.%m.%d -d +"12"hour)`"-Super-${VER1}.${ver54}"
+#export date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Super-'${VER1}'.'${ver54}''
+export date1="$(TZ=UTC-8 date +%Y.%m.%d -d +"12"hour)-Super-${VER1}.${ver54}"
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-Vip-5.10-/g' include/image.mk
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20230601-Ipv6-Super-Vip-5.10-/g' include/image.mk
-echo ${date1}'_by_Sirpdboy' > ./package/base-files/files/etc/ezopenwrt_version
-echo "${HOSTNAME} ${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
+echo "${date1}_by_Sirpdboy" > ./package/base-files/files/etc/ezopenwrt_version
+echo "EzOpWrt ${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 # rename_version=`cat files/etc/ezopenwrt_version`
 
