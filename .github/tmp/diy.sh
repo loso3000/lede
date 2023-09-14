@@ -330,7 +330,7 @@ echo "EzOpWrt ${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 # rename_version=`cat files/etc/ezopenwrt_version`
 
-cp  -f ./z.zshrc ./file/root/.zshrc
+cp  -f patch/z.zshrc ./file/root/.zshrc
 ./scripts/feeds update -i
 cat  ./x86_64/x86_64  > .config
 cat  ./x86_64/comm  >> .config
