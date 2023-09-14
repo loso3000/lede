@@ -21,4 +21,4 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ./.oh-my-zsh/custom/p
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ./.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugins/zsh-completions
 popd
-cp  -f ./z.zshrc ./file/root/.zshrc
+cp -f patch/z.zshrc ./file/root/.zshrc
