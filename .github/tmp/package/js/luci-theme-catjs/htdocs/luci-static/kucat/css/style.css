@@ -1971,7 +1971,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 }
 
 #modal_overlay .modal>p ,.modal>p  {
-    font-size: var(--font-z);
+    font-size: var(--font-x);
 }
 .modal .label {
 	font-size: var(--font-x);
@@ -1983,6 +1983,14 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 }
 .modal .label.warning {
 	background-color: #f0ad4e !important;
+}
+[data-page="admin-system-flash"] .modal .btn {
+    white-space: normal !important;
+    font-size: var(--font-x);
+    margin: 0;
+    line-height: 2rem;
+    text-align: left;
+    height: auto;
 }
 .modal .btn {
 	padding: .3rem .6rem;
@@ -2344,7 +2352,11 @@ div.cbi-value var, td.cbi-value-field var, .td.cbi-value-field var {
 	flex-direction: column;
 }
 label > input[type="checkbox"], label > input[type="radio"] {
-	margin-right: 0.8rem;
+
+    margin-right: 0.8rem;
+    position: relative;
+    margin-top: 0.5rem;
+    vertical-align: bottom;
 }
 label[data-index][data-depends] {
 	padding-right: 2em;
