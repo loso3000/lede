@@ -46,8 +46,7 @@ ln -sf "/sbin/ip" "/usr/bin/ip"
 sed -i '/lcp-echo/d' /etc/ppp/options
 echo "lcp-echo-failure 10" >>  /etc/ppp/options 
 echo "lcp-echo-interval 200" >>  /etc/ppp/options
-sed -i 's/immortalwrt.org/openwrt.org/g'  /etc/config/luci
-sed -i 's/immortalwrt/openwrt/g'  etc/opkg/distfeeds.conf
+sed -i 's/immortalwrt/openwrt/g' {/etc/config/luci,etc/opkg/distfeeds.conf}
 # diagnostics
 if [ $(uci -q get luci.diag.ping) = "openwrt.org" ]; then
     uci set luci.diag.dns='www.openwrt.com'
