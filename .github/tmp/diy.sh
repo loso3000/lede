@@ -123,8 +123,8 @@ sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,in
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
 
 echo '替换smartdns'
-rm -rf ./feeds/packages/net/smartdns package/feeds/packages/smartdns
-svn export https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns ./feeds/packages/net/smartdns
+# rm -rf ./feeds/packages/net/smartdns package/feeds/packages/smartdns
+# svn export https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns ./feeds/packages/net/smartdns
 
 
 # netdata 
