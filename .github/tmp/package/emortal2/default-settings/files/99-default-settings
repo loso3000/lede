@@ -2,28 +2,20 @@
 uci -q get system.@imm_init[0] > "/dev/null" || uci -q add system imm_init > "/dev/null"
 uci set luci.main.mediaurlbase='/luci-static/kucat'
 uci set luci.main.pollinterval='2'
-uci commit luci
 uci set dropbear.@dropbear[0].Interface='lan'
 uci commit dropbear
 if ! uci -q get system.@imm_init[0].lang > "/dev/null"; then
 	uci -q set luci.main.lang="auto"
-	uci -q commit luci
-
 	uci -q set system.@imm_init[0].lang="1"
-	uci -q commit system
 fi
 if ! uci -q get system.@imm_init[0].anon_mount > "/dev/null"; then
 	uci -q set fstab.@global[0].anon_mount="1"
 	uci -q commit fstab
-
 	uci -q set system.@imm_init[0].anon_mount="1"
-	uci -q commit system
 fi
-
 uci -q batch <<-EOF
 	set system.@system[0].timezone='CST-8'
 	set system.@system[0].zonename='Asia/Shanghai'
-
 	delete system.ntp.server
 	add_list system.ntp.server='ntp.tencent.com'
 	add_list system.ntp.server='ntp1.aliyun.com'
@@ -31,7 +23,7 @@ uci -q batch <<-EOF
 	add_list system.ntp.server='cn.ntp.org.cn'
 EOF
 uci commit system
-
+uci commit luci
 sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
 # opkg mirror
 sed -i 's,downloads.openwrt.org,mirror.sjtu.edu.cn/openwrt,g' /etc/opkg/distfeeds.conf
@@ -55,7 +47,7 @@ sed -i '/lcp-echo/d' /etc/ppp/options
 echo "lcp-echo-failure 10" >>  /etc/ppp/options 
 echo "lcp-echo-interval 200" >>  /etc/ppp/options
 sed -i 's/immortalwrt.org/openwrt.org/g'  /etc/config/luci
-
+sed -i 's/immortalwrt/openwrt/g'  etc/opkg/distfeeds.conf
 # diagnostics
 if [ $(uci -q get luci.diag.ping) = "openwrt.org" ]; then
     uci set luci.diag.dns='www.openwrt.com'
@@ -71,7 +63,7 @@ crontab /etc/crontabs/root
 [ -f /etc/ezopenwrt_version ]  && { 
     sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
     new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
-    echo "DISTRIB_DESCRIPTION='EzOpWrt ${new_DISTRIB_REVISION}'" >> /etc/openwrt_release
+    echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
 }
 sed -i "/log-facility/d" "/etc/dnsmasq.conf"
 echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
