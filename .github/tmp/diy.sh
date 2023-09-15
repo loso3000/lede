@@ -22,10 +22,12 @@ cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
 rm -rf   ./package/emortal/autocore 
 rm -rf  package/emortal/default-settings 
-rm -rf {feeds/packages/net/open-app-filter feeds/packages/net/oaf ./feeds/luci/applications/luci-app-oaf    }
 rm -rf   feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
+rm -rf  feeds/packages/net/open-app-filter
+rm -rf  feeds/packages/net/oaf
+rm -rf  ./feeds/luci/applications/luci-app-oaf
 
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
