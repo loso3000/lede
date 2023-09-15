@@ -1,50 +1,77 @@
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 CONFIG_TARGET_x86_64_DEVICE_generic=y
-
+CONFIG_TARGET_KERNEL_PARTSIZE=64
+CONFIG_TARGET_ROOTFS_PARTSIZE=925
+# CONFIG_GRUB_CONSOLE is not set
 CONFIG_GRUB_TIMEOUT="0"
 CONFIG_GRUB_TITLE="EzOpWrt"
 CONFIG_PACKAGE_ca-certificates=y
 CONFIG_PACKAGE_libatomic=y
-CONFIG_PACKAGE_libstdcpp=y
 CONFIG_PACKAGE_resolveip=y
+CONFIG_PACKAGE_sqm-scripts=y
 CONFIG_PACKAGE_wireless-tools=y
-# CONFIG_PACKAGE_zabbix-extra-mac80211 is not set
 CONFIG_PACKAGE_htop=y
 CONFIG_HTOP_LMSENSORS=y
-# CONFIG_PACKAGE_mt76-test is not set
 CONFIG_PACKAGE_wireless-regdb=y
 CONFIG_PACKAGE_kmod-nvme=y
+CONFIG_PACKAGE_kmod-crypto-ccm=y
+CONFIG_PACKAGE_kmod-crypto-cmac=y
+CONFIG_PACKAGE_kmod-crypto-ctr=y
+CONFIG_PACKAGE_kmod-crypto-gcm=y
+CONFIG_PACKAGE_kmod-crypto-gf128=y
+CONFIG_PACKAGE_kmod-crypto-ghash=y
+CONFIG_PACKAGE_kmod-crypto-hmac=y
+CONFIG_PACKAGE_kmod-crypto-rng=y
+CONFIG_PACKAGE_kmod-crypto-seqiv=y
+CONFIG_PACKAGE_kmod-crypto-sha256=y
+CONFIG_PACKAGE_kmod-fs-nfs=y
+CONFIG_PACKAGE_kmod-fs-nfs-common=y
+CONFIG_PACKAGE_kmod-fs-nfs-v3=y
+CONFIG_PACKAGE_kmod-fs-nfs-v4=y
+CONFIG_PACKAGE_kmod-fs-squashfs=y
 CONFIG_PACKAGE_kmod-fuse=y
 CONFIG_PACKAGE_kmod-ip6tables-extra=y
 CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
-CONFIG_PACKAGE_kmod-ipt-extra=y
-CONFIG_PACKAGE_kmod-ipt-iprange=y
-CONFIG_PACKAGE_kmod-ipt-tproxy=y
-CONFIG_PACKAGE_kmod-oaf=y
+CONFIG_PACKAGE_kmod-ipt-ipopt=y
 CONFIG_PACKAGE_kmod-iavf=y
 CONFIG_PACKAGE_kmod-ice=y
+CONFIG_PACKAGE_kmod-ifb=y
 CONFIG_PACKAGE_kmod-igb=y
 CONFIG_PACKAGE_kmod-igb-vendor=m
 CONFIG_PACKAGE_kmod-ixgbe=y
 CONFIG_PACKAGE_kmod-ixgbe-vendor=m
 CONFIG_PACKAGE_kmod-ixgbevf=y
 CONFIG_PACKAGE_kmod-ixgbevf-vendor=m
+CONFIG_PACKAGE_kmod-via-velocity=y
+CONFIG_PACKAGE_kmod-dnsresolver=y
 CONFIG_PACKAGE_kmod-gre=y
 CONFIG_PACKAGE_kmod-inet-diag=y
 CONFIG_PACKAGE_kmod-l2tp=y
 CONFIG_PACKAGE_kmod-pppol2tp=y
 CONFIG_PACKAGE_kmod-pptp=y
-CONFIG_PACKAGE_kmod-tun=y
+CONFIG_PACKAGE_kmod-sched-cake=y
+CONFIG_PACKAGE_kmod-sched-core=y
 CONFIG_PACKAGE_kmod-udptunnel4=y
 CONFIG_PACKAGE_kmod-udptunnel6=y
 CONFIG_PACKAGE_kmod-lp=y
 CONFIG_PACKAGE_kmod-ppdev=y
 CONFIG_PACKAGE_kmod-thermal=y
+CONFIG_PACKAGE_kmod-usb-dwc2=y
+CONFIG_PACKAGE_kmod-usb-dwc3=y
+CONFIG_PACKAGE_kmod-usb-ehci=y
+CONFIG_PACKAGE_kmod-usb-ohci=y
+CONFIG_PACKAGE_kmod-usb-ohci-pci=y
 CONFIG_PACKAGE_kmod-usb-printer=y
 CONFIG_PACKAGE_kmod-usb-serial=y
 CONFIG_PACKAGE_kmod-usb-serial-option=y
 CONFIG_PACKAGE_kmod-usb-serial-wwan=y
+CONFIG_PACKAGE_kmod-usb-uhci=y
+CONFIG_PACKAGE_kmod-usb-wdm=y
+CONFIG_PACKAGE_kmod-usb2=y
+CONFIG_PACKAGE_kmod-usb2-pci=y
+CONFIG_PACKAGE_kmod-usb3=y
+CONFIG_PACKAGE_kmod-usbip=y
 CONFIG_PACKAGE_kmod-ath=y
 CONFIG_ATH_USER_REGD=y
 CONFIG_PACKAGE_ATH_DFS=y
@@ -62,45 +89,11 @@ CONFIG_PACKAGE_kmod-mt7603=y
 CONFIG_PACKAGE_kmod-mt76x02-common=y
 CONFIG_PACKAGE_kmod-mt76x2=y
 CONFIG_PACKAGE_kmod-mt76x2-common=y
-CONFIG_PACKAGE_lua-neturl=y
-CONFIG_PACKAGE_ruby=y
-#
-# Standard Library
-#
-CONFIG_PACKAGE_libfuse=y
-CONFIG_PACKAGE_libyaml=y
-CONFIG_PACKAGE_libmbedtls=y
-# CONFIG_LIBMBEDTLS_DEBUG_C is not set
-CONFIG_LIBMBEDTLS_HAVE_SSE2=y
-# CONFIG_LIBMBEDTLS_HKDF_C is not set
 CONFIG_PACKAGE_libimobiledevice=y
 CONFIG_PACKAGE_libplist=y
 CONFIG_PACKAGE_libusbmuxd=y
 CONFIG_PACKAGE_bind-libs=y
-CONFIG_PACKAGE_boost=y
-#
-# Select Boost Options
-#
-#
-# Boost compilation options.
-#
-CONFIG_boost-compile-visibility-hidden=y
-CONFIG_boost-static-and-shared-libs=y
-CONFIG_boost-runtime-shared=y
-CONFIG_boost-variant-release=y
-#
-# Select Boost libraries
-#
-#
-# Libraries
-#
-CONFIG_PACKAGE_boost-program_options=y
-CONFIG_PACKAGE_boost-system=y
-CONFIG_PACKAGE_libbpf=y
 CONFIG_PACKAGE_libcap=y
-CONFIG_PACKAGE_libcap-bin=y
-CONFIG_PACKAGE_libcap-bin-capsh-shell="/bin/sh"
-CONFIG_PACKAGE_libcares=y
 CONFIG_PACKAGE_libcurl=y
 #
 # SSL support
@@ -109,54 +102,81 @@ CONFIG_LIBCURL_OPENSSL=y
 #
 # Supported protocols
 #
-# CONFIG_LIBCURL_DICT is not set
 CONFIG_LIBCURL_FILE=y
 CONFIG_LIBCURL_FTP=y
-# CONFIG_LIBCURL_GOPHER is not set
 CONFIG_LIBCURL_HTTP=y
 CONFIG_LIBCURL_COOKIES=y
 CONFIG_LIBCURL_TFTP=y
 CONFIG_LIBCURL_NGHTTP2=y
 #
 # Miscellaneous
+#
 CONFIG_LIBCURL_PROXY=y
 CONFIG_LIBCURL_CRYPTO_AUTH=y
 CONFIG_LIBCURL_TLS_SRP=y
-# CONFIG_LIBCURL_LIBIDN2 is not set
 CONFIG_LIBCURL_THREADED_RESOLVER=y
-# CONFIG_LIBCURL_ZLIB is not set
-# CONFIG_LIBCURL_ZSTD is not set
 CONFIG_LIBCURL_UNIX_SOCKETS=y
-# CONFIG_LIBCURL_LIBCURL_OPTION is not set
-# CONFIG_LIBCURL_VERBOSE is not set
-# CONFIG_LIBCURL_NTLM is not set
-CONFIG_PACKAGE_libdb47=y
-CONFIG_PACKAGE_libelf=y
-CONFIG_PACKAGE_libev=y
 CONFIG_PACKAGE_libevdev=y
-CONFIG_PACKAGE_libltdl=y
-CONFIG_PACKAGE_liblua5.3=y
-CONFIG_PACKAGE_libminiupnpc=y
 CONFIG_PACKAGE_libmount=y
-CONFIG_PACKAGE_libnatpmp=y
 CONFIG_PACKAGE_libnetsnmp=y
 CONFIG_PACKAGE_libnghttp2=y
 CONFIG_PACKAGE_libpci=y
 CONFIG_PACKAGE_libreadline=y
-CONFIG_PACKAGE_libruby=y
-CONFIG_PACKAGE_libsodium=y
-#
-# Configuration
-#
-CONFIG_LIBSODIUM_MINIMAL=y
-# end of Configuration
-CONFIG_PACKAGE_libuci-lua=y
 CONFIG_PACKAGE_libudev-zero=y
-CONFIG_PACKAGE_libudns=y
 CONFIG_PACKAGE_libusb-1.0=y
 CONFIG_PACKAGE_libuv=y
-CONFIG_PACKAGE_libwebsockets-full=y
 CONFIG_PACKAGE_libxml2=y
+CONFIG_LUCI_LANG_en=y
+CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-sqm=y
+CONFIG_PACKAGE_luci-app-upnp=y
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-theme-material=y
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_ip6tables-extra=y
+CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
+CONFIG_PACKAGE_iptables-mod-ipopt=y
+CONFIG_PACKAGE_miniupnpd=y
+CONFIG_PACKAGE_bind-host=y
+CONFIG_PACKAGE_ddns-scripts=y
+CONFIG_PACKAGE_ddns-scripts-cloudflare=y
+CONFIG_PACKAGE_ddns-scripts-dnspod=y
+CONFIG_PACKAGE_ddns-scripts-dnspod-com=y
+CONFIG_PACKAGE_ddns-scripts-freedns=y
+CONFIG_PACKAGE_ddns-scripts-godaddy=y
+CONFIG_PACKAGE_ddns-scripts-services=y
+CONFIG_PACKAGE_ddns-scripts_aliyun=y
+CONFIG_PACKAGE_tc-mod-iptables=y
+CONFIG_PACKAGE_tc-tiny=y
+CONFIG_PACKAGE_openssh-sftp-client=y
+CONFIG_PACKAGE_openssh-sftp-server=y
+CONFIG_PACKAGE_xl2tpd=y
+CONFIG_PACKAGE_hostapd-common=y
+CONFIG_DRIVER_WEXT_SUPPORT=y
+CONFIG_DRIVER_11N_SUPPORT=y
+CONFIG_DRIVER_11AC_SUPPORT=y
+CONFIG_PACKAGE_iw=y
+CONFIG_PACKAGE_ppp-mod-pppol2tp=y
+CONFIG_PACKAGE_ppp-mod-pptp=y
+# CONFIG_PACKAGE_snmpd=y
+CONFIG_PACKAGE_unzip=y
+CONFIG_PACKAGE_blkid=y
+CONFIG_PACKAGE_hdparm=y
+CONFIG_PACKAGE_lsblk=y
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_zsh=y
+CONFIG_PACKAGE_libimobiledevice-utils=y
+CONFIG_PACKAGE_libusbmuxd-utils=y
+CONFIG_PACKAGE_usbmuxd=y
+CONFIG_PACKAGE_acpid=y
+CONFIG_PACKAGE_coremark=y
+CONFIG_COREMARK_OPTIMIZE_O3=y
+CONFIG_COREMARK_ENABLE_MULTITHREADING=y
+CONFIG_COREMARK_NUMBER_OF_THREADS=16
+CONFIG_PACKAGE_iwinfo=y
+CONFIG_PACKAGE_openssl-util=y
+CONFIG_PACKAGE_usbids=y
+CONFIG_PACKAGE_usbutils=y
 
 CONFIG_LUCI_LANG_en=y
 CONFIG_PACKAGE_luci-theme-argon=y
