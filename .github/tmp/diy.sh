@@ -20,9 +20,9 @@ cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
 cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
-rm -rf   ./package/emortal/autocore 
+rm -rf ./package/emortal/autocore 
 rm -rf  package/emortal/default-settings 
-rm -rf   feeds/packages/net/wrtbwmon
+rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf  feeds/packages/net/open-app-filter
@@ -336,5 +336,5 @@ echo '---------------------------------' >> ./package/base-files/files/etc/banne
 # cp  -f ./patch/z.zshrc ./file/root/.zshrc
 ./scripts/feeds update -i
 cat  ./x86_64/x86_64  > .config
-cat  ./x86_64/comm  >> .config
+# cat  ./x86_64/comm  >> .config
 exit
