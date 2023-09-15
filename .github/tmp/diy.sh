@@ -30,7 +30,7 @@ cat  patch/profiles > ./package/base-files/files/etc/profiles
 cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
 mkdir -p files/usr/share
-mkdir -p files/etc/
+mkdir -p files/etc/root
 #touch files/etc/ezopenwrt_version
 #touch files/usr/share/kmodreg
 
@@ -72,7 +72,7 @@ sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" 
 # svn export https://github.com/openwrt/openwrt/trunk/package/network/utils/iproute2 ./package/network/utils/iproute2
 
 #  coremark
-# sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
+sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
 
 git clone https://github.com/sirpdboy/luci-app-lucky ./package/lucky
 # git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
@@ -335,8 +335,10 @@ date2="EzOpWrt Super-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}_b
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
-cp  -rf ./patch/z.zshrc ./file/root/.zshrc
-
+cp  -Rf patch/z.zshrc file/root/.zshrc
+[ -f ./file/root/.zshrc ] || cp  -Rf ./z.zshrc ./file/root/.zshrc
+[ -f ./file/root/.zshrc ] && echo ------------------no zshrc---------------------
+[ -f ./file/root/.zshrc ] && echo ------------------no zshrc---------------------
 
 cat>buildmd5.sh<<-\EOF
 #!/bin/bash
