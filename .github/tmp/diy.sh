@@ -323,15 +323,15 @@ export VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = 
 #date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Ipv6-Super-Vip'
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 #export date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Super-'${VER1}'.'${ver54}''
-export date1="$(TZ=UTC-8 date +%Y.%m.%d -d +"12"hour)-Super-${VER1}.${ver54}"
+# export date1="Super-$(TZ=UTC-8 date +%Y.%m.%d -d +"12"hour)-${VER1}.${ver54}"
+export date1="Super-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}"
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-Vip-5.10-/g' include/image.mk
 #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20230601-Ipv6-Super-Vip-5.10-/g' include/image.mk
 echo "${date1}_by_Sirpdboy" > ./package/base-files/files/etc/ezopenwrt_version
 echo "EzOpWrt ${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 # rename_version=`cat files/etc/ezopenwrt_version`
-
-cp  -f ./patch/z.zshrc ./file/root/.zshrc
+# cp  -f ./patch/z.zshrc ./file/root/.zshrc
 ./scripts/feeds update -i
 cat  ./x86_64/x86_64  > .config
 cat  ./x86_64/comm  >> .config
