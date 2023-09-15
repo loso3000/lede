@@ -335,6 +335,7 @@ date2="EzOpWrt Super-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}_b
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
+mkdir -p file/root
 cp  -Rf patch/z.zshrc file/root/.zshrc
 [ -f ./file/root/.zshrc ] || cp  -Rf ./z.zshrc ./file/root/.zshrc
 [ -f ./file/root/.zshrc ] && echo ------------------no zshrc---------------------
@@ -373,9 +374,9 @@ EOF
 cat>bakkmod.sh<<-\EOF
 #!/bin/bash
 bakkmoddir=./file/etc/kmod.d
+mkdir -p $bakkmoddi
 bakkmodfile=$bakkmoddir/kmod.source
 nowkmodfile=$bakkmoddir/kmod.now
-mkdir -p $bakkmoddi 2>/dev/null
 cp -rf ./patch/kmod.source $bakkmodfile
 while IFS= read -r file; do find ./bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir ; done < $bakkmodfile
 sleep 2
