@@ -20,11 +20,12 @@ cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
 cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
-rm -rf  {./package/emortal/autocore package/feeds/packages/autocore package/emortal/default-settings }
+rm -rf   ./package/emortal/autocore 
+rm -rf  package/emortal/default-settings 
 rm -rf {feeds/packages/net/open-app-filter feeds/packages/net/oaf ./feeds/luci/applications/luci-app-oaf    }
-rm -rf {feeds/packages/net/open-app-wrtbwmon ./feeds/luci/applications/luci-app-wrtbwmon }
+rm -rf   feeds/packages/net/wrtbwmon
+rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
-#修改默认主题
 
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
@@ -330,7 +331,7 @@ echo "EzOpWrt ${date1}_by_Sirpdboy" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 # rename_version=`cat files/etc/ezopenwrt_version`
 
-cp  -f patch/z.zshrc ./file/root/.zshrc
+cp  -f ./patch/z.zshrc ./file/root/.zshrc
 ./scripts/feeds update -i
 cat  ./x86_64/x86_64  > .config
 cat  ./x86_64/comm  >> .config
