@@ -85,10 +85,10 @@ sed -i 's/luci-lib-ipkg/luci-base/g' package/diy1/istore/luci-app-store/Makefile
 # svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
 
 rm -rf feeds/packages/net/v2ray-geodata
-rm -rf feeds/packages/net/mosdns
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
+rm -rf package/mosdns/mosdns
 
 # alist 
 #git clone https://github.com/sbwml/luci-app-alist package/alist
