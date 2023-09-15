@@ -369,7 +369,7 @@ exit 0
 EOF
 
 cat>bakkmod.sh<<-\EOF
-#!/bash/sh
+#!/bin/bash
 bakkmoddir=./file/etc/kmod.d
 bakkmodfile=$bakkmoddir/kmod.source
 nowkmodfile=$bakkmoddir/kmod.now
