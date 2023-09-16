@@ -68,7 +68,7 @@ case ${YN} in
     /etc/init.d/rpcd restart
     rm -rf /etc/config/wizard
     rm -rf /etc/config/netwizard_hide
-    sleep 2
+    sleep 5
     . /etc/profiles 
 ;;
 [Nn])
@@ -114,8 +114,8 @@ done
 }
 
 function k_change_ip() {
-  echo -e "\n q. 返回(return)"
-  export k_ip="请输入新IP(Please input the new IP[eg:192.168.11.1])"
+  echo -e " q. 返回(return)"
+  export k_ip="请输入新IP(Please input the new IP[eg:192.168.1.1])"
   echo
   while :; do
   domainy=""
@@ -133,9 +133,8 @@ function k_change_ip() {
     uci commit network
     ER "您的IP已经改为(Your IP has been changed to)：${keyip}！"
     /etc/init.d/network restart
-    sleep 2
+    sleep 5
     . /etc/profiles 
-
   ;; 
 
  Q)
@@ -191,8 +190,6 @@ read -p "是否重启系统(Whether to restart the system)[Y/n]:" YN
 case ${YN} in
 [Yy]) 
     ER "系统重启中(System is restarting)..."
-    uci set argon.@global[0].bing_background=0
-    uci commit argon
     reboot -f
     goreboot
 ;;
@@ -200,7 +197,6 @@ case ${YN} in
     EW "返回主菜单(return)"
     sleep 2
     . /etc/profiles 
-
 ;;
 [Qq])
     sleep 2
@@ -249,15 +245,18 @@ function k_kmodreg() {
 echo
 while :; do
 echo -e "\n q. 返回(return)"
-read -p "是否装载全部的网卡驱动?可能对系统稳定性有影响.(Are all the NC drivers loaded? May have an impact on the system stability.)[Y/n]:" YN
+read -p "是否装载全部的网卡驱动?驱动太多系统可能有影响.(Are all the NC drivers loaded? May have an impact on the system stability.)[Y/n]:" YN
 
 case ${YN} in
 [Yy]) 
 
+    echo
     ER "正在装载中，请稍等。。。(In mount, Please wait....)"
     bash /etc/kmodreg  2 > /dev/null 2>&1 
+    echo
     EY "已装载全部的网卡驱动！(All NIC drivers are loaded!)"
-    sleep 2
+    echo
+    sleep 5
     . /etc/profiles 
 ;;
 [Nn])
@@ -393,7 +392,7 @@ function mainmenu() {
   EY " 7. 装入全部网卡驱动(Load all NIC drives)"
   EY " 8. 刷新释放内存(Refresh and free memory)"
   EY " 9. 停止家长控制(Stop Parentcontrol)"
-  
+  echo
   EW " 0. 退出菜单(Exit)"
   echo
   KEY="请输入数字(please enter a number)"
@@ -425,23 +424,20 @@ function mainmenu() {
     7)
        k_kmodreg
     ;;
-
     8)
         EY " 刷新状态清除内存完成!(Refresh status clear memory completed!)"
         sync && echo 3 > /proc/sys/vm/drop_caches
         rm -rf /tmp/luci*
 	ER " "
-    sleep 3
+    sleep 5
     . /etc/profiles 
-
     ;;
     9)
       EY " 停卡家长控制插件成功!(Stop Parentcontrol completed!)"
       EW " "
       /etc/init.d/parentcontrol stop
-    sleep 3
+    sleep 5
     . /etc/profiles 
-
     ;;
     0)
       EW " 退出程序成功(Exit the program successfully)"
