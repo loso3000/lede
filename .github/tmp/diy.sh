@@ -374,15 +374,16 @@ EOF
 cat>bakkmod.sh<<-\EOF
 #!/bin/bash
 bakkmoddir=./file/etc/kmod.d
-mkdir -p $bakkmoddi
 bakkmodfile=$bakkmoddir/kmod.source
 nowkmodfile=$bakkmoddir/kmod.now
-cp -rf ./patch/kmod.source $bakkmodfile
-while IFS= read -r file; do find ./bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir ; done < $bakkmodfile
-sleep 2
+mkdir -p $bakkmoddir 2>/dev/null
+cp -rf ./kmod.source $bakkmoddir
+for file in $bakkmodfile; do
+      find ./lede/bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir 
+done
 ls $bakkmoddir > $nowkmodfile
-exit
 EOF
+
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
