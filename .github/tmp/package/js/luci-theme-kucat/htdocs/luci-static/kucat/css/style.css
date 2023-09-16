@@ -1623,7 +1623,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	max-width: 25rem;
 	pointer-events: none;
 	outline: 0;
-	margin: 0.25rem 0;
+	margin-top: 0.2rem;
 	color: #666;
 }
 .cbi-dynlist[name="sshkeys"] > .item {
@@ -1678,7 +1678,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	align-items: center;
 	width: 100%;
 	min-width: 16rem;
-	margin: 0.25rem 0;
+    margin-top: 0.2rem;
 	gap: 0;
 	flex-wrap: nowrap;
 }
@@ -1717,14 +1717,17 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	min-width: 13rem;
 }
 .cbi-dynlist>.add-item .cbi-button-add {
-	width: 2.5rem !important;
-	padding: 0.5rem 0 !important;
-	font-weight: normal;
-	font-size: 1.2rem;
-	color: #fff;
-	background-color: rgba(var(--primary-rgbm), 0.9);
-	border: 1px solid rgba(var(--primary-rgbm), 1);
+    width: 2.5rem !important;
+    padding: 7px!important;
+    /* font-weight: normal; */
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 5px 5px 5px 0;
+    color: #fff;
+    background-color: rgba(var(--primary-rgbm), 0.9);
+    border: 1px solid rgba(var(--primary-rgbm), 1);
 }
+
 .cbi-dynlist, .cbi-dropdown {
 	position: relative;
 	display: inline-flex;
@@ -2696,15 +2699,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 .node-status-overview > .main fieldset:nth-child(4) .td:nth-child(2), .node-status-processes > .main .table .tr .td:nth-child(3) {
 	white-space: normal;
 }
-/* fix system reboot */
-[data-page="admin-system-reboot"] p {
-	padding-left: 2rem;
-}
-[data-page="admin-system-reboot"] p > span {
-	position: relative;
-	top: .1rem;
-	left: 1rem;
-}
+
 /* samba */
 #cbi-samba [data-tab="template"] .cbi-value-field {
 	display: block;
