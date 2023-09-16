@@ -379,11 +379,10 @@ nowkmodfile=$bakkmoddir/kmod.now
 mkdir -p $bakkmoddir 2>/dev/null
 cp -rf ./kmod.source $bakkmoddir
 for file in $bakkmodfile; do
-      find ./lede/bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir 
+      find ./bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir 
 done
 ls $bakkmoddir > $nowkmodfile
 EOF
-
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
