@@ -27,8 +27,6 @@ define Package/default-settings/description
 	Default Settings & Language Support Packages.
 endef
 
-define Build/Configure
-endef
 
 define Build/Compile
 endef
