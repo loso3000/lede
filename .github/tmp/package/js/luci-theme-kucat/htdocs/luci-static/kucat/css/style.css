@@ -236,6 +236,7 @@ em {
 	box-sizing: border-box;
 	-webkit-tap-highlight-color: transparent
 }
+
 .btn, button, select, input, .cbi-dropdown {
 	height: 2.6rem;
 	color: #999;
@@ -1933,6 +1934,12 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	background-color: rgba(var(--primary-rgbbody), 1);
     box-shadow: 0 2px 10px 0px rgba(255, 255, 255, .16), 0 0 10px 0 rgba(255, 255, 255, .12);
 }
+.modal .btn {
+	padding: .3rem .6rem;
+}
+.modal .right>.btn {
+	padding: 0 0.8rem
+}
 .modal > * {
 	line-height: normal;
 	flex-basis: 100%;
@@ -1995,9 +2002,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
     text-align: left;
     height: auto;
 }
-.modal .btn {
-	padding: .3rem .6rem;
-}
+
 .modal.cbi-modal {
 	max-width: 90%;
 	max-height: none;
