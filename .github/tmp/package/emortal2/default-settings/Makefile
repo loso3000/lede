@@ -21,12 +21,15 @@ define Package/default-settings
   SECTION:=luci
   CATEGORY:=LuCI
   TITLE:=LuCI support for Default Settings
-  DEPENDS:=+luci +luci-lib-base +@LUCI_LANG_zh_Hans +luci-i18n-base-zh-cn
+  DEPENDS:=+luci
   PKGARCH:=all
+  DEPENDS:=+luci-lib-base
 endef
 
-define Package/default-settings/description
-	Default Settings & Language Support Packages.
+define Package/default-settings-chn
+  $(Package/default-settings)
+  TITLE+= (Optimize for CHN users)
+  DEPENDS:=+default-settings +@LUCI_LANG_zh_Hans +luci-i18n-base-zh-cn
 endef
 
 
@@ -36,9 +39,14 @@ endef
 define Package/default-settings/install
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./files/99-default-settings $(1)/etc/uci-defaults/
+endef
+define Package/default-settings-chn/install
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/99-default-settings-chinese $(1)/etc/uci-defaults/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 	po2lmo ./i18n/default.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/default.zh-cn.lmo
 	po2lmo ./i18n/more.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/more.zh-cn.lmo
 endef
 
 $(eval $(call BuildPackage,default-settings))
+$(eval $(call BuildPackage,default-settings-chn))
