@@ -377,7 +377,7 @@ bakkmoddir=./file/etc/kmod.d
 bakkmodfile=$bakkmoddir/kmod.source
 nowkmodfile=$bakkmoddir/kmod.now
 mkdir -p $bakkmoddir 2>/dev/null
-cp -rf ./kmod.source $bakkmoddir
+cp -rf $bakkmodfile $bakkmoddir
 for file in $bakkmodfile; do
       find ./bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir 
 done
