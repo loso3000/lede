@@ -130,8 +130,8 @@ function k_change_ip() {
   Y)
     export keyipn="${keyip}"
     uci set network.lan.ipaddr="${keyip}"
-    ER "您的IP已经改为(Your IP has been changed to)：${keyip}！"
     uci commit network
+    ER "您的IP已经改为(Your IP has been changed to)：${keyip}！"
     /etc/init.d/network restart
     sleep 2
     . /etc/profiles 
@@ -424,7 +424,6 @@ function mainmenu() {
     ;;
     7)
        k_kmodreg
-    break
     ;;
 
     8)
