@@ -9,7 +9,7 @@
 #=================================================
 
 mkdir -p files/root
-cp  -rf ./patch/z.zshrc ./file/root/.zshrc
+cp  -rf ./patch/z.zshrc ./files/root/.zshrc
 pushd files/root
 
 ## Install oh-my-zsh
