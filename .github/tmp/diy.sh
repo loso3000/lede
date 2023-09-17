@@ -330,8 +330,8 @@ VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 #export date1=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`'-Super-'${VER1}'.'${ver54}''
 # export date1="Super-$(TZ=UTC-8 date +%Y.%m.%d -d +"12"hour)-${VER1}.${ver54}"
-date1="Super-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"_by_Sirpdboy"
-date2="EzOpWrt Super-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}_by_Sirpdboy"
+date1="Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"_by_Sirpdboy"
+date2="EzOpWrt Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}_by_Sirpdboy"
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
