@@ -1926,7 +1926,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	flex-wrap: wrap;
 	width: 90%;
 	min-width: 270px;
-	max-width: 600px;
+	max-width: 800px;
 	min-height: 32px;
 	margin: 5em auto;
 	padding: 1em;
@@ -2969,6 +2969,10 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 #cbi-netspeedtest-homebox>.cbi-section-node>.cbi-value {
 	display: inline-block;
+}
+/* fix luci-app-wrtbwmon */
+.main #view .cbi-value-title  {
+   width: 15rem;
 }
 /* fix node-admin-status-overview
 .node-admin-network-network > .main #view td:nth-child(3),  */
