@@ -371,14 +371,17 @@ EOF
 
 cat>bakkmod.sh<<-\EOF
 #!/bin/bash
-bakkmoddir=./files/etc/kmod.d
+kmoddirdrv=./files/etc/kmod.d/drv
+kmoddirdocker=./files/etc/kmod.d/docker
 bakkmodfile=./files/etc/kmod.source
 nowkmodfile=./files/etc/kmod.now
-mkdir -p $bakkmoddir 2>/dev/null
+mkdir -p $kmoddirdrv 2>/dev/null
+mkdir -p $kmoddirdocker 2>/dev/null
 cp -rf ./patch/kmod.source $bakkmodfile
 for file in $bakkmodfile; do
-      find ./bin/ -name "${file}*" | xargs -i cp -f {} $bakkmoddir
+      find ./bin/ -name "*${file}*.ipk" | xargs -i cp -f {} $kmoddirdrv
 done
+find ./bin/ -name "*docker*.ipk" | xargs -i cp -f {} $kmoddirdocker
 ls $bakkmoddir > $nowkmodfile
 EOF
 
@@ -386,12 +389,12 @@ cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
 # https://github.com/sirpdboy/openWrt
 # EzOpenWrt By Sirpdboy
-nowkmoddir=/etc/kmod.d
+nowkmoddir=/etc/kmod.d/drv
 [ ! -d $nowkmoddir ]  || return
-opkg update
+opkg update  2>/dev/null
 sleep 2
 for file in `ls $nowkmoddir/*.ipk`;do
-    opkg install "$file"
+    opkg install "$file"  2>/dev/null
 done
 sleep 2
 exit
