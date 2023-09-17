@@ -394,8 +394,7 @@ while IFS= read -r file; do
         fi
     fi
 done < $bakkmodfile
-
-find ./bin/ -name "*docker*.ipk" | xargs -i cp -f {} $kmoddirdocker
+find ./bin/ -name "*dockerman*.ipk" | xargs -i cp -f {} $kmoddirdocker
 EOF
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
