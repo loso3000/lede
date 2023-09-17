@@ -406,9 +406,8 @@ nowkmoddir=/etc/kmod.d/$IPK
 [ ! -d $nowkmoddir ]  || return
 opkg update
 for file in `ls $nowkmoddir/*.ipk`;do
-    opkg install "$file"
+    opkg install "$file" --force-depends
 done
-exit
 EOF
 
 ./scripts/feeds update -i
