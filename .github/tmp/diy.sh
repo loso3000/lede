@@ -11,6 +11,7 @@ KEY=123456
 config_generate=package/base-files/files/bin/config_generate
 
 sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
 #删除冲突插件
 #rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|default-settings\).*")
