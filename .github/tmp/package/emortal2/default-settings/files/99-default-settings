@@ -1,4 +1,37 @@
 #!/bin/sh
+setup_ssid()
+{
+    local r="radio$1"
+    
+    if ! uci show wireless.${r} >/dev/null 2>&1; then
+        return
+    fi
+    local s="wlan$1"
+    logger "default-wifi: setup $1's ssid"
+    local mac=`ifconfig ${s} | grep "HWaddr" | awk '{print $5}'`
+    local wifimac=`echo ${mac}|awk -F ":" '{print $4""$5""$6 }'|tr A-Z a-z|cut -c4-`
+    # uci set wireless.${r}.disabled=0
+    uci set wireless.${r}.country=CN
+    # uci set wireless.${r}.channel=149
+    if [ `uci get wireless.${r}.channel` -lt 14 ]; then
+        uci set wireless.${r}.channel=11
+        uci set wireless.default_${r}.ssid=EZ-2.4G
+    else
+        uci set wireless.${r}.channel=149
+        uci set wireless.default_${r}.ssid=EZ-5G
+    fi
+    uci set wireless.default_${r}.encryption='psk2'
+    uci set wireless.default_${r}.key='12345678'
+    uci commit
+}
+WIFI_NUM=`find /sys/class/net/ -name wlan* | wc -l`
+if [ ${WIFI_NUM} -gt 0 ]; then
+    # update /etc/config/wireless
+    for i in `seq 0 ${WIFI_NUM}`; do
+        setup_ssid ${i}
+    done
+fi
+
 uci -q get system.@imm_init[0] > "/dev/null" || uci -q add system imm_init > "/dev/null"
 uci set dropbear.@dropbear[0].Interface='lan'
 uci commit dropbear
@@ -31,12 +64,12 @@ sed -i 's,downloads.openwrt.org,mirror.sjtu.edu.cn/openwrt,g' /etc/opkg/distfeed
 uci set upnpd.config.enabled='1'
 uci commit upnpd
 /etc/init.d/miniupnpd restart
+# /etc/init.d/dockerd stop
 # firewall
 uci set firewall.@defaults[0].fullcone='1'
 [ $(grep -c shortcut_fe /etc/config/firewall) -eq '0' ] && uci set firewall.@defaults[0].flow_offloading='1'
 uci set firewall.@defaults[0].input='ACCEPT'
 uci commit firewall
-
 
 ln -sf "/sbin/ip" "/usr/bin/ip"
 
@@ -46,7 +79,6 @@ echo "lcp-echo-failure 10" >>  /etc/ppp/options
 echo "lcp-echo-interval 200" >>  /etc/ppp/options
 sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
 sed -i 's/immortalwrt/openwrt/g' /etc/opkg/distfeeds.conf
-
 sed -i '/coremark/d' /etc/crontabs/root
 crontab /etc/crontabs/root
 [ -f /etc/ezopenwrt_version ]  && { 
@@ -54,6 +86,12 @@ crontab /etc/crontabs/root
     new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
     echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
 }
+sed -i '/option disabled/d' /etc/config/wireless
+sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
+uci set wireless.radio0.disabled=0
+uci set wireless.radio1.disabled=0
+uci commit wireless
+wifi up
 
 sed -i "/log-facility/d" "/etc/dnsmasq.conf"
 echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
