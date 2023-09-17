@@ -10,7 +10,7 @@ LUCI_TITLE:=Kucat Theme by sirpdboy
 THEME_NAME:=kucat
 PKG_NAME:=luci-theme-$(THEME_NAME)
 LUCI_DEPENDS:= +curl
-PKG_VERSION:=2.0.9
+PKG_VERSION:=2.0.10
 PKG_RELEASE:=20230916
 
 include $(TOPDIR)/feeds/luci/luci.mk
