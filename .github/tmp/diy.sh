@@ -373,34 +373,45 @@ cat>bakkmod.sh<<-\EOF
 #!/bin/bash
 kmoddirdrv=./files/etc/kmod.d/drv
 kmoddirdocker=./files/etc/kmod.d/docker
-bakkmodfile=./files/etc/kmod.source
+bakkmodfile=./kmod.source
 nowkmodfile=./files/etc/kmod.now
 mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
-cp -rf ./patch/kmod.source $bakkmodfile
-for file in $bakkmodfile; do
-      find ./bin/ -name "*${file}*.ipk" | xargs -i cp -f {} $kmoddirdrv
-done
+cp -rf ./patch/list.txt $bakkmodfile
+
+while IFS= read -r file; do
+    a=`find ./bin/ -name "$file" `
+    echo $a
+    if [ -z "$a" ]; then
+        echo "no find: $file"
+    else
+        cp -f $a $kmoddirdrv
+	echo $file >> $nowkmodfile
+        if [ $? -eq 0 ]; then
+            echo "cp ok: $file"
+        else
+            echo "no cp:$file"
+        fi
+    fi
+done < $bakkmodfile
+
 find ./bin/ -name "*docker*.ipk" | xargs -i cp -f {} $kmoddirdocker
-ls $bakkmoddir > $nowkmodfile
 EOF
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
 # https://github.com/sirpdboy/openWrt
 # EzOpenWrt By Sirpdboy
-nowkmoddir=/etc/kmod.d/drv
+IPK=$1
+nowkmoddir=/etc/kmod.d/$IPK
 [ ! -d $nowkmoddir ]  || return
 opkg update  2>/dev/null
-sleep 2
 for file in `ls $nowkmoddir/*.ipk`;do
     opkg install "$file"  2>/dev/null
 done
-sleep 2
 exit
 EOF
 
 ./scripts/feeds update -i
 cat  ./x86_64/x86_64  > .config
 cat  ./x86_64/comm  >> .config
-
