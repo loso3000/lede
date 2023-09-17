@@ -404,9 +404,9 @@ cat>./package/base-files/files/etc/kmodreg<<-\EOF
 IPK=$1
 nowkmoddir=/etc/kmod.d/$IPK
 [ ! -d $nowkmoddir ]  || return
-opkg update  2>/dev/null
+opkg update
 for file in `ls $nowkmoddir/*.ipk`;do
-    opkg install "$file"  2>/dev/null
+    opkg install "$file"
 done
 exit
 EOF
