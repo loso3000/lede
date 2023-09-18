@@ -16,9 +16,9 @@ config basic
 	option gohome 'overview'
 	option bklock '1'
 	option fontmode '0'
-	option font_d '1rem'
-	option font_z '0.875rem'
-	option font_x '0.7rem'
+	option font_d '1.1rem'
+	option font_z '0.92rem'
+	option font_x '0.875rem'
 	option background '0'
 	option setbar '0'
 	option bkuse '1'
@@ -240,9 +240,9 @@ if [ "x$(uci -q get advancedplus.@basic[0].fontmode)" = "x1" ] ; then
 	uci set advancedplus.@basic[0].font_z='1.1rem'
 	uci set advancedplus.@basic[0].font_x='0.92rem'
 else
-	uci set advancedplus.@basic[0].font_d='1rem'
-	uci set advancedplus.@basic[0].font_z='0.875rem'
-	uci set advancedplus.@basic[0].font_x='0.7rem'
+	uci set advancedplus.@basic[0].font_d='1.1rem'
+	uci set advancedplus.@basic[0].font_z='0.92rem'
+	uci set advancedplus.@basic[0].font_x='0.875rem'
 fi
 uci commit advancedplus
 }
