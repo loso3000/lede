@@ -8,11 +8,11 @@ include $(TOPDIR)/rules.mk
 NAME:=advancedplus
 PKG_NAME:=luci-app-$(NAME)
 LUCI_TITLE:=LuCI support for Kucat theme setting by sirpdboy
-LUCI_DEPENDS:=
+LUCI_DEPENDS:=+luci-compat
 LUCI_PKGARCH:=all
 
-PKG_VERSION:=1.5.11
-PKG_RELEASE:=20230907
+PKG_VERSION:=1.6.12
+PKG_RELEASE:=20230919
 
 define Package/$(PKG_NAME)/conffiles
 /etc/config/advancedplus

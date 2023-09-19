@@ -6,6 +6,6 @@ uci -q batch <<-EOF >/dev/null
 	set ucitrack.@advancedplus[-1].init=advancedplus
 	commit ucitrack
 EOF
-
+sed -i 's/cbi.submit\"] = true/cbi.submit\"] = \"1\"/g' /usr/lib/lua/luci/dispatcher.lua
 rm -f /tmp/luci-indexcache
 exit 0

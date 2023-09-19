@@ -1,17 +1,28 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+
 msgid "Advanced plus"
 msgstr "进阶设置"
 
 msgid "KuCat Theme Config"
-msgstr "KuCat设置"
+msgstr "KuCat主题设置"
 
 msgid "Argon Config"
-msgstr "Argon设置"
+msgstr "Argon主题设置"
+
+msgid "Design Config"
+msgstr "Design主题设置"
+
 
 msgid "Advanced Setting"
 msgstr "高级设置"
 
 msgid "Here you can set the blur and transparency of the login page of argon theme, and manage the background pictures and videos.[Chrome is recommended]"
 msgstr "在这里你可以设置argon 主题的登录页面的模糊和透明度。[建议使用 Chrome]"
+
+msgid "Here you can set the mode of the theme and change the proxy tool icon in the navigation bar. [Recommend Chrome]"
+msgstr "这里可以设置主题的模式和更换导航栏的代理工具图标。[建议使用 Chrome]"
 
 msgid "Advanced Edit"
 msgstr "进阶参数编辑"
@@ -312,5 +323,27 @@ msgstr "Qos自动优化"
 
 msgid "Enable QOS automatic optimization strategy (testing function)"
 msgstr "开启QOS自动优化策略（测试功能）"
+
+
+msgid "You can choose Theme color mode here"
+msgstr "你可以选择喜欢的主题模式"
+
+msgid "Navigation bar setting"
+msgstr "导航栏设置"
+
+msgid "Display navigation bar"
+msgstr "显示导航栏"
+
+msgid "Close navigation bar"
+msgstr "关闭导航栏"
+
+msgid "The navigation bar is display by default"
+msgstr "默认显示导航栏"
+
+msgid "Navigation bar proxy"
+msgstr "导航栏代理"
+
+msgid "OpenClash by default"
+msgstr "默认 OpenClash"
 
 
