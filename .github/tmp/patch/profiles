@@ -135,7 +135,6 @@ function k_change_ip() {
     uci commit network
     ER "您的IP已经改为(Your IP has been changed to)：${keyip}！"
     /etc/init.d/network restart
-    /etc/init.d/rpcd restart
     sleep 5
     . /etc/profiles 
   ;; 
@@ -165,7 +164,6 @@ case ${YN} in
     else
       passwd -d root
     fi
-    /etc/init.d/rpcd restart
     goreboot
 ;;
 [Nn])
@@ -251,19 +249,19 @@ function k_kmodregdrv() {
 echo
 while :; do
 echo -e "\n q. 返回(return)"
-read -p "是否装载全部的网卡驱动?驱动太多系统可能有影响.(Are all the NC drivers loaded? )[Y/n]:" YN
+echo -e "\n 装载全部${DRVNUM}个驱动可能对系统有影响.(May have an impact on the system stability.)"
+read -p "是否确定?(are you sure? )[Y/n]:" YN
 
 case ${YN} in
 [Yy]) 
 
     echo
-    ER "正在装载中，时间会有点久请耐心等待完成。(In mount, Please wait....)"
+    ER "正在装载中，请稍等。。。(In mount, Please wait....)"
     bash /etc/kmodreg drv 2 > /dev/null 2>&1 
     echo
-    EY "已装载全部的网卡驱动！(All NIC drivers are loaded!)"
+    EY "已装载全部${DRVNUM}个网卡驱动！(All NIC drivers are loaded!)"
     echo
     sleep 5
-    /etc/init.d/rpcd restart
     . /etc/profiles 
 ;;
 [Nn])
@@ -297,10 +295,9 @@ case ${YN} in
     ER "正在装载中，请稍等。。。(In mount, Please wait....)"
     bash /etc/kmodreg docker 2 > /dev/null 2>&1 
     echo
-    EY "docker服务装载成功！(Docker service successfully loaded!)"
+    EY "docker服务装载成功！请重新登录！(Docker service successfully loaded!)"
     echo
     sleep 5
-    /etc/init.d/rpcd restart
     . /etc/profiles 
 ;;
 [Nn])
@@ -358,13 +355,14 @@ clear
 [ -e /tmp/.failsafe ] && export FAILSAFE=1
 [ -f /etc/banner ] && echo -e "${Skyb}$(cat /etc/banner)${White}"
 [ -n "$FAILSAFE" ] && cat /etc/banner.failsafe
-
+export DRVNUM=`cat /etc/kmod.now | wc -l`
 Sysinfo
 
 fgrep -sq '/ overlay ro,' /proc/mounts && {
 	echo -e "${Red}Your JFFS2-partition seems full and overlayfs is mounted read-only."
 	echo -e "Please try to remove files from /overlay/upper/... and reboot!${}"
 }
+
 
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
 export HOME=$(grep -e "^${USER:-root}:" /etc/passwd | cut -d ":" -f 6)
@@ -409,8 +407,8 @@ function mainmenu() {
   EY " 1. 修改后台IPv4地址(Modify IPv4 address)"
   EY " 2. 清除密码并重启(Clear password and Reboot)"
   EY " 3. 修复向导默认主题(Restore wizard default theme)"
-  EY " 4. 重启服务器(Reboot)"
-  EY " 5. 关闭服务器(Shutdown)"
+  EY " 4. 重启系统(Reboot)"
+  EY " 5. 关闭系统(Shutdown)"
   EY " 6. 恢复出厂设置(Restore factory settings)"
   EY " 7. 网络连接检查(Check network connectivity)"
   EY " 8. 刷新释放内存(Refresh and free memory)"
@@ -467,7 +465,6 @@ function mainmenu() {
     8)
         EY " 刷新状态清除内存完成!(Refresh status clear memory completed!)"
         sync && echo 3 > /proc/sys/vm/drop_caches
-        /etc/init.d/rpcd restart
         rm -rf /tmp/luci*
 	ER " "
     sleep 5
@@ -477,7 +474,6 @@ function mainmenu() {
       EY " 停卡家长控制插件成功!(Stop Parentcontrol completed!)"
       EW " "
       /etc/init.d/parentcontrol stop
-     /etc/init.d/rpcd restart
     sleep 5
     . /etc/profiles 
     ;;
