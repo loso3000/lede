@@ -414,20 +414,23 @@ for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/common/*.sh`;do
     source $sh_file amd64
 done
 
-# echo '默认开启 Irqbalance'
-#ver1=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2` #判断当前默认内核版本号如5.10
+if [[ $DATE_S == 'default' ]]; then
+   DATA=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+else 
+   DATA=$DATE_S
+fi
+[[ -n $CONFIG_S ]] || CONFIG_S=Mini
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
-
-date1="Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"_by_Sirpdboy"
+date1="VIP-${CONFIG_S}-${DATA}_by_Sirpdboy"
 if [ "$VER1" = "5.4" ]; then
-date2="EzOpWrt Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver54}_by_Sirpdboy"
+date2="EzOpWrt VIP-${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
 elif [ "$VER1" = "5.15" ]; then
-date2="EzOpWrt Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver515}_by_Sirpdboy"
+date2="EzOpWrt VIP-${CONFIG_S}-${DATA}-${VER1}.${ver515}_by_Sirpdboy"
 elif [ "$VER1" = "6.1" ]; then
-date2="EzOpWrt Super-VIP-"`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`"-${VER1}.${ver61}_by_Sirpdboy"
+date2="EzOpWrt VIP-${CONFIG_S}-${DATA}-${VER1}.${ver61}_by_Sirpdboy"
 fi
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
@@ -458,19 +461,19 @@ ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 sleep 2
 if [ "$VER1" = "5.4" ]; then
 mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver54}_x86-64-combined-efi.img.gz
+mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined-efi.img.gz
 md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver54}_x86-64-combined-efi.img.gz
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined-efi.img.gz
 elif [ "$VER1" = "5.15" ]; then
 mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver515}_x86-64-combined-efi.img.gz
+mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined-efi.img.gz
 md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver515}_x86-64-combined-efi.img.gz
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined-efi.img.gz
 elif [ "$VER1" = "6.1" ]; then
 mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver61}_x86-64-combined-efi.img.gz
+mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined-efi.img.gz
 md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver61}_x86-64-combined-efi.img.gz
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined-efi.img.gz
 fi
 #md5
 cd bin/targets/x86/64
