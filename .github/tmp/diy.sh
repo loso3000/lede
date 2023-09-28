@@ -419,7 +419,7 @@ if [[ $DATE_S == 'default' ]]; then
 else 
    DATA=$DATE_S
 fi
-[[ -n $CONFIG_S ]] || CONFIG_S=Mini
+[[ -n $CONFIG_S ]] || CONFIG_S=Super
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
@@ -544,5 +544,5 @@ EOF
 
 
 ./scripts/feeds update -i
-cat  ./x86_64/x86_64  > .config
+cat  ./x86_64/${CONFIG_S}  > .config
 cat  ./x86_64/comm  >> .config
