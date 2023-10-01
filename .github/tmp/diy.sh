@@ -237,8 +237,8 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 # rm -rf feeds/packages/libs
 # svn export https://github.com/openwrt/packages/trunk/libs/libssh feeds/packages/libs/
 
-git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
-sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
+# git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
+# sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
 
 # Add OpenClash
 
