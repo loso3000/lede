@@ -341,6 +341,7 @@ rm -rf  bin/targets/x86/64/version.buildinfo
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-rootfs.img.gz
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined-efi.img.gz
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined.img.gz
+rm -rf bin/targets/x86/64/profiles.json
 sleep 2
 r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
