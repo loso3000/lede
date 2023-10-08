@@ -773,9 +773,12 @@ span[data-indicator="uci-changes"] {
 	color: #eee;
 }
 .success {
-	background-color: #1a8361;
+	background-color: #1a8361!important;
 	color: #eee;
 	width: 12rem!important;
+}
+#log_textarea {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16), 0 0 1px 0 rgba(0, 0, 0, 0.12);
 }
 [data-indicator]:not([data-style="inactive"]) {
     background-color: #f8f8f8 !important;
@@ -813,7 +816,7 @@ background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzY4IiBoZWlnaHQ
 	margin: .5rem 0;
 }
 .alert-message .btn {
-	padding: .3rem .6rem;
+	/*padding: .3rem .6rem; */
 }
 .errorbox {
 	color: #f8f8f8;
@@ -1529,7 +1532,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .cbi-value {
     display: inline-block;
     width: 100%;
-    padding: 0.35rem 1rem 0.2rem 1rem;
+    padding: 0.2rem 0.5rem;
     line-height: 2.4rem;
 }
 
@@ -2418,7 +2421,6 @@ label[data-index][data-depends] {
 	width: 100%;
 	padding: 8.5px;
 	white-space: pre;
-	color: #eee;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
 }
 [data-page="admin-network-diagnostics"] .table {
