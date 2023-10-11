@@ -277,6 +277,7 @@ svn export https://github.com/loso3000/other/trunk/up/pass/luci-app-bypass ./pac
 rm ./package/luci-app-bypass/po/zh_Hans && mv ./package/luci-app-bypass/po/zh-cn ./package/luci-app-bypass/po/zh_Hans
 # sed -i 's,default n,default y,g' package/luci-app-bypass/Makefile
 
+rm ./feeds/luci/applications/luci-app-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 git clone -b luci https://github.com/xiaorouji/openwrt-passwall package/passwall
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
