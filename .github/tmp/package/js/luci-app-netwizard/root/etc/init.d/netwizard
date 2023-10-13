@@ -59,20 +59,7 @@ setipv6() {
 			uci -q set network.wan.delegate='0'
 			uci -q set network.lan.delegate='0'
 		;;
-		4)
-		    opkg update
-		    opkg remove --force-depends kmod-nf-reject6 kmod-nf-nat6 kmod-nf-ipt6 kmod-ip6tables odhcp6c luci-proto-ipv6 ip6tables kmod-ipt-nat6 ip6tables-mod-nat odhcpd-ipv6only ipv6helper
-		    uci -q delete dhcp.lan.dhcpv6
-		    uci -q delete dhcp.lan.ndp
-		    uci -q delete dhcp.lan.ra
-		    uci -q delete dhcp.lan.ra_management
-		    uci -q delete dhcp.lan.ra_default
-		    uci -q delete network.wan6
-		    # Enable IPV6 ula prefix
-		    sed -i 's/#.*\toption ula/\toption ula/g' /etc/config/network
-		    # Enable IPV6 dns resolution
-		    uci -q set dhcp.@dnsmasq[0].filter_aaaa=1
-		;;
+
 	esac
 }
 add_netwizard() {

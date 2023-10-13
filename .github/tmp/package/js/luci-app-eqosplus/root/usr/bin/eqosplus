@@ -17,11 +17,11 @@ else
      dev=`uci -q get $NAME.@$NAME[0].ifname `
 fi
 # [ x$(uci get eqosplus.@eqosplus[0].forced) = 'x1' ] && forced="default $id" || forced='default 999'
-bin_iptables=$(which iptables)   
-bin_ip6tables=$(which ip6tables)
-bin_tc=$(which tc)
-bin_ebtables=$(which ebtables)
-bin_ip=$(which ip)
+bin_iptables=$(command -v iptables-legacy || command -v iptables)
+bin_ip6tables=$(command -v ip6tables-legacy || command -v ip6tables)
+bin_tc=$(command tc)
+bin_ebtables=$(command ebtables)
+bin_ip=$(command ip)
 # Uncomment this to debug commands
 # DEBUG=1
 ## End
@@ -66,6 +66,11 @@ ipt6=$ip6tables
 ipt(){
 	$iptables $@
 	$ip6tables $@
+}
+
+iptn(){
+	$iptables "-t nat $@"
+	$ip6tables "-t nat $@"
 }
 
 iptm(){
