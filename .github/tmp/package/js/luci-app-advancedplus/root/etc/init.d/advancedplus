@@ -6,6 +6,9 @@ STOP=15
 EXTRA_COMMANDS='reset'
 EXTRA_HELP="        reset   Reset to default settings"
 
+ipt=$(command -v iptables-legacy || command -v iptables)
+ip6t=$(command -v ip6tables-legacy || command -v ip6tables)
+
 reset() {
 rm -rf /etc/config/advancedplus
 cat <<EOF  >/etc/config/advancedplus
@@ -132,11 +135,10 @@ dev=`ifconfig | grep "Point-to-Point" | cut -d " " -f1`
 	    /etc/init.d/uhttpd restart
 	}
     fi
-    [ "x$(uci -q get advancedplus.@basic[0].qos)" = "x1" ] && qoshome 
     if [ "x$(uci -q get advancedplus.@basic[0].ttl)" = "x1" ] ; then
-        iptables -t mangle -A PREROUTING -p tcp --tcp-flags RST RST -i $dev -j DROP
-        iptables -t mangle -A PREROUTING -i ${dev} -j TTL --ttl-inc 1
-        iptables -t mangle -A POSTROUTING -o ${dev} -j TTL --ttl-set 64
+        $ipt -t mangle -A PREROUTING -p tcp --tcp-flags RST RST -i $dev -j DROP
+        $ipt -t mangle -A PREROUTING -i ${dev} -j TTL --ttl-inc 1
+        $ipt -t mangle -A POSTROUTING -o ${dev} -j TTL --ttl-set 64
     fi
     #cpumode=`uci -q get advancedplus.@basic[0].cpumode`
     #[ ! $cpumode ] || cpumodeset $cpumode   /usr/bin/zsh
