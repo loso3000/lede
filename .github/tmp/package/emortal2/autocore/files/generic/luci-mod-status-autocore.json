@@ -7,12 +7,4 @@
 			}
 		}
 	}
-	"luci-mod-cpu-status": {
-		"description": "Grant access to cpu-status procedures",
-		"read": {
-			"file": {
-				"/proc/stat": [ "read" ]
-			}
-		}
-	}
 }
