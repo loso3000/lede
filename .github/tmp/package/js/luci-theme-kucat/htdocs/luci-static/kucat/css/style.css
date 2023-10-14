@@ -3407,7 +3407,9 @@ table>tbody>tr>td, table>tfoot>tr>td, table>thead>tr>td {
 .table {
     display: block;
 }
-
+.cbi-section>div>table.table {
+    display: inline-table;
+}
 .mobile-hide {
 	display: none
 }
