@@ -34,20 +34,20 @@ wait_for_init() {
 smb_handle() {
 	config_get path $1 path
 	config_get auto $1 auto
-	if [  "$path" = "$2" -o "$auto" = "0" ] ;then
+	if [  "$path" = "$2" -o "x$auto" = "x0" ] ;then
 		global=1
 	fi
 }
 
 chk_en() {
 	config_get_bool autoshare $1 autoshare 1
-	[ $autoshare -eq 0 ] && exit
+	[ "x$autoshare" == "x1" ] || exit
 }
 
 config_load samba4
-config_foreach chk_en samba4
-autoshare=`uci get samba4.@samba[0].autoshare`
-[ $autoshare -eq "0" ] && exit
+config_foreach chk_en samba
+autoshare=`uci get samba4.@samba[0].autoshare >/dev/null 2>&1`
+[ "x$autoshare" == "x1" ] || exit
 
 device=`basename $DEVPATH`
 
@@ -77,7 +77,7 @@ case "$ACTION" in
 			name=${target#*/mnt/}
 			name=$(echo $name | sed -e "s/^\///")
 			[ "$name" == "overlay" -o "$target" == "/overlay" ] && global=1
-			if [ $global -eq 0 ] ;then
+			if [ "x$global" == "x0" ] ;then
 				echo -e "\n\nconfig sambashare" >> $config_file
 				echo -e "\toption auto '1'" >> $config_file
 				echo -e "\toption name '$name'" >> $config_file
@@ -101,13 +101,13 @@ case "$ACTION" in
 		i=0
 		while true
 		do
-			dev=`uci get samba4.@sambashare[$i].device`
+			dev=`uci get samba4.@sambashare[$i].device >/dev/null 2>&1`
 			[ $? -ne 0 ] && break
 
 			[ "$dev" = "$device" ] && {
 				auto=`uci get samba4.@sambashare[$i].auto`
 				[ $auto = "1" ] && {
-					mount_dir=`uci get samba4.@sambashare[$i].name`
+					mount_dir=`uci get samba4.@sambashare[$i].name >/dev/null 2>&1`
 					uci delete samba4.@sambashare[$i]
 					uci commit
 					/etc/init.d/samba4 reload

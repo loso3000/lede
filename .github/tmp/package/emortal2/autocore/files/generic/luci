@@ -566,31 +566,19 @@ const methods = {
 
 	getCPUUsage: {
 		call: function() {
-			const fd = popen('busybox top -n1 | awk \'/^CPU/ {printf("%d%", 100 - $8)}\'');
+			const fd = popen('/sbin/sysinfo archinfo');
 			if (fd) {
 				let cpuusage = fd.read('all');
 				if (!cpuusage)
-					cpuusage = '?';
+					return {};
 				fd.close();
 
 				return { cpuusage: cpuusage };
 			} else {
-				return { cpuusage: error() };
+				return {};
 			}
 		}
 	},
-
-	getCpuData: {
-		call: function() {
-			const fd = open('/proc/stat', 'r');
-			let cpudate = fd.read('all');
-			if (!cpudate)
-				cpudate = '{}';
-			fd.close();
-			return { cpudate: cpudate };
-		}
-	},
-
 	getETHInfo: {
 		call: function() {
 			const fd = popen('/sbin/sysinfo ethinfo');
@@ -621,12 +609,6 @@ const methods = {
 			}
 
 		}
-	},
-	getarchInfo: {
-		call: function() {
-			return { archinfo: system('/sbin/sysinfo archinfo') || '' };
-		}
-
 	},
 	getOnlineUsers: {
 		call: function() {

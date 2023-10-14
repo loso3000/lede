@@ -1,31 +1,21 @@
 'use strict';
 'require baseclass';
 'require fs';
-'require rpc';
-
-var callLuciCpuData = rpc.declare({
-	object: 'luci',
-	method: 'getCpuData',
-	expect: { '': {} }
-});
 
 return baseclass.extend({
-
-	title    : _('CPU Load'),
+	title    : _('CPU usage'),
 
 	statArray: null,
-	load: function() {
-		return Promise.all([
-			L.resolveDefault(callLuciCpuData(), {})
-		]);
+
+	load     : function() {
+		return L.resolveDefault(fs.read('/proc/stat'), null);
 	},
 
 	render: function(cpuData) {
 		if(!cpuData) return;
 
-		let tcpuData = cpuData.cpuData;
 		let cpuStatArray   = [];
-		let statItemsArray = tcpuData.trim().split('\n').filter(s => s.startsWith('cpu'));
+		let statItemsArray = cpuData.trim().split('\n').filter(s => s.startsWith('cpu'));
 
 		for(let str of statItemsArray) {
 			let arr = str.split(/\s+/).slice(0, 8);
@@ -58,7 +48,7 @@ return baseclass.extend({
 			cpuTable.append(
 				E('tr', { 'class': 'tr' }, [
 					E('td', { 'class': 'td left', 'width': '33%' },
-						(cpuStatArray[i][0] === Infinity) ? _('Total usage') : _('CPU') + ' ' + cpuStatArray[i][0]),
+						(cpuStatArray[i][0] === Infinity) ? _('Total Load') : _('CPU') + ' ' + cpuStatArray[i][0]),
 
 					E('td', { 'class': 'td' },
 						E('div', {

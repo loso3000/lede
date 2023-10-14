@@ -38,11 +38,6 @@ var callTempInfo = rpc.declare({
 	method: 'getTempInfo'
 });
 
-var callarchInfo = rpc.declare({
-	object: 'luci',
-	method: 'getarchInfo'
-});
-
 return baseclass.extend({
 	title: _('System'),
 
@@ -54,7 +49,6 @@ return baseclass.extend({
 			L.resolveDefault(callCPUInfo(), {}),
 			L.resolveDefault(callCPUUsage(), {}),
 			L.resolveDefault(callTempInfo(), {}),
-			L.resolveDefault(callarchInfo(), {}),
 			L.resolveDefault(callLuciVersion(), { revision: _('unknown version'), branch: 'LuCI' })
 		]);
 	},
@@ -66,8 +60,7 @@ return baseclass.extend({
 		    cpuinfo     = data[3],
 		    cpuusage    = data[4],
 		    tempinfo    = data[5],
-		    archinfo    = data[6],
-		    luciversion = data[7];
+		    luciversion = data[6];
 
 		luciversion = luciversion.branch + ' ' + luciversion.revision;
 
@@ -90,7 +83,7 @@ return baseclass.extend({
 			_('Hostname'),         boardinfo.hostname,
 			_('Model'),            boardinfo.model + cpubench.cpubench,
 			_('Architecture'),     cpuinfo.cpuinfo,
-			_('Target Platform'),  (L.isObject(boardinfo.release) ? boardinfo.release.target + ' ' : '')  + (archinfo.archinfo || ''),
+			_('Target Platform'),  (L.isObject(boardinfo.release) ? boardinfo.release.target + ' ' : '')  + (cpuusage.cpuusage || ''),
 			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || ''),
 			_('Kernel Version'),   boardinfo.kernel,
 			_('Local Time'),       datestr,
@@ -100,7 +93,6 @@ return baseclass.extend({
 				systeminfo.load[1] / 65535.0,
 				systeminfo.load[2] / 65535.0
 			) : null,
-			_('CPU usage'),    cpuusage.cpuusage
 		];
 
 		if (tempinfo.tempinfo) {
