@@ -180,9 +180,11 @@ CONFIG_LUCI_LANG_en=y
 #CONFIG_LUCI_LANG_zh-cn=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_autocore-x86=y
+CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_default-settings=y
 CONFIG_PACKAGE_default-settings-chn=y
 CONFIG_PACKAGE_automount=y
+CONFIG_PACKAGE_autosamba=y
 
 # CONFIG_PACKAGE_luci-proto-wireguard=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
