@@ -274,7 +274,10 @@ git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 # git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 rm -rf ./package/openwrt-passwall/trojan-plus
-# rm -rf ./feeds/packages/net/sing-box
+
+rm -rf ./feeds/packages/net/sing-box
+svn export https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box ./feeds/packages/net/sing-box
+
 rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus package/new/trojan-plus
 svn export https://github.com/fw876/helloworld/trunk/shadow-tls package/new/shadow-tls
