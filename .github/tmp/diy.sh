@@ -277,6 +277,7 @@ rm -rf ./package/openwrt-passwall/trojan-plus
 
 rm -rf ./feeds/packages/net/sing-box
 svn export https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box ./feeds/packages/net/sing-box
+svn export https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box package/new/sing-box
 
 rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus package/new/trojan-plus
