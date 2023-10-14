@@ -22,6 +22,9 @@ mv -rf ./package/emortal2/autocore  ./package/emortal/autocore
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
+#samba4
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
+
 # rm -rf ./package/emortal2
 #rm -rf  package/js2
 
