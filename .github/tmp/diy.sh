@@ -268,8 +268,8 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 
 
 # rm -rf  ./feeds/luci/applications/luci-app-passwall
-# rm -rf  ./feeds/luci/applications/luci-app-passwall2
-# git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+rm -rf  ./feeds/luci/applications/luci-app-passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 # git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 # git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
