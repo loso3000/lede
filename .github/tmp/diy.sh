@@ -268,8 +268,9 @@ svn export https://github.com/fw876/helloworld/trunk/shadow-tls package/new/shad
 svn export https://github.com/fw876/helloworld/trunk/tuic-client package/new/tuic-client
 
 #bypass
-svn export https://github.com/loso3000/other/trunk/up/pass/luci-app-bypass ./package/luci-app-bypass
-rm ./package/luci-app-bypass/po/zh_Hans && mv ./package/luci-app-bypass/po/zh-cn ./package/luci-app-bypass/po/zh_Hans
+svn export https://github.com/loso3000/other/trunk/up/pass ./package/pass
+rm ./package/pass/luci-app-bypass/po/zh_Hans && mv ./package/pass/luci-app-bypass/po/zh-cn ./packag/passe/luci-app-bypass/po/zh_Hans
+rm ./package/pass/luci-app-ssr-plus/po/zh_Hans && mv ./package/pass/luci-app-ssr-plus/po/zh-cn ./packag/passe/luci-app-ssr-plus/po/zh_Hans
 # sed -i 's,default n,default y,g' package/luci-app-bypass/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
