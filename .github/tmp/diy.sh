@@ -253,7 +253,6 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 # sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
 
-
 rm -rf  ./feeds/luci/applications/luci-app-passwall
 rm -rf  ./feeds/luci/applications/luci-app-passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
@@ -261,11 +260,12 @@ git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 rm -rf ./package/openwrt-passwall/trojan-plus
+rm -rf ./feeds/packages/net/sing-box
 rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus package/new/trojan-plus
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+
 svn export https://github.com/fw876/helloworld/trunk/shadow-tls package/new/shadow-tls
-svn export https://github.com/fw876/helloworld/trunk/tuic-client package/new/tuic-client
+# svn export https://github.com/fw876/helloworld/trunk/tuic-client package/new/tuic-client
 
 #bypass
 svn export https://github.com/loso3000/other/trunk/up/pass ./package/pass
