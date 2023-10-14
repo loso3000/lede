@@ -10,6 +10,8 @@ ENCRYPTION=psk2
 KEY=123456
 config_generate=package/base-files/files/bin/config_generate
 
+[[ -n $CONFIG_S ]] || CONFIG_S=Super
+
 sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
 #删除冲突插件
@@ -22,9 +24,11 @@ mv -rf ./package/emortal2/autocore  ./package/emortal/autocore
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
-#samba4
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
 
+if [ "$CONFIG_S" = "Mini" || "$CONFIG_S" = "Super" ] ; then
+#samba4
+  sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
+fi
 # rm -rf ./package/emortal2
 #rm -rf  package/js2
 
@@ -334,7 +338,6 @@ if [[ $DATE_S == 'default' ]]; then
 else 
    DATA=$DATE_S
 fi
-[[ -n $CONFIG_S ]] || CONFIG_S=Super
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
