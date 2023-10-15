@@ -223,7 +223,7 @@ a {
 }
 a:hover {
 	font-size: var(--font-z);
-	text-decoration: underline
+	text-decoration: none
 }
 em {
 	font-style: normal !important;
@@ -370,7 +370,7 @@ code {
 }
 abbr {
 	cursor: help;
-	text-decoration: underline;
+	text-decoration: none;
 	color: #005470;
 }
 hr {
@@ -513,20 +513,6 @@ small {
 	justify-content: center;
 	background-color: rgba(255,255,255,0);
 }
-.loading {
-	height: 150px;
-	width: 150px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
-}
-
 .main-left {
 	float: left;
 	width: calc(0% + 17rem);
