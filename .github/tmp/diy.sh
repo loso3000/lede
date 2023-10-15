@@ -25,10 +25,16 @@ mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
-if [ "$CONFIG_S" = "Mini" || "$CONFIG_S" = "Super" ] ; then
-#samba4
-  sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
+
+if [ ${CONFIG_S} = "Mini" || ${CONFIG_S} = "Super" ] ; then
+  
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 fi
+
+sed -i 's/status/services/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
+#samba4
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
+
 # rm -rf ./package/emortal2
 #rm -rf  package/js2
 
