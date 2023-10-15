@@ -223,7 +223,7 @@ a {
 }
 a:hover {
 	font-size: var(--font-z);
-	text-decoration: none
+	text-decoration: underline
 }
 em {
 	font-style: normal !important;
@@ -370,7 +370,7 @@ code {
 }
 abbr {
 	cursor: help;
-	text-decoration: none;
+	text-decoration: underline;
 	color: #005470;
 }
 hr {
@@ -503,12 +503,9 @@ small {
 }
 .main > .loading {
 	position: fixed;
-	z-index: 1000;
 	top: 0;
 	opacity: 1;
 	visibility: visible;
-	width: 100%;
-	height: 100%;
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(255,255,255,0);
@@ -2306,7 +2303,7 @@ label[data-index][data-depends] {
 }
 /* diagnostics */
 #diag-rc-output > pre, #command-rc-output > pre, [data-page="admin-services-wol"] .notice code {
-	font-size: var(--font-z);
+	font-size: var(--font-x);
 	font-size-adjust: .35;
 	line-height: normal;
 	display: block;
