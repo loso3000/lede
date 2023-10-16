@@ -26,9 +26,16 @@ mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
 case "${CONFIG_S}" in
-Super|Mini|Vip-Mini|Vip-Mini)
+Plus)
+;;
+Bypass)
+;;
+Vip-Plus)
+;;
+Vip-Bypass)
+;;
+*)
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-#samba4
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
 ;;
 esac
