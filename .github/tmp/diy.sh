@@ -81,6 +81,7 @@ echo "修改默认主题"
 # sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
 # sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
 
+rm -rf ./feeds/luci/themes/luci-theme-design
  git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
 #rm -rf ./feeds/luci/themes/luci-theme-argon
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
@@ -113,7 +114,15 @@ sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" 
 sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
 
 git clone https://github.com/sirpdboy/luci-app-lucky ./package/lucky
-# git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
+rm ./package/lucky/luci-app-lucky/po/zh_Hans
+mv ./package/lucky/luci-app-lucky/po/zh-cn ./package/ddns-go/luci-app-lucky/po/zh_Hans
+
+rm -rf ./feeds/packages/net/ddns-go
+rm -rf  ./feeds/luci/applications/luci-app-ddns-go
+git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
+rm ./package/ddns-go/luci-app-ddns-go/po/zh_Hans
+mv ./package/ddns-go/luci-app-ddns-go/po/zh-cn ./package/ddns-go/luci-app-ddns-go/po/zh_Hans
+
 
 # nlbwmon
 sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
