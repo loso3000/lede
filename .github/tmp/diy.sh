@@ -285,13 +285,14 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 # sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
 
-# rm -rf  ./feeds/luci/applications/luci-app-passwall
+rm -rf  ./feeds/luci/applications/luci-app-passwall
 rm -rf  ./feeds/luci/applications/luci-app-passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-# git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 # git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 rm -rf ./package/openwrt-passwall/trojan-plus
+sed -i 's,default n,default y,g' package/openwrt-passwall/luci-app-passwall/Makefile
 
 rm -rf ./feeds/packages/net/sing-box
 svn export https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box ./feeds/packages/net/sing-box
@@ -309,7 +310,7 @@ rm ./package/pass/luci-app-bypass/po/zh_Hans
 mv ./package/pass/luci-app-bypass/po/zh-cn ./package/pass/luci-app-bypass/po/zh_Hans
 rm ./package/pass/luci-app-ssr-plus/po/zh_Hans
 mv ./package/pass/luci-app-ssr-plus/po/zh-cn ./package/pass/luci-app-ssr-plus/po/zh_Hans
-# sed -i 's,default n,default y,g' package/luci-app-bypass/Makefile
+sed -i 's,default n,default y,g' package/pass/luci-app-bypass/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
