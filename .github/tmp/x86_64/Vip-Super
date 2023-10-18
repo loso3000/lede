@@ -8,9 +8,6 @@ CONFIG_GRUB_TIMEOUT="0"
 CONFIG_GRUB_TITLE="EzOpWrt"
 CONFIG_PACKAGE_libatomic=y
 CONFIG_PACKAGE_resolveip=y
-CONFIG_PACKAGE_sqm-scripts=y
-CONFIG_PACKAGE_htop=y
-CONFIG_HTOP_LMSENSORS=y
 CONFIG_PACKAGE_kmod-nvme=y
 CONFIG_PACKAGE_kmod-crypto-ccm=y
 CONFIG_PACKAGE_kmod-crypto-cmac=y
@@ -41,7 +38,6 @@ CONFIG_PACKAGE_kmod-ixgbe-vendor=m
 CONFIG_PACKAGE_kmod-ixgbevf=y
 CONFIG_PACKAGE_kmod-ixgbevf-vendor=m
 CONFIG_PACKAGE_kmod-via-velocity=y
-CONFIG_PACKAGE_kmod-dnsresolver=y
 CONFIG_PACKAGE_kmod-gre=y
 CONFIG_PACKAGE_kmod-inet-diag=y
 CONFIG_PACKAGE_kmod-l2tp=y
@@ -70,8 +66,6 @@ CONFIG_PACKAGE_kmod-usb2-pci=y
 CONFIG_PACKAGE_kmod-usb3=y
 CONFIG_PACKAGE_kmod-usbip=y
 CONFIG_PACKAGE_kmod-ath=y
-CONFIG_ATH_USER_REGD=y
-CONFIG_PACKAGE_ATH_DFS=y
 CONFIG_PACKAGE_libimobiledevice=y
 CONFIG_PACKAGE_libplist=y
 CONFIG_PACKAGE_libusbmuxd=y
@@ -280,7 +274,6 @@ CONFIG_PACKAGE_iptables-mod-extra=y
 CONFIG_PACKAGE_iptables-mod-iprange=y
 CONFIG_PACKAGE_iptables-mod-tproxy=y
 CONFIG_PACKAGE_bind-host=y
-CONFIG_PACKAGE_chinadns-ng=y
 
 CONFIG_PACKAGE_ddns-scripts=y
 CONFIG_PACKAGE_ddns-scripts-cloudflare=y
@@ -291,6 +284,7 @@ CONFIG_PACKAGE_ddns-scripts-godaddy=y
 CONFIG_PACKAGE_ddns-scripts-services=y
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
 
+CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_kmod-bonding=y
 CONFIG_PACKAGE_dns2socks=y
 CONFIG_PACKAGE_dns2tcp=y
@@ -350,20 +344,7 @@ CONFIG_PACKAGE_kmod-usb3=y
 CONFIG_PACKAGE_kmod-usbip=y
 CONFIG_PACKAGE_kmod-usb-ohci=y
 CONFIG_PACKAGE_kmod-usb-ohci-pci=y
-
-
-### Docker
-#CONFIG_DOCKER_CGROUP_OPTIONS=y
-#CONFIG_DOCKER_NET_ENCRYPT=y
-#CONFIG_DOCKER_NET_MACVLAN=y
-#CONFIG_DOCKER_NET_OVERLAY=y
-#CONFIG_DOCKER_NET_TFTP=y
-#CONFIG_DOCKER_OPTIONAL_FEATURES=y
-#CONFIG_DOCKER_STO_BTRFS=y
-#CONFIG_DOCKER_STO_EXT4=y
-#CONFIG_PACKAGE_luci-app-dockerman=m
-#CONFIG_PACKAGE_luci-lib-docker=y
-
+#docke
 CONFIG_PACKAGE_luci-app-dockerman=m
 CONFIG_KERNEL_CGROUP_FREEZER=y
 CONFIG_KERNEL_CGROUP_DEVICE=y
