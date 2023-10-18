@@ -93,12 +93,6 @@ rm -rf ./feeds/luci/themes/luci-theme-design
 #rm -rf ./feeds/luci/themes/luci-theme-argon
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 
-#修改默认IP地址
-# sed -i "s/192\.168\.[0-9]*\.[0-9]*/$IPADDRESS/g" ./package/base-files/files/bin/config_generate
-#sed -i 's/US/CN/g ; s/OpenWrt/iNet/g ; s/none/psk2/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
-# sed -i "s/192.168.6.1/192.168.10.1/g"  package/base-files/files/bin/config_generate
-
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
 #修改默认时区
@@ -130,7 +124,6 @@ git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
 rm ./package/ddns-go/luci-app-ddns-go/po/zh_Hans
 mv ./package/ddns-go/luci-app-ddns-go/po/zh-cn ./package/ddns-go/luci-app-ddns-go/po/zh_Hans
 
-
 # nlbwmon
 sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 # 可以设置汉字名字
@@ -152,84 +145,12 @@ git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 rm -rf package/mosdns/mosdns
 
-# alist 
-#git clone https://github.com/sbwml/luci-app-alist package/alist
-#sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
-#rm -rf feeds/packages/lang/golang
-# svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
-#git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
-
-
-#cifs
-#sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua   #dnsfilter
-
-#dnsmasq
-#rm -rf ./package/network/services/dnsmasq package/feeds/packages/dnsmasq
-#svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/network/services/dnsmasq ./package/network/services/dnsmasq
-
-#upnp
-#rm -rf ./feeds/packages/net/miniupnpd
-#svn export https://github.com/sirpdboy/sirpdboy-package/trunk/upnpd/miniupnp   ./feeds/packages/net/miniupnp
-#rm -rf ./feeds/luci/applications/luci-app-upnp  package/feeds/packages/luci-app-upnp
-#svn export https://github.com/sirpdboy/sirpdboy-package/trunk/upnpd/luci-app-upnp ./feeds/luci/applications/luci-app-upnp
-
-
-#aria2
-#svn export https://github.com/sirpdboy/sirpdboy-package/trunk/aria2  ./feeds/packages/net/aria2
-#svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-aria2 ./feeds/luci/applications/luci-app-aria2
-#mv ./feeds/luci/applications/luci-app-aria2/po/zh-cn ./feeds/luci/applications/luci-app-aria2/po/zh_Hans
-
-#无链接
-# mv -f ./package/other/patch/index.htm ./package/lean/autocore/files/x86/index.htm
-
-#设置
-sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
-sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
+#设置upnpd
+#sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
+#sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 
 sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
-
-# netdata 
-rm -rf ./feeds/luci/applications/luci-app-netdata package/feeds/packages/luci-app-netdata
-svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-netdata ./feeds/luci/applications/luci-app-netdata
-
-
-# Add luci-app-dockerman
-# rm -rf ./feeds/luci/applications/luci-app-dockerman
-# rm -rf ./feeds/luci/applications/luci-app-docker
-# rm -rf ./feeds/luci/collections/luci-lib-docker
-# rm -rf ./package/diy/luci-app-dockerman
-# rm -rf ./feeds/packages/utils/docker
-# git clone --depth=1 https://github.com/lisaac/luci-lib-docker ./package/new/luci-lib-docker
-# git clone --depth=1 https://github.com/lisaac/luci-app-dockerman ./package/new/luci-app-dockerman
-
-# svn export https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker ./package/new/luci-lib-docke
-# svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./package/new/luci-app-dockerman
-# sed -i '/auto_start/d' ./package/diy/luci-app-dockerman/root/etc/uci-defaults/luci-app-dockerman
-# sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
-# sed -i 's,# CONFIG_BLK_CGROUP_IOCOST is not set,CONFIG_BLK_CGROUP_IOCOST=y,g' target/linux/generic/config-5.10
-# sed -i 's,# CONFIG_BLK_CGROUP_IOCOST is not set,CONFIG_BLK_CGROUP_IOCOST=y,g' target/linux/generic/config-5.15
-# sed -i 's/+dockerd/+dockerd +cgroupfs-mount/' ./package/new/luci-app-dockerman/Makefile
-# sed -i '$i /etc/init.d/dockerd restart &' ./package/new/luci-app-dockerman/root/etc/uci-defaults/*
-
-# Add luci-aliyundrive-webdav
-rm -rf ./feeds/luci/applications/luci-app-aliyundrive-webdav 
-rm -rf ./feeds/luci/applications/aliyundrive-webdav
-
-#svn export https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav ./feeds/luci/applications/aliyundrive-webdav
-#svn export https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav ./feeds/luci/applications/luci-app-aliyundrive-webdav 
-
-
-#zerotier 
-# rm -rf  luci-app-zerotier && git clone https://github.com/rufengsuixing/luci-app-zerotier.git feeds/luci/applications/luci-app-zerotier  #取消防火墙
-# svn export https://github.com/immortalwrt/luci/trunk/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
-# ln -sf ../../../feeds/luci/applications/luci-app-zerotier ./package/feeds/luci/luci-app-zerotier
-# rm -rf ./feeds/packages/net/zerotier
-# svn export https://github.com/openwrt/packages/trunk/net/zerotier feeds/packages/net/zerotier
-# rm -rf ./feeds/packages/net/zerotier/files/etc/init.d/zerotier
-
-# rm -rf ./feeds/packages/net/softethervpn5 package/feeds/packages/softethervpn5
-# svn export https://github.com/loso3000/other/trunk/up/softethervpn5 ./feeds/packages/net/softethervpn5
 
 sed -i 's/msgstr "Socat"/msgstr "端口转发"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
 
@@ -282,7 +203,7 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 rm -rf  ./feeds/luci/applications/luci-app-openclash
 svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./package/diy/luci-app-openclash
 # svn export https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/new/luci-app-openclash
-# sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
+sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
 
 # rm -rf  ./feeds/luci/applications/luci-app-passwall
@@ -320,19 +241,6 @@ sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-script
 #Add x550
 # git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
 
-# config_file_turboacc=`find package/ -follow -type f -path '*/luci-app-turboacc/root/etc/config/turboacc'`
-# sed -i "s/option hw_flow '1'/option hw_flow '0'/" $config_file_turboacc
-# sed -i "s/option sfe_flow '1'/option sfe_flow '0'/" $config_file_turboacc
-# sed -i "s/option sfe_bridge '1'/option sfe_bridge '0'/" $config_file_turboacc
-# sed -i "/dep.*INCLUDE_.*=n/d" `find package/ -follow -type f -path '*/luci-app-turboacc/Makefile'`
-
-sed -i "s/option limit_enable '1'/option limit_enable '0'/" `find package/ -follow -type f -path '*/nft-qos/files/nft-qos.config'`
-sed -i "s/option enabled '1'/option enabled '0'/" `find package/ -follow -type f -path '*/vsftpd-alt/files/vsftpd.uci'`
-
-#设置
-sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
-# sed -i 's/option dports.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
-
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
 # 修改makefile
@@ -341,17 +249,13 @@ sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-script
 
 # 修复 hostapd 报错
 cp -f  ./patch/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
+
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
 sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
 
-# sed -i 's/kmod-usb-net-rtl8152/kmod-usb-net-rtl8152-vendor/' target/linux/rockchip/image/armv8.mk target/linux/sunxi/image/cortexa53.mk target/linux/sunxi/image/cortexa7.mk
-
 # sed -i 's/KERNEL_PATCHVER:=6.1/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
 # sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
-
-#zzz-default-settingsim
-# curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/default-settings/zzz-default-settingsim > ./package/lean/default-settings/files/zzz-default-settings
 
 # 预处理下载相关文件，保证打包固件不用单独下载
 for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/common/*.sh`;do
