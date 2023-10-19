@@ -34,6 +34,8 @@ e:value(9,translate("Scheduled DisReconn"))
 e:value(10,translate("Scheduled DisRereboot"))
 e:value(11,translate("Scheduled Restartmwan3"))
 e:value(12,translate("Scheduled Customscript"))
+e:value(13,translate("Scheduled Wifiup"))
+e:value(14,translate("Scheduled Wifidown"))
 e.default=2
 
 e=s:option(Flag,"enable",translate("Enable"))
