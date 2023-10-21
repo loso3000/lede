@@ -115,7 +115,6 @@ case ${YN} in
 ;;
 esac
 done
-}
 
 function k_change_ip() {
   echo -e " q. 返回(return)"
@@ -130,6 +129,8 @@ function k_change_ip() {
     if [[ -n "${keyip}" ]] && [[ ${keyip} == 'q'  ||  ${keyip} == 'Q'  ]]; then
     keyipy="Q"
   fi
+ [ ! -s /etc/config/network ] && echo "The network is not ready, please wait " && sleep 30
+ [ ! -s /etc/config/network ] && echo "The network is not ready, please wait... " && sleep 60
   case $keyipy in
   Y)
     export keyipn="${keyip}"
