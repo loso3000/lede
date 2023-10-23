@@ -115,6 +115,7 @@ case ${YN} in
 ;;
 esac
 done
+}
 
 function k_change_ip() {
   echo -e " q. 返回(return)"
