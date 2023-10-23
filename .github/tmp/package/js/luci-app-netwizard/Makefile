@@ -5,8 +5,8 @@ include $(TOPDIR)/rules.mk
 
 NAME:=netwizard
 PKG_NAME:=luci-app-$(NAME)
-PKG_VERSION:=1.8.4
-PKG_RELEASE:=20230909
+PKG_VERSION:=1.8.5
+PKG_RELEASE:=20231023
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
@@ -19,17 +19,6 @@ LUCI_PKGARCH:=all
 
 define Package/$(PKG_NAME)/conffiles
 /etc/config/netwizard
-endef
-
-define Package/$(PKG_NAME)/postinst
-#!/bin/sh
-chmod +x /etc/init.d/netwizard
-if [ -z "$$IPKG_INSTROOT" ]; then
-  ( . /etc/uci-defaults/luci-netwizard-defaults )
-  rm -f /etc/uci-defaults/luci-netwizard-defaults
-  rm -rf /tmp/luci*
-fi
-exit 0
 endef
 
 include $(TOPDIR)/feeds/luci/luci.mk

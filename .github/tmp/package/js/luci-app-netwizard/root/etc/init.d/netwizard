@@ -1,10 +1,10 @@
 #!/bin/sh /etc/rc.common
 
 LOCK=/var/lock/netwizard-boot.lock
-START=99
+START=20
 
 boot() {
-	XBOOT=1
+	XBOOT=1  start
 }
 
 setipv6() {
@@ -63,7 +63,6 @@ setipv6() {
 	esac
 }
 add_netwizard() {
-	[ "x$XBOOT" = "x1" ] && exit 0
 	local cfg="$1"
 	local wan_proto wan_ipaddr wan_netmask wan_gateway wan_dns wan_pppoe_user wan_pppoe_pass 
 	local ipv6 wifi_ssid wifi_key old_wifi_ssid old_wifi_key showhide
@@ -144,8 +143,8 @@ add_netwizard() {
 				#uci -q set network.wan.metric='40'
 				uci -q set network.wan.username="${wan_pppoe_user}"
 				uci -q set network.wan.password="${wan_pppoe_pass}"
-				uci -q set network.wan.keepalive='5 5'
-				uci -q set network.wan.mtu='1480'
+				uci -q set network.wan.keepalive='60 60'
+				uci -q set network.wan.mtu='1420'
 				config_get wan_dns "$cfg" wan_dns
 				test -n "${wan_dns}" && {
 					uci -q set network.wan.peerdns='0'
@@ -228,6 +227,16 @@ add_netwizard() {
 	config_get wifi_key "$cfg" wifi_key
 	config_get old_wifi_ssid "$cfg" old_wifi_ssid
 	config_get old_wifi_key "$cfg" old_wifi_key
+	test -n "${wifi_ssid}" && test -n "${wifi_key}" && {
+		for idx in `seq 0 64`; do
+			uci get wireless.@wifi-iface[$idx] 2>/dev/null || break
+			[ "$(uci get wireless.@wifi-iface[$idx].mode 2>/dev/null)" = "ap" ] && {
+				uci set wireless.@wifi-iface[$idx].ssid="${wifi_ssid}"
+				uci set wireless.@wifi-iface[$idx].key="${wifi_key}"
+				uci set wireless.@wifi-iface[$idx].encryption='psk2'
+			}
+		done
+	}
 	if [[ "${wifi_ssid}" != "${old_wifi_ssid}" || "${wifi_key}" != "${old_wifi_key}" ]]; then
  	 	test -n "${wifi_ssid}" && {
 		for radio in radio0 radio1 radio2 radio3; do
@@ -235,6 +244,7 @@ add_netwizard() {
 		done
 		uci commit wireless
 	 	}
+
  		uci -q set netwizard.default.old_wifi_ssid="${wifi_ssid}"
 	 	uci -q set netwizard.default.old_wifi_key="${wifi_ssid}"
 	fi
@@ -242,13 +252,14 @@ add_netwizard() {
 	uci commit dhcp
 	uci commit firewall
 	uci commit network
-	(sleep 3
+	(sleep 15
 	 /etc/init.d/network restart
 	 /etc/init.d/dnsmasq reload)&
 }
 
 start() { 
 	[ -f $LOCK ] && exit
+	[ "x$XBOOT" = "x1" ] && exit 0
 	config_load netwizard
 	config_foreach add_netwizard netwizard
 	rm -f $LOCK 2>/dev/null
