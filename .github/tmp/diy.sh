@@ -211,6 +211,8 @@ rm -rf  ./feeds/luci/applications/luci-app-passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 # git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
+svn export https://github.com/fw876/helloworld/trunk/hysteria package/new/hysteria
+
 # git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 rm -rf ./package/openwrt-passwall/trojan-plus
 sed -i 's,default n,default y,g' package/openwrt-passwall/luci-app-passwall/Makefile
