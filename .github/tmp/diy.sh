@@ -296,6 +296,7 @@ rm -rf  bin/targets/x86/64/*x86-64-generic-kernel.bin
 rm -rf  bin/targets/x86/64/*x86-64-generic-squashfs-rootfs.img.gz
 rm -rf  bin/targets/x86/64/*x86-64-generic-rootfs.tar.gz
 rm -rf  bin/targets/x86/64/*x86-64-generic.manifest
+rm -rf  bin/targets/x86/64/*.vmdk
 rm -rf  bin/targets/x86/64/sha256sums
 rm -rf  bin/targets/x86/64/version.buildinfo
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-rootfs.img.gz
