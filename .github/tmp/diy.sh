@@ -68,11 +68,6 @@ mv -rf ./package/wget  ./feeds/packages/net/wget
 #aria2
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
-#qbittorrent
-rm -rf ./feeds/packages/net/qbittorrent
-rm -rf ./feeds/packages/net/qBittorrent-Enhanced-Edition
-rm -rf ./feeds/packages/net/qBittorrent-static
-rm -rf ./feeds/luci/applications/luci-app-qbittorrent  package/feeds/packages/luci-app-qbittorrent
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
