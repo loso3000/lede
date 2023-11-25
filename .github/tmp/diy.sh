@@ -242,11 +242,6 @@ rm -rf ./feeds/packages/net/hysteria
 
 #bypass
 # rm -rf package/other/up/pass/luci-app-bypass 
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-sed -i 's,default n,default y,g' package/other/up/pass/luci-app-bypass/Makefile
-# sed -i 's,default n,default y,g' package/bypass/luci-app-bypass/Makefile
-sed -i 's,default n,default y,g' package/other/up/pass/luci-app-ssr-plus/Makefile
-# sed -i 's,default n,default y,g' package/other/up/pass/luci-app-ssr-plusdns/Makefile
 
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
@@ -305,14 +300,6 @@ svn export https://github.com/fw876/helloworld/branches/main/tuic-client package
 svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin package/new/v2ray-plugin
 svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust package/new/shadowsocks-rust
 
-# svn export https://github.com/immortalwrt/packages/trunk/net/kcptun feeds/packages/net/kcptun
-# VSSR
-svn export https://github.com/jerrykuku/luci-app-vssr/trunk/  ./package/diy/luci-app-vssr
-pushd package/diy/luci-app-vssr
-sed -i 's,default n,default y,g' Makefile
-sed -i 's,+shadowsocks-libev-ss-local ,,g' Makefile
-popd
-
 # 在 X86 架构下移除 Shadowsocks-rust
 sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
 sed -i '/Rust:/d' package/diy/luci-app-vssr/Makefile
@@ -321,7 +308,10 @@ sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plus/Makefile
 sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plusdns/Makefile
 
 #bypass
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus
+rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2
+rm -rf ./feeds/luci/applications/luci-app-vssr
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 svn export https://github.com/loso3000/other/trunk/up/pass ./package/pass
 rm ./package/pass/luci-app-bypass/po/zh_Hans
 mv ./package/pass/luci-app-bypass/po/zh-cn ./package/pass/luci-app-bypass/po/zh_Hans
