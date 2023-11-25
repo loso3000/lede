@@ -1,0 +1,60 @@
+#
+# Copyright (C) 2016-2017 GitHub 
+#
+# This is free software, licensed under the GNU General Public License v3.
+# See /LICENSE for more information.
+
+include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
+
+PKG_NAME:=default-settings
+PKG_VERSION:=2.0
+PKG_RELEASE:=2
+PKG_LICENSE:=GPLv3
+PKG_LICENSE_FILES:=LICENSE
+
+PKG_FLAGS:=nonshared
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/default-settings
+  SECTION:=luci
+  CATEGORY:=LuCI
+  TITLE:=LuCI support for Base Settings
+  PKGARCH:=all
+  DEPENDS:=+luci +base-files +jsonfilter +@LUCI_LANG_zh_Hans +luci-i18n-base-zh-cn
+endef
+
+define Package/base-config-setting/config
+  source "$(SOURCE)/Config.in"
+endef
+
+define Package/default-settings/description
+	Default Settings & Language Support Packages.
+endef
+
+define Package/default-settings/conffiles
+/etc/config/base_config
+endef
+
+if [ -z "$$IPKG_INSTROOT" ]; then
+  ( . /etc/uci-defaults/zzz-base-config-setting )
+  rm -f /etc/uci-defaults/zzz-base-config-setting
+fi
+exit 0
+endef
+
+define Package/default-settings/install
+	$(INSTALL_DIR) $(1)/etc/uci-defaults $(1)/etc/config  $(1)/usr/share/base-config
+	$(INSTALL_DATA) ./files/base_config.config $(1)/etc/config/base_config
+	$(INSTALL_DATA) ./files/zzz-default-settings $(1)/etc/uci-defaults/zzz-base-config-setting
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/auto_usb_mount.init $(1)/etc/init.d/auto_usb_mount
+	$(INSTALL_DATA) ./files/auto_usb_mount.hotplug $(1)/usr/share/base-config/auto_usb_mount.hotplug
+	$(INSTALL_DATA) ./files/mount.hotplug $(1)/usr/share/base-config/mount.hotplug
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
+	po2lmo ./i18n/default.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/default.zh-cn.lmo
+	po2lmo ./i18n/more.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/more.zh-cn.lmo
+endef
+
+$(eval $(call BuildPackage,default-settings))
