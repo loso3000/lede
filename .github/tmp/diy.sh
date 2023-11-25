@@ -432,8 +432,6 @@ nowkmodfile=./files/etc/kmod.now
 mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
 cp -rf ./patch/list.txt $bakkmodfile
-mkdir -p files/etc/uci-defaults/
-cp -rf ./patch/init-settings.sh files/etc/uci-defaults/99-init-settings
 while IFS= read -r file; do
     a=`find ./bin/ -name "$file" `
     echo $a
