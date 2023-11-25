@@ -7,7 +7,7 @@ start() {
 	rfc=4096
 	threads="$(grep -c "processor" "/proc/cpuinfo")"
 
-	sysctl -w net.core.rps_sock_flow_entries="$(( rfc * threads ))"
+	sysctl -w net.core.rps_sock_flow_entries="$(( rfc * threads ))"  >/dev/null
 
 	for fileRps in /sys/class/net/eth*/queues/rx-*/rps_cpus
 	do
@@ -21,6 +21,25 @@ start() {
 
 	uci set network.@globals[0].packet_steering="1"
 	uci commit network
+	g=$(dmesg | grep 'DMI:' | awk -F ', BIOS' '{print $1 }' | awk -F ':' '{print $2 }')
+
+	[ -d /tmp/sysinfo ] || mkdir -p /tmp/sysinfo
+	echo $g > /tmp/sysinfo/model
+
+	vendor=$(lscpu | grep -m1 "Vendor ID:" | cut -d':' -f 2)
+	if [ -z "$vendor" ]; then
+	    vendor=$(lscpu | grep -m1 "BIOS Vendor ID:" | cut -d':' -f 2)
+	fi
+
+	if [ -z "$vendor" ]; then
+	    vendor="GenuineIntel"
+	fi
+	str1="Default string Default string/Default string"
+	str2="Default string Default string"
+	str3="Default string"
+	rpl="$vendor"
+
+	sed -i -e  -e "s|$str1|$rpl|g" -e "s|$str2|$rpl|g" -e "s|$str3|$rpl|g" -e "s/^[ \t]*//g" /tmp/sysinfo/model
 
 	for i in $(ip address | awk -F ': ' '/eth[0-9]+/ {print $2}' | xargs)
 	do
