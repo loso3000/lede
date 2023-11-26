@@ -39,14 +39,9 @@ exit 0
 endef
 
 define Package/default-settings/install
-	$(INSTALL_DIR) $(1)/etc/uci-defaults $(1)/etc/config  $(1)/usr/share/base-config
+	$(INSTALL_DIR) $(1)/etc/uci-defaults $(1)/usr/lib/lua/luci/i18n $(1)/etc/config
 	$(INSTALL_DATA) ./files/base_config.config $(1)/etc/config/base_config
-	$(INSTALL_DATA) ./files/zzz-default-settings $(1)/etc/uci-defaults/zzz-base-config-setting
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/auto_usb_mount.init $(1)/etc/init.d/auto_usb_mount
-	$(INSTALL_DATA) ./files/auto_usb_mount.hotplug $(1)/usr/share/base-config/auto_usb_mount.hotplug
-	$(INSTALL_DATA) ./files/mount.hotplug $(1)/usr/share/base-config/mount.hotplug
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
+	$(INSTALL_BIN) ./files/zzz-default-settings $(1)/etc/uci-defaults/zzz-base-config-setting
 	po2lmo ./i18n/default.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/default.zh-cn.lmo
 	po2lmo ./i18n/more.zh_Hans.po $(1)/usr/lib/lua/luci/i18n/more.zh-cn.lmo
 endef

@@ -1,4 +1,4 @@
-
+#!/bin/sh
 touch /etc/config/base_config
 uci -q get base_config.@base[0] >/dev/null 2>&1 || uci add base_config base >/dev/null 2>&1
 ver=$(uci -q get base_config.@base[0].ver 2>/dev/null)
@@ -273,7 +273,7 @@ uci -q set base_config.@base[0].base$ver=$ver
 }
 
 # fix usb auto umount bug
-cp /usr/share/base-config/mount.hotplug /etc/hotplug.d/block/10-mount
+# cp /usr/share/base-config/mount.hotplug /etc/hotplug.d/block/10-mount
 
 #FIXME fixup for openvpn client
 uci delete openvpn_recipes.client_tun.pkcs12 2>/dev/null && uci commit openvpn_recipes
