@@ -1,8 +1,10 @@
 #
-# Copyright (C) 2016-2017 GitHub 
+# Copyright (C) 2021 ImmortalWrt
+# <https://immortalwrt.org>
 #
-# This is free software, licensed under the GNU General Public License v3.
+# This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
+#
 
 include $(TOPDIR)/rules.mk
 
@@ -10,9 +12,6 @@ PKG_NAME:=default-settings
 PKG_VERSION:=2.0
 PKG_RELEASE:=2
 PKG_LICENSE:=GPLv3
-PKG_LICENSE_FILES:=LICENSE
-
-PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -21,7 +20,7 @@ define Package/default-settings
   CATEGORY:=LuCI
   TITLE:=LuCI support for Base Settings
   PKGARCH:=all
-  DEPENDS:=+luci +base-files +jsonfilter +@LUCI_LANG_zh_Hans +luci-i18n-base-zh-cn
+  DEPENDS:=+luci +jsonfilter +@LUCI_LANG_zh_Hans +luci-i18n-base-zh-cn
 endef
 
 define Package/default-settings/description
