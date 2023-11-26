@@ -20,7 +20,6 @@ fi
 bin_iptables=$(command -v iptables-legacy || command -v iptables)
 bin_ip6tables=$(command -v ip6tables-legacy || command -v ip6tables)
 bin_tc=$(command tc)
-bin_ebtables=$(command ebtables)
 bin_ip=$(command ip)
 # Uncomment this to debug commands
 # DEBUG=1
@@ -39,10 +38,6 @@ dbg_tc() {
 	[ "${DEBUG:-0}" -eq 0 ] || echo "D: tc $@"
 	$bin_tc "$@" 
 }
-dbg_ebtables() {
-	[ "${DEBUG:-0}" -eq 0 ] || echo "D: ebtables $@"
-	$bin_ebtables "$@" 
-}
 dbg_ip() {
 	[ "${DEBUG:-0}" -eq 0 ] || echo "D: ip $@"
 	$bin_ip "$@" 
@@ -60,7 +55,6 @@ iptables="dbg_iptables"
 ip6tables="dbg_ip6tables"
 tc="dbg_tc"
 ip="dbg_ip"
-ebt="dbg_ebtables"
 ipt=$iptables
 ipt6=$ip6tables
 ipt(){
