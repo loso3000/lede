@@ -170,7 +170,8 @@ CONFIG_DRIVER_WEXT_SUPPORT=y
 CONFIG_DRIVER_11N_SUPPORT=y
 CONFIG_DRIVER_11AC_SUPPORT=y
 
-
+#passwlall
+CONFIG_PACKAGE_iptables-mod-socket=y
 ### USB Audio 
 CONFIG_PACKAGE_kmod-usb-audio=y
 #Tailscale
