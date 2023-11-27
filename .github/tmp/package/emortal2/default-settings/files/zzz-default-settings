@@ -273,6 +273,8 @@ uci delete openvpn_recipes.client_tun.pkcs12 2>/dev/null && uci commit openvpn_r
 #replace wget
 test -x /usr/bin/wget && rm -f /bin/wget && ln -s /usr/bin/wget /bin/wget
 test -x /usr/bin/vim && touch /root/.vimrc
+#argon
+sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argon/sysauth.htm
 
 #clean all log if new flash firmware
 mount -t pstore -o noatime pstore /sys/fs/pstore 2>/dev/null
