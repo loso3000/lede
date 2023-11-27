@@ -44,11 +44,12 @@ case "${CONFIG_S}" in
 "Vip"*)
 #修改默认IP地址
 sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
+CONFIG_Y="$CONFIG_S"
 ;;
 *)
 #修改默认IP地址
 sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
-CONFIG_S="Ipv6-$CONFIG_S"
+CONFIG_Y="Ipv6-$CONFIG_S"
 ;;
 esac
 sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
@@ -361,7 +362,7 @@ ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 
-date1="${CONFIG_S}-${DATA}_by_Sirpdboy"
+date1="${CONFIG_Y}-${DATA}_by_Sirpdboy"
 if [ "$VER1" = "5.4" ]; then
 date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
 elif [ "$VER1" = "5.15" ]; then
