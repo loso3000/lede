@@ -28,7 +28,7 @@ define Package/automount
     +kmod-fs-ext4 \
     +kmod-fs-exfat \
     +kmod-fs-vfat \
-    +ntfs3-mount
+    +ntfs-3g
   PKGARCH:=all
 endef
 
@@ -57,4 +57,4 @@ define Package/ntfs3-mount/install
 endef
 
 $(eval $(call BuildPackage,automount))
-$(eval $(call BuildPackage,ntfs3-mount))
+# $(eval $(call BuildPackage,ntfs3-mount))
