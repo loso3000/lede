@@ -474,7 +474,9 @@ opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends
 	uci -q get dockerd.globals 2>/dev/null && {
 		uci -q set dockerd.globals.data_root='/opt/docker/'
 		uci -q set dockerd.globals.auto_start='1'
-		uci commit dockerd
+  		uci commit dockerd
+  		/etc/init.d/dockerd enabled
+  		/etc/init.d/dockerd start
 	}
 }
 case "$IPK" in
