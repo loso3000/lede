@@ -49,7 +49,7 @@ CONFIG_Y="$CONFIG_S"
 *)
 #修改默认IP地址
 sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
-CONFIG_Y="Ipv6-$CONFIG_S"
+CONFIG_Y="Free-$CONFIG_S"
 ;;
 esac
 sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
