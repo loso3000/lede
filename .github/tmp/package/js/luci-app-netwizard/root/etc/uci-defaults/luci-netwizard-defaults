@@ -14,7 +14,6 @@ uci -q set netwizard.default.lan_netmask=` uci -q get network.lan.netmask `
 uci -q set netwizard.default.lan_gateway="${IPADDR%.*}"
 uci -q set netwizard.default.lan_dns=` uci -q get network.lan.dns || echo '114.114.114.114'  `
 uci -q set netwizard.default.wan_interface=`uci -q get network.wan.ifname  || uci -q get network.wan.device`
-[ "$(uci -q get dhcp.lan.ignore)" ] && uci -q set netwizard.default.lan_dhcp="0" || uci -q set netwizard.default.lan_dhcp="1" 
 uci commit netwizard 
 rm -f /tmp/luci-indexcache
 /etc/init.d/netwizard disable
