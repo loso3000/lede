@@ -135,6 +135,7 @@ dev=`ifconfig | grep "Point-to-Point" | cut -d " " -f1`
 	    /etc/init.d/uhttpd restart
 	}
     fi
+    [ "x$(uci -q get advancedplus.@basic[0].qos)" = "x1" ] && \usr\bin\qoshome
     if [ "x$(uci -q get advancedplus.@basic[0].ttl)" = "x1" ] ; then
         $ipt -t mangle -A PREROUTING -p tcp --tcp-flags RST RST -i $dev -j DROP
         $ipt -t mangle -A PREROUTING -i ${dev} -j TTL --ttl-inc 1

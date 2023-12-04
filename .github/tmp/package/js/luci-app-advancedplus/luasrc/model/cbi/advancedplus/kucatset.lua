@@ -56,9 +56,9 @@ e = t:option(Flag, "fontmode", translate("Care mode (large font)"))
 e.rmempty = false
 e.default = '0'
 
--- e = t:option(DummyValue, '', translate('Color palette'))
--- e.rawhtml = true
--- e.template = 'advancedplus/color_primary'
+e = t:option(DummyValue, '', translate('Color palette'))
+e.rawhtml = true
+e.template = 'advancedplus/color_primary'
 
 t = a:section(TypedSection, "theme", translate("Color scheme list"))
 t.template = "cbi/tblsection"
