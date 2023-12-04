@@ -113,6 +113,7 @@ sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" 
 # rm -rf ./package/network/utils/iproute2/
 # svn export https://github.com/openwrt/openwrt/trunk/package/network/utils/iproute2 ./package/network/utils/iproute2
 
+
 #  coremark
 sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
 
@@ -218,6 +219,23 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
 
+# Add luci-app-dockerman
+rm -rf ./feeds/luci/applications/luci-app-dockerman
+rm -rf ./feeds/luci/applications/luci-app-docker
+rm -rf ./feeds/luci/collections/luci-lib-docker
+rm -rf ./package/diy/luci-app-dockerman
+# git clone --depth=1 https://github.com/lisaac/luci-lib-docker ./package/new/luci-lib-docker
+# git clone --depth=1 https://github.com/lisaac/luci-app-dockerman ./package/new/luci-app-dockerman
+
+svn export https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker ./package/new/luci-lib-docke
+svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./package/new/luci-app-dockerman
+
+rm -rf ./feeds/packages/utils/docker
+rm -rf ./feeds/packages/utils/containerd/
+rm -rf ./feeds/packages/utils/dockerd
+svn export https://github.com/coolsnowwolf/packages/trunk//utils/docker ./feeds/packages/utils/docker
+svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd/ ./feeds/packages/utils/containerd/
+svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
 
 rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
 
