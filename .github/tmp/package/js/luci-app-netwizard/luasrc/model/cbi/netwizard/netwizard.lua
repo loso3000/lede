@@ -11,7 +11,6 @@ if lan_gateway ~= "" then
    lan_gateway = sys.exec("ipaddr=`uci -q get network.lan.ipaddr`;echo ${ipaddr%.*}")
 end
 local lan_ip = uci:get("network", "lan", "ipaddr")
-local lan_dhcp = uci:get("dhcp", "lan", "ignore")
 local wan_face = sys.exec(" [ `uci -q get network.wan.ifname` ] && uci -q get network.wan.ifname  || uci -q get network.wan.device ")
 local wanproto = uci:get("netwizard", "default", "wan_proto")
 if wanproto == "" then
