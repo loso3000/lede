@@ -230,12 +230,12 @@ rm -rf ./package/diy/luci-app-dockerman
 svn export https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker ./package/new/luci-lib-docke
 svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./package/new/luci-app-dockerman
 
-rm -rf ./feeds/packages/utils/docker
+# rm -rf ./feeds/packages/utils/docker
 rm -rf ./feeds/packages/utils/containerd/
-rm -rf ./feeds/packages/utils/dockerd
-svn export https://github.com/coolsnowwolf/packages/trunk//utils/docker ./feeds/packages/utils/docker
+# rm -rf ./feeds/packages/utils/dockerd
+# svn export https://github.com/coolsnowwolf/packages/trunk//utils/docker ./feeds/packages/utils/docker
 svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd/ ./feeds/packages/utils/containerd/
-svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
+# svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
 
 rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
 
