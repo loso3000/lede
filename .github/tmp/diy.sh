@@ -218,7 +218,6 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 # svn export https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/new/luci-app-openclash
 sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
-
 # Add luci-app-dockerman
 # rm -rf ./feeds/luci/applications/luci-app-docker
 # rm -rf ./package/diy/luci-app-dockerman
@@ -227,13 +226,13 @@ sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefil
 # rm -rf ./feeds/luci/collections/luci-lib-docker
 # svn export https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker ./feeds/luci/collections/luci-lib-docker
 
-rm -rf ./feeds/luci/applications/luci-app-dockerman
-svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
+# rm -rf ./feeds/luci/applications/luci-app-dockerman
+# svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
 
 rm -rf ./feeds/packages/utils/containerd
 svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd ./feeds/packages/utils/containerd
-rm -rf ./feeds/packages/utils/docker
-svn export https://github.com/coolsnowwolf/packages/trunk/utils/docker ./feeds/packages/utils/docker
+# rm -rf ./feeds/packages/utils/docker
+# svn export https://github.com/coolsnowwolf/packages/trunk/utils/docker ./feeds/packages/utils/docker
 # rm -rf ./feeds/packages/utils/dockerd
 # svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
 
