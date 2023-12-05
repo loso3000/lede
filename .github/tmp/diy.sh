@@ -230,12 +230,12 @@ sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefil
 rm -rf ./feeds/luci/applications/luci-app-dockerman
 svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
 
-rm -rf ./feeds/packages/utils/containerd/
-svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd/ ./feeds/packages/utils/containerd/
-# rm -rf ./feeds/packages/utils/docker
-# svn export https://github.com/coolsnowwolf/packages/trunk//utils/docker ./feeds/packages/utils/docker
-# rm -rf ./feeds/packages/utils/dockerd
-# svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
+rm -rf ./feeds/packages/utils/containerd
+svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd ./feeds/packages/utils/containerd
+rm -rf ./feeds/packages/utils/docker
+svn export https://github.com/coolsnowwolf/packages/trunk/utils/docker ./feeds/packages/utils/docker
+ rm -rf ./feeds/packages/utils/dockerd
+ svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
 
 rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
 
