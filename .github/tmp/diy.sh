@@ -262,6 +262,13 @@ rm -rf ./feeds/packages/net/hysteria
 #bypass
 # rm -rf package/other/up/pass/luci-app-bypass 
 
+rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2
+rm -rf ./feeds/luci/applications/luci-app-vssr
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
@@ -291,33 +298,31 @@ rm -rf ./package/openwrt-passwall/xray-plugin
 #rm -rf package/other/up/pass/xray-plugin
 
 # sed -i 's,PKG_HASH.*,PKG_HASH:=5279eb1cb7555cf9292423cc9f672dc43e6e214b3411a6df26a6a1cfa59d88b7,g' ./package/openwrt-passwall/ipt2socks/Makefile
-
 # svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan package/new/trojan
 # svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan-plus package/new/trojan-plus
 
-svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus package/new/trojan-plus
-
-svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./package/new/lua-neturl
-
+svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus ./feeds/packages/net/trojan-plus
+svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/packages/net/lua-neturl
 rm -rf ./feeds/packages/net/shadowsocks-libev
-svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev package/new/shadowsocks-libev
-svn export https://github.com/fw876/helloworld/branches/main/redsocks2 package/new/redsocks2
-svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay package/new/srelay
-svn export https://github.com/fw876/helloworld/branches/main/trojan package/new/trojan
-svn export https://github.com/fw876/helloworld/branches/main/tcping package/new/tcping
-svn export https://github.com/fw876/helloworld/branches/main/dns2tcp package/new/dns2tcp
-svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev package/new/shadowsocksr-libev
-svn export https://github.com/fw876/helloworld/branches/main/simple-obfs package/new/simple-obfs
+svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/redsocks2
+svn export https://github.com/fw876/helloworld/branches/main/redsocks2 ./feeds/packages/net/redsocks2
+rm -rf ./feeds/packages/net/srelay
+svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay ./feeds/packages/net/srelay
+svn export https://github.com/fw876/helloworld/branches/main/trojan ./feeds/packages/net/trojan
+svn export https://github.com/fw876/helloworld/branches/main/tcping ./feeds/packages/net/tcping
+svn export https://github.com/fw876/helloworld/branches/main/dns2tcp ./feeds/packages/net/dns2tcp
+svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev ./feeds/packages/net/shadowsocksr-libev
+svn export https://github.com/fw876/helloworld/branches/main/simple-obfs ./feeds/packages/net/simple-obfs
 
-svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng package/new/chinadns-ng
+svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
 # svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
 
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-svn export https://github.com/fw876/helloworld/branches/main/shadow-tls package/new/shadow-tls
+svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
 
-svn export https://github.com/fw876/helloworld/branches/main/tuic-client package/new/tuic-client
-svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin package/new/v2ray-plugin
-svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust package/new/shadowsocks-rust
+svn export https://github.com/fw876/helloworld/branches/main/tuic-client ./feeds/packages/net/tuic-client
+svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin ./feeds/packages/net/v2ray-plugin
+svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust ./feeds/packages/net/shadowsocks-rust
 
 # 在 X86 架构下移除 Shadowsocks-rust
 sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
@@ -327,10 +332,6 @@ sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plus/Makefile
 sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plusdns/Makefile
 
 #bypass
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2
-rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 svn export https://github.com/loso3000/other/trunk/up/pass ./package/pass
 rm ./package/pass/luci-app-bypass/po/zh_Hans
 mv ./package/pass/luci-app-bypass/po/zh-cn ./package/pass/luci-app-bypass/po/zh_Hans
