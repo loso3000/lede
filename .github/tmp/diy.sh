@@ -236,41 +236,41 @@ sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefil
 # rm -rf ./feeds/packages/utils/dockerd
 # svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
 
-rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
+# rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
 
 # Passwall
-rm -rf ./feeds/packages/net/pdnsd-alt
-rm -rf ./feeds/packages/net/shadowsocks-libev
-rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/kcptun
-rm -rf ./feeds/packages/net/brook
-rm -rf ./feeds/packages/net/chinadns-ng
-rm -rf ./feeds/packages/net/dns2socks
-rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/ipt2socks
-rm -rf ./feeds/packages/net/microsocks
-rm -rf ./feeds/packages/net/naiveproxy
-rm -rf ./feeds/packages/net/shadowsocks-rust
-rm -rf ./feeds/packages/net/simple-obfs
-rm -rf ./feeds/packages/net/ssocks
-rm -rf ./feeds/packages/net/tcping
-rm -rf ./feeds/packages/net/v2ray*
-rm -rf ./feeds/packages/net/xray*
-rm -rf ./feeds/packages/net/trojan*
-rm -rf ./feeds/packages/net/hysteria
+# rm -rf ./feeds/packages/net/pdnsd-alt
+# rm -rf ./feeds/packages/net/shadowsocks-libev
+# rm -rf ./feeds/packages/net/xray-core
+# rm -rf ./feeds/packages/net/kcptun
+# rm -rf ./feeds/packages/net/brook
+# rm -rf ./feeds/packages/net/chinadns-ng
+# rm -rf ./feeds/packages/net/dns2socks
+# rm -rf ./feeds/packages/net/hysteria
+# rm -rf ./feeds/packages/net/ipt2socks
+# rm -rf ./feeds/packages/net/microsocks
+# rm -rf ./feeds/packages/net/naiveproxy
+# rm -rf ./feeds/packages/net/shadowsocks-rust
+# rm -rf ./feeds/packages/net/simple-obfs
+# rm -rf ./feeds/packages/net/ssocks
+# rm -rf ./feeds/packages/net/tcping
+# rm -rf ./feeds/packages/net/v2ray*
+# rm -rf ./feeds/packages/net/xray*
+# rm -rf ./feeds/packages/net/trojan*
+# rm -rf ./feeds/packages/net/hysteria
 
 #bypass
 # rm -rf package/other/up/pass/luci-app-bypass 
 
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2
-rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
+# rm -rf ./feeds/luci/applications/luci-app-passwall
+# rm -rf ./feeds/luci/applications/luci-app-passwall2
+# rm -rf ./feeds/luci/applications/luci-app-vssr
+# rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+# rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 
-git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+# git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+# git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 # line_number_INCLUDE_Xray=$[`grep -m1 -n 'Include Xray' package/passwall/luci-app-passwall/Makefile|cut -d: -f1`-1]
 # sed -i $line_number_INCLUDE_Xray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
@@ -287,13 +287,13 @@ echo ' ShadowsocksR Plus+'
 # ShadowsocksR Plus+ 依赖
 
 
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-rm -rf ./package/openwrt-passwall/trojan-plus
-rm -rf ./package/openwrt-passwall/v2ray-geodata
-rm -rf ./package/openwrt-passwall/trojan
+# git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+# rm -rf ./package/openwrt-passwall/trojan-plus
+# rm -rf ./package/openwrt-passwall/v2ray-geodata
+# rm -rf ./package/openwrt-passwall/trojan
 #20231119 error
-rm -rf ./package/openwrt-passwall/xray-core
-rm -rf ./package/openwrt-passwall/xray-plugin
+# rm -rf ./package/openwrt-passwall/xray-core
+# rm -rf ./package/openwrt-passwall/xray-plugin
 #rm -rf package/other/up/pass/xray-core
 #rm -rf package/other/up/pass/xray-plugin
 
@@ -301,6 +301,7 @@ rm -rf ./package/openwrt-passwall/xray-plugin
 # svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan package/new/trojan
 # svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan-plus package/new/trojan-plus
 
+rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus ./feeds/packages/net/trojan-plus
 svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/packages/net/lua-neturl
 rm -rf ./feeds/packages/net/shadowsocks-libev
@@ -309,20 +310,20 @@ rm -rf ./feeds/packages/net/redsocks2
 svn export https://github.com/fw876/helloworld/branches/main/redsocks2 ./feeds/packages/net/redsocks2
 rm -rf ./feeds/packages/net/srelay
 svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay ./feeds/packages/net/srelay
-svn export https://github.com/fw876/helloworld/branches/main/trojan ./feeds/packages/net/trojan
-svn export https://github.com/fw876/helloworld/branches/main/tcping ./feeds/packages/net/tcping
-svn export https://github.com/fw876/helloworld/branches/main/dns2tcp ./feeds/packages/net/dns2tcp
-svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev ./feeds/packages/net/shadowsocksr-libev
+# svn export https://github.com/fw876/helloworld/branches/main/trojan ./feeds/packages/net/trojan
+# svn export https://github.com/fw876/helloworld/branches/main/tcping ./feeds/packages/net/tcping
+# svn export https://github.com/fw876/helloworld/branches/main/dns2tcp ./feeds/packages/net/dns2tcp
+# svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev ./feeds/packages/net/shadowsocksr-libev
 svn export https://github.com/fw876/helloworld/branches/main/simple-obfs ./feeds/packages/net/simple-obfs
 
-svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
+# svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
 # svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
 
 svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
 
 svn export https://github.com/fw876/helloworld/branches/main/tuic-client ./feeds/packages/net/tuic-client
 svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin ./feeds/packages/net/v2ray-plugin
-svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust ./feeds/packages/net/shadowsocks-rust
+# svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust ./feeds/packages/net/shadowsocks-rust
 
 # 在 X86 架构下移除 Shadowsocks-rust
 sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
