@@ -304,17 +304,17 @@ echo ' ShadowsocksR Plus+'
 rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus ./feeds/packages/net/trojan-plus
 svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/packages/net/lua-neturl
-rm -rf ./feeds/packages/net/shadowsocks-libev
-svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./feeds/packages/net/shadowsocks-libev
-rm -rf ./feeds/packages/net/redsocks2
-svn export https://github.com/fw876/helloworld/branches/main/redsocks2 ./feeds/packages/net/redsocks2
-rm -rf ./feeds/packages/net/srelay
-svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay ./feeds/packages/net/srelay
+# rm -rf ./feeds/packages/net/shadowsocks-libev
+# svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./feeds/packages/net/shadowsocks-libev
+# rm -rf ./feeds/packages/net/redsocks2
+# svn export https://github.com/fw876/helloworld/branches/main/redsocks2 ./feeds/packages/net/redsocks2
+# rm -rf ./feeds/packages/net/srelay
+# svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay ./feeds/packages/net/srelay
 # svn export https://github.com/fw876/helloworld/branches/main/trojan ./feeds/packages/net/trojan
 # svn export https://github.com/fw876/helloworld/branches/main/tcping ./feeds/packages/net/tcping
 # svn export https://github.com/fw876/helloworld/branches/main/dns2tcp ./feeds/packages/net/dns2tcp
 # svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev ./feeds/packages/net/shadowsocksr-libev
-svn export https://github.com/fw876/helloworld/branches/main/simple-obfs ./feeds/packages/net/simple-obfs
+# svn export https://github.com/fw876/helloworld/branches/main/simple-obfs ./feeds/packages/net/simple-obfs
 
 # svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
 # svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
