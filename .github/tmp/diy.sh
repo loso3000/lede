@@ -25,6 +25,9 @@ mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
+rm -rf  ./include/kernel-5.4
+svn export https://github.com/coolsnowwolf/lede/trunk/include/kernel-5.4 ./include/kernel-5.4
+
 case "${CONFIG_S}" in
 Plus)
 ;;
