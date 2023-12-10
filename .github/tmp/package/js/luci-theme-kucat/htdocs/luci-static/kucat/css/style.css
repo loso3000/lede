@@ -187,7 +187,9 @@ html {
 	-ms-text-size-adjust: 100%
 }
 html, body {
-	font-family: var(--font-sans);
+    font-family: "Microsoft Yahei",-apple-system,"WenQuanYi Micro Hei","sans-serif" !important;
+    font-family: var(--font-sans)!important;
+
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -1216,7 +1218,7 @@ background-image: url("data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9
 .cbi-rowstyle-1 .cbi-button-up, .cbi-rowstyle-1 .cbi-button-down, body:not(.Interfaces) .cbi-rowstyle-1:first-child {
 	background-color: #ddd !important;
 }
-/* border: none !important; 
+/*border: none !important; 
 .cbi-button-down:focus, .cbi-button-up:focus, .cbi-button-up:hover, .cbi-button-down:hover, .cbi-button-up:active, .cbi-button-down:active {
 	box-shadow: none !important;
 }
@@ -2889,6 +2891,9 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 #cbi-netspeedtest-homebox>.cbi-section-node>.cbi-value {
 	display: inline-block;
+}
+.chat_window {
+    background-color:rgba(255,255,255,0.35)!important;
 }
 /* fix luci-app-wrtbwmon */
 .main #view .cbi-value-title  {

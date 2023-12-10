@@ -255,8 +255,8 @@ msgstr "系统快捷键设置"
 msgid "Status Homekey settings"
 msgstr "首页状态快捷键设置"
 
-msgid "Use"
-msgstr "启用方案"
+msgid "Enable color matching"
+msgstr "启用配色"
 
 msgid "RoyalBlue"
 msgstr "皇家高端蓝"

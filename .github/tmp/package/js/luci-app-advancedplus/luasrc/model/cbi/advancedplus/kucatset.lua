@@ -71,7 +71,7 @@ t.addremove = true
 
 e = t:option(Value, 'remarks', translate('Remarks'))
 
-e = t:option(Flag, "use", translate("Use"))
+e = t:option(Flag, "use", translate("Enable color matching"))
 e.rmempty = false
 e.default = '1'
 
