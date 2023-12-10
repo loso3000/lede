@@ -321,8 +321,9 @@ svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/
 
 # svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
 # svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
-
-svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
+rm -rf ./feeds/packages/net/shadow-tls
+svn export https://github.com/fw876/helloworld/trunk/shadow-tls ./feeds/packages/net/shadow-tls
+#svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
 
 svn export https://github.com/fw876/helloworld/branches/main/tuic-client ./feeds/packages/net/tuic-client
 svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin ./feeds/packages/net/v2ray-plugin
