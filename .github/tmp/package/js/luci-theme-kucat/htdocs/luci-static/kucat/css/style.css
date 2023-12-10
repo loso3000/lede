@@ -26,7 +26,7 @@
  --inputborder-color: #ced4da;
  --input-hover-color: #f8f8f8;
  --input-hover-bgcolor: rgba(255,255,255,0.2);
- --font-apple: -apple-system, "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif";
+ --font-apple: -apple-system,"Google Sans","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
  --font-sans: "Microsoft Yahei",-apple-system,  "Google Sans","WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
 }
 [data-theme="dark"] {
@@ -158,7 +158,7 @@
  -webkit-border-radius: 8px;
  -moz-border-radius: 8px;
  border-radius: 8px;
- border: 1px solid #bbb;
+ border: 1px solid #888;
  background-clip: content-box;
  background: #ccc;
 }
@@ -417,7 +417,7 @@ small {
 	background-color: #51c291;
 	background-color: rgba(var(--primary-rgbm), 0.9);
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 	transition: all .1s ease;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: auto;
@@ -510,8 +510,8 @@ small {
 	height: 100%;
 	-webkit-backdrop-filter: var(--primary-ufilter);
 	backdrop-filter: var(--primary-ufilter);
-	background-color: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
-	background-image: var(--bg-image);
+	background-color: var(--bgqs-color);
+	background-image: var(--bgqs-image);
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.14), 0 -2px 3px 1px rgba(0, 0, 0, 0.32), 0 0px 5px 2px rgba(0, 0, 0, 0.2);
 	overflow-x: auto;
 	position: fixed;
@@ -1117,18 +1117,18 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n+2), .cbi-map>.cbi-section .cbi-value:nth-of-type(4n+2), fieldset>table>tbody>tr:nth-of-type(4n+2), table>tbody>tr:nth-of-type(4n+2), div>.table>.tr:nth-of-type(4n+2) {
 	background-color: rgba(var(--primary-rgbm), var(--primary-rgbs-ts));
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n), .cbi-map>.cbi-section .cbi-value:nth-of-type(4n), fieldset>table>tbody>tr:nth-of-type(4n), table>tbody>tr:nth-of-type(4n), div>.table>.tr:nth-of-type(4n) {
 	background-color: rgba(var(--primary-rgbs), var(--primary-rgbs-ts));
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n+2):hover, .cbi-map>.cbi-section .cbi-value:nth-of-type(4n+2):hover, fieldset>table>tbody>tr:nth-of-type(4n+2):hover, table>tbody>tr:nth-of-type(4n+2):hover, div>.table>.tr:nth-of-type(4n+2):hover {
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 	                  
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n):hover, .cbi-map>.cbi-section .cbi-value:nth-of-type(4n):hover, fieldset>table>tbody>tr:nth-of-type(4n):hover, table>tbody>tr:nth-of-type(4n):hover, div>.table>.tr:nth-of-type(4n):hover {
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 }
 
 /* fix multiple table */
@@ -1159,7 +1159,7 @@ table table, .table .table, .cbi-value-field table, .cbi-value-field .table, td 
 	height: 2.6rem;
 	color: #f8f8f8;
 	background-color: #dbb91c;
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 	transform: translate(1) translate(0, 0);
 	transition: transform 225ms, box-shadow 225ms;
@@ -1770,16 +1770,17 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	position: relative;
 	height: 26px;
 	margin: 2px 0;
-	border: thin solid #bbb;
-	border-radius: 4px !important;
-	background: rgba(255, 255, 255, 0.5);
+	/* border: thin solid #bbb;
+	border-radius: 4px !important; */
+	background: rgba(255, 255, 255, 0.3);
+	color:#333;
 }
 .cbi-progressbar > div {
 	width: 0;
 	height: 100%;
 	transition: width .25s ease-in;
 	background-color: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 }
 .cbi-progressbar::after {
 	font-size: var(--font-x);
@@ -2056,7 +2057,8 @@ body.modal-overlay-active #modal_overlay {
 	outline: none;
 	color: var(--body-text-color);
 	background-color: rgba(255,255,255,0.2);
-	border: 1px solid #ddd;
+	/*border: 1px solid #ddd; */
+	box-shadow: 0 0 1px rgba(0,0,0,0.3)!important;
 	word-wrap: break-word;
 	white-space: pre-wrap;
 	min-width: 18rem;
@@ -2068,7 +2070,8 @@ body.modal-overlay-active #modal_overlay {
 	padding: 1rem;
 	font-size: small;
 	color: var(--body-color);
-	border: 1px solid var(--inputborder-color);
+	/*border: 1px solid var(--inputborder-color); */
+	box-shadow: 0 0 1px rgba(0,0,0,0.3)!important;
 	background-color: var(--inputbg-color);
 	border: none;
 	outline: none
@@ -2858,8 +2861,8 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 #content_syslog {
 	line-height: 1;
-	font-family: var(--font-sans);
-	border: 1px solid var(--inputborder-color);
+	font-family: var(--font-apple);
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 2px 0 rgba(0,0,0,0.12);
 	color: var(--body-color);
 	background-color: var(--inputbg-color);
 	font-size: small;
@@ -3046,7 +3049,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	border-right: 0 !important;
 	border-radius: 0.25rem !important;
 	background-color: rgba(var(--primary-rgbm), 0.9)!important;
-	background-image: var(--bg-image);
+	background-image: var(--bgqs-image);
 }
 
 .node-admin-system-leds .cbi-section em {

@@ -1,6 +1,6 @@
 ﻿
 body {
-    font-family:  "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB"!important
+    font-family:  "Microsoft Yahei", "Google Sans", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB"!important
 }
 body {
     color: #98a6ad;
@@ -112,7 +112,7 @@ header.bg-primary {
 
 
 header>.fill>.container>.brand {
-    font-family: "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
+    font-family: "Microsoft Yahei", "Google Sans", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
     color: #e9eff3;
 }
 .pull-right a,
@@ -239,7 +239,7 @@ footer a {
 }
 
 .main .main-left .sidenav-header .brand {
-    font-family: -apple-system, "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif";
+    font-family: "Microsoft Yahei",-apple-system,  "WenQuanYi Micro Hei", "sans-serif";
     color: #ccc;
 }
 
@@ -267,7 +267,7 @@ select {
 select,
 input {
     color: #bbb;
-    font-family: "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
+    font-family: "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
     border: 1px solid rgba(255,255,255,0.25);
     background-color:rgba(255,255,255,0.1);
 }
@@ -315,7 +315,7 @@ button,
 .cbi-input-textarea,
 textarea {
     color: #8391a2;
-    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 1px rgba(255, 255, 255,  0.3)!important;
 }
 
 
@@ -609,9 +609,9 @@ h3 {
 
 #syslog {
     color: #8391a2;
-    font-family: -apple-system, "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif";
-    border: 1px solid rgba(255,255,255,0.3);
+    font-family: "Microsoft Yahei",-apple-system,  "WenQuanYi Micro Hei", "sans-serif";
     background-color: rgba(255,255,255,0.1);
+    box-shadow: 0 0 1px rgba(255, 255, 255,  0.3)!important;
 }
 
 
@@ -713,9 +713,8 @@ h3 {
 }
 #content_syslog {
     color: #8391a2;
-    font-family: -apple-system, "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif";
-    border: 1px solid rgba(255,255,255,0.3);
     background-color: rgba(255,255,255,0.1);
+    box-shadow: 0 0 1px rgba(255, 255, 255,  0.3)!important;
 }
 
 
