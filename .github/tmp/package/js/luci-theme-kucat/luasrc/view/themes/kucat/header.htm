@@ -66,9 +66,10 @@
     local gossr = bar .. "services/"  ..ssr
     local goadvanced = bar .. "system/"  ..advanced
 	local background = '0' 
-	local fontd = '1rem' 
-	local fontz = '0.875rem' 
-	local fontx = '0.7rem'
+	local fontd = '1.2rem' 
+	local fontz = '0.92rem' 
+	local fontx = '0.875rem'
+	local bgqs = '1'
 	local primary_rgbbody = '248,248,248'
 	local primary_rgbm = '45,102,147'
 	local primary_rgbm_ts = '0.8'
@@ -100,10 +101,16 @@
 		fontd = uci:get_first('advancedplus', 'basic', 'font_d')
 		fontz = uci:get_first('advancedplus', 'basic', 'font_z')
 		fontx = uci:get_first('advancedplus', 'basic', 'font_x')
+		bgqs = uci:get_first('advancedplus', 'basic', 'bgqs')
 	end
 	local primary_ufilter =  "saturate(150%) contrast(50%) blur(" .. primary_opacity .. "px)"
 	if primary_opacity == '0' then
 	    primary_ufilter = 'none'
+	end
+	if bgqs == '0' then
+	    bg_image = '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent) !important'
+	else
+	    bg_image = 'none!important'
 	end
 
 function getBing()
@@ -159,7 +166,7 @@ function downIcibaUrl()
         end
     end
     if check == 1 or not fs.access('/www/luci-static/kucat/img/down4.jpg') then
-io.popen("curl -kLfsm 3 -o /www/luci-static/kucat/img/down4.jpg  $(curl -s 'https://zhouxiaoben.info/iciba/dsapi' | awk -F 'picture4\":\"' '{print $2}' | awk -F '\"' '{print $1}') ")
+io.popen("curl -kLfsm 3 -o /www/luci-static/kucat/img/down4.jpg  $(curl -kLfsm 5 'https://zhouxiaoben.info/iciba/dsapi' | awk -F 'picture4\":\"' '{print $2}' | awk -F '\"' '{print $1}') ")
         sys.exec("date +%Y%m%d  > /tmp/kucaticiba.tmp")
     end
     if fs.access('/www/luci-static/kucat/img/down4.jpg') then
@@ -299,6 +306,7 @@ end
 		--font-z: <%=fontz%>;
 		--font-x: <%=fontx%>;
 		--theme-background: url(<%=bg_lock%>);
+		--bg_image: <%=bg_image%>;
 	}
 	<% else %>
 		:root {
@@ -311,7 +319,8 @@ end
 		--font-d: <%=fontd%>;
 		--font-z: <%=fontz%>;
 		--font-x: <%=fontx%>;
-		--theme-background: ; 
+		--theme-background: none; 
+		--bg-image: <%=bg_image%>;
 	}
 	<% end -%>
 	<% if setbar == "1" then %>

@@ -173,8 +173,8 @@ footer a {
 .main .main-left .nav li.slide .menu {
     color: #bbb
 }
-
-
+.main .main-left .nav>li>a:first-child, 
+.main .main-left .nav>li>a:first-child::before,
 .main .main-left .nav .slide .menu::before {
     color: #bbb
 }
@@ -194,11 +194,12 @@ footer a {
 .main .main-left .nav li.slide .menu.active::after {
     color: #e9eff3
 }
-
+.main .main-left .nav>li>a:hover,
+ .main .main-left .nav>li>a.active,
 .main .main-left .nav li.slide .menu:hover,
 .main .main-left .nav li.slide .menu.active {
     background-color: rgba(255, 255, 255, 0.2);
-    color: #e9eff3
+    color: #e9eff3 !important;
 }
 
 .main .main-left .nav li.slide .menu:hover a,
@@ -580,7 +581,8 @@ h3 {
 
 
 .cbi-dropdown[open]>ul.dropdown>li[selected] {
-    background-color: #8391a2
+    background-color: #8391a2;
+    color: #fff;
 }
 
 

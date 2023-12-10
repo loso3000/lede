@@ -90,6 +90,12 @@ msgstr "壁纸透明度"
 msgid "Follow System"
 msgstr "跟随系统"
 
+msgid "Refreshing mode"
+msgstr "清爽模式"
+
+msgid "Cancel background glass fence special effects"
+msgstr "取消背景玻璃栅栏特效"
+
 msgid "Care mode (large font)"
 msgstr "关怀模式(大字体)"
 

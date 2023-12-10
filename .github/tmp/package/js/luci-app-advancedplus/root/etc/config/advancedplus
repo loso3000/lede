@@ -18,6 +18,7 @@ config basic
 	option primary_rgbs '76,157,69'
 	option primary_rgbs_ts '0.2'
 	option primary_rgbbody '248,248,248'
+	option bgqs '1'
 
 config theme
 	option primary_rgbbody '248,248,248'
