@@ -69,7 +69,7 @@
 	local fontd = '1.2rem' 
 	local fontz = '0.92rem' 
 	local fontx = '0.875rem'
-	local bgqs = '1'
+	local bgqs = 1
 	local primary_rgbbody = '248,248,248'
 	local primary_rgbm = '45,102,147'
 	local primary_rgbm_ts = '0.8'
@@ -107,10 +107,10 @@
 	if primary_opacity == '0' then
 	    primary_ufilter = 'none'
 	end
-	if bgqs == '0' then
-	    bg_image = '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent) !important'
+	if bgqs == '1' then
+	    bg_image = 'none!important'	
 	else
-	    bg_image = 'none!important'
+	    bg_image = '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent) !important'
 	end
 
 function getBing()
@@ -306,7 +306,7 @@ end
 		--font-z: <%=fontz%>;
 		--font-x: <%=fontx%>;
 		--theme-background: url(<%=bg_lock%>);
-		--bg_image: <%=bg_image%>;
+		--bg-image: <%=bg_image%>;
 	}
 	<% else %>
 		:root {
