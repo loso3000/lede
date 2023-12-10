@@ -25,8 +25,8 @@ mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
-rm -rf  ./include/kernel-5.4
-svn export https://github.com/coolsnowwolf/lede/trunk/include/kernel-5.4 ./include/kernel-5.4
+#rm -rf  ./include/kernel-5.4
+#svn export https://github.com/coolsnowwolf/lede/trunk/include/kernel-5.4 ./include/kernel-5.4
 
 case "${CONFIG_S}" in
 Plus)
@@ -306,7 +306,7 @@ rm -rf ./package/openwrt-passwall/xray-plugin
 
 rm -rf ./feeds/packages/net/trojan-plus
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus ./feeds/packages/net/trojan-plus
-svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/packages/net/lua-neturl
+svn export svn export https://github.com/fw876/helloworld/trunk/lua-neturl ./feeds/packages/net/lua-neturl
 # rm -rf ./feeds/packages/net/shadowsocks-libev
 # svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./feeds/packages/net/shadowsocks-libev
 # rm -rf ./feeds/packages/net/redsocks2
@@ -323,10 +323,11 @@ svn export https://github.com/fw876/helloworld/branches/main/lua-neturl ./feeds/
 # svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
 rm -rf ./feeds/packages/net/shadow-tls
 svn export https://github.com/fw876/helloworld/trunk/shadow-tls ./feeds/packages/net/shadow-tls
+svn export https://github.com/fw876/helloworld/trunk/shadow-tls package/new/shadow-tls
 #svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
 
-svn export https://github.com/fw876/helloworld/branches/main/tuic-client ./feeds/packages/net/tuic-client
-svn export https://github.com/fw876/helloworld/branches/main/v2ray-plugin ./feeds/packages/net/v2ray-plugin
+svn export https://github.com/fw876/helloworld/trunk/tuic-client ./feeds/packages/net/tuic-client
+svn export https://github.com/fw876/helloworld/trunk/v2ray-plugin ./feeds/packages/net/v2ray-plugin
 # svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust ./feeds/packages/net/shadowsocks-rust
 
 # 在 X86 架构下移除 Shadowsocks-rust
