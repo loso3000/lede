@@ -297,19 +297,18 @@ input:checked[type="checkbox"]:before {
     background-position: center
 }
 
-select:not([multiple="multiple"]):focus,
-input:focus {
+
+select:not([multiple="multiple"]):focus, input:not(.cbi-button):focus, .cbi-dropdown:focus {
+
     background-color: rgba(255,255,255,0.18);
      box-shadow: 0 0.5rem 1rem rgba(255,255,255, 0.35);
     -webkit-box-shadow: 0 0 6px rgba(255,255,255, 0.35);
     -moz-box-shadow: 0 0 6px rgba(255,255,255, 0.35);
 }
 
-.btn,
-button,
-.cbi-button,
-.item::after {
+.btn, button, select, input, .cbi-dropdown,.item::after {
     box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15); 
+
 }
 
 .cbi-input-textarea,
@@ -428,6 +427,13 @@ fieldset>table>tbody>tr:nth-of-type(4n):hover,
 table>tbody>tr:nth-of-type(4n):hover,
 div>.table>.tr:nth-of-type(4n):hover {
     background-image: none !important
+}
+
+.cbi-rowstyle-2 .cbi-button-up, .cbi-rowstyle-2 .cbi-button-down, body:not(.Interfaces) .cbi-rowstyle-2:first-child {
+	background-color: rgba(0,0,0,0, 0.2) !important;
+}
+.cbi-rowstyle-1 .cbi-button-up, .cbi-rowstyle-1 .cbi-button-down, body:not(.Interfaces) .cbi-rowstyle-1:first-child {
+	background-color: rgba(0,0,0,0, 0.1) !important;
 }
 
 .status-bar {
