@@ -12,13 +12,13 @@ config basic
 	option bklock '1'
 	option mode 'light'
 	option primary_rgbbody '248,248,248'
+	option bgqs '1'
+	option bkuse '1'
 	option primary_rgbm_ts '0.8'
 	option primary_opacity '0'
-	option primary_rgbs_ts '0.2'
 	option primary_rgbm '26,131,97'
 	option primary_rgbs '76,157,69'
-	option bkuse '1'
-	option bgqs '1'
+	option primary_rgbs_ts '0.2'
 
 config theme
 	option primary_rgbbody '33,45,60'
@@ -26,10 +26,10 @@ config theme
 	option primary_rgbs '76,157,69'
 	option primary_rgbs_ts '0.2'
 	option primary_rgbm_ts '0.9'
-	option bkuse '1'
 	option primary_opacity '0'
 	option primary_rgbm 'green'
-	option use '1'
+	option use '0'
+	option bkuse '0'
 
 config theme
 	option primary_rgb_ts '0.3'
@@ -39,8 +39,8 @@ config theme
 	option primary_rgbs_ts '0.2'
 	option primary_rgbm_ts '0.8'
 	option mode 'light'
-	option bkuse '0'
-	option use '0'
+	option bkuse '1'
+	option use '1'
 
 config theme
 	option primary_rgbm '66,139,139'
