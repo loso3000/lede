@@ -94,7 +94,7 @@ e:value("bluets",translate("Cool Ocean Heart (transparent and bright)"))
 e.default='green'
 e.default='74,161,133'
 
-e = t:option(Flag, "bkuse", translate("Desktop wallpaper"))
+e = t:option(Flag, "bkuse", translate("Enable wallpaper"))
 e.rmempty = false
 e.default = '1'
 
@@ -109,6 +109,7 @@ e:value("0.6",translate("0.6"))
 e:value("0.7",translate("0.7"))
 e:value("0.8",translate("0.8"))
 e:value("0.9",translate("0.9"))
+e:value("0.95",translate("0.95"))
 e:value("1",translate("1"))
 e.default='0.5'
 
