@@ -21,7 +21,11 @@ e = t:option(Flag, "bklock", translate("Wallpaper synchronization"),translate("I
 e.rmempty = false
 e.default = '0'
 
-e = t:option(ListValue, 'gohome', translate('Status Homekey settings'))
+e = t:option(Flag, "setbar", translate("Expand Toolbar"),translate('Expand or shrink the toolbar'))
+e.rmempty = false
+e.default = '0'
+
+e = t:option(Value, 'gohome', translate('Status Homekey settings'))
 e:value('overview', translate('Overview'))
 e:value('online', translate('Online User'))
 e:value('realtime', translate('Realtime Graphs'))
@@ -29,28 +33,28 @@ e:value('netdata', translate('NetData'))
 e.default = 'overview'
 e.rmempty = false
 
-e = t:option(ListValue, 'gossr', translate('Shortcut Ssrkey settings'))
+e = t:option(Value, 'gouser', translate('System Userkey settings'))
+e:value('advancedplus', translate('Advanced plus'))
+e:value('netwizard', translate('Inital Setup'))
+e:value('system', translate('System'))
+e:value('admin', translate('Administration'))
+e:value('terminal', translate('TTYD Terminal'))
+e:value('packages', translate('Software'))
+e:value('filetransfer', translate('FileTransfer'))
+e.default = 'advancedplus'
+e.rmempty = false
+
+e = t:option(Value, 'gossr', translate('Services Ssrkey settings'))
 e:value('shadowsocksr', translate('SSR'))
 e:value('bypass', translate('bypass'))
 e:value('vssr', translate('Hello World'))
 e:value('passwall', translate('passwall'))
 e:value('passwall2', translate('passwall2'))
 e:value('openclash', translate('OpenClash'))
+e:value('chatgpt-web', translate('Chatgpt Web'))
+e:value('ddns-go', translate('DDNS-GO'))
 e.default = 'bypass'
 e.rmempty = false
-
-e = t:option(ListValue, 'gouser', translate('System Userkey settings'))
-e:value('netwizard', translate('Inital Setup'))
-e:value('system', translate('System'))
-e:value('admin', translate('Administration'))
-e:value('terminal', translate('TTYD Terminal'))
-e:value('packages', translate('Software'))
-e.default = 'admin'
-e.rmempty = false
-
-e = t:option(Flag, "setbar", translate("Expand Toolbar"),translate('Expand or shrink the toolbar'))
-e.rmempty = false
-e.default = '0'
 
 e = t:option(Flag, "bgqs", translate("Refreshing mode"),translate('Cancel background glass fence special effects'))
 e.rmempty = false
@@ -120,10 +124,10 @@ e:value("7",translate("7"))
 e:value("8",translate("8"))
 e:value("9",translate("9"))
 e:value("10",translate("10"))
-e:value("15",translate("15"))
 e:value("20",translate("20"))
 e:value("30",translate("30"))
 e:value("50",translate("50"))
+e:value("80",translate("80"))
 e:value("100",translate("100"))
 e:value("200",translate("200"))
 e.default='10'
@@ -133,6 +137,7 @@ e.default='225,112,88'
 
 e = t:option(Value, 'primary_rgbs_ts', translate('Fence background transparency'))
 e:value("0",translate("0"))
+e:value("0.05",translate("0.05"))
 e:value("0.1",translate("0.1"))
 e:value("0.2",translate("0.2"))
 e:value("0.3",translate("0.3"))
@@ -142,6 +147,7 @@ e:value("0.6",translate("0.6"))
 e:value("0.7",translate("0.7"))
 e:value("0.8",translate("0.8"))
 e:value("0.9",translate("0.9"))
+e:value("0.95",translate("0.95"))
 e:value("1",translate("1"))
 e.default='0.3'
 

@@ -173,11 +173,6 @@ footer a {
 .main .main-left .nav li.slide .menu {
     color: #bbb
 }
-.main .main-left .nav>li>a:first-child, 
-.main .main-left .nav>li>a:first-child::before,
-.main .main-left .nav .slide .menu::before {
-    color: #bbb
-}
 
 .main .main-left .nav .slide .menu:after,
 .main .main-left .nav li.slide .menu::after {
@@ -247,6 +242,12 @@ footer a {
 
 .main .main-right #maincontent .container>div:nth-child(1).alert-message.warning>a {
     color: #ccc;
+}
+.main .main-left .nav>li>a:first-child, 
+.main .main-left .nav li.slide .menu::before,
+.main .main-left .nav>li>a:first-child::before,
+.main .main-left .nav .slide .menu::before {
+    color: #bbb 
 }
 
 

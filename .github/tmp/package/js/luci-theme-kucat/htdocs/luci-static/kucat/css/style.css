@@ -419,6 +419,7 @@ small {
 	background-color: rgba(var(--primary-rgbm), 0.9);
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 	background-image: var(--bgqs-image);
+    background-image: -webkit-linear-gradient(135deg,rgba(255,255,255,0.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.2) 75%,transparent 75%,transparent) !important;
 	transition: all .1s ease;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: auto;
@@ -427,15 +428,15 @@ small {
 }
 .container-bar-left a {
 	text-decoration: none;
-	width: 12.5% !important
+    width: 16.6% !important
 }
 .container-bar-right a {
 	text-decoration: none
 }
 .container-bar-left .labelbar:hover, .container-bar-right .labelbar:hover {
-	background-color: rgba(255, 255, 255, 0.3);
-	border-radius: .375rem;
-	text-decoration: none
+    background-color: rgba(255,255,255,0.3);
+    border-radius: .375rem;
+    text-decoration:none
 }
 .container-bar-right .labelbar:hover::before, .container-bar-left .labelbar:hover::before {
 	color: #f8f8f8;
@@ -494,6 +495,7 @@ small {
 	line-height: 30px;
 	padding: 10px;
 	height: 100%;
+    transition: 0.1s;
 	float: left
 }
 .main > .loading {
@@ -1157,10 +1159,13 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
 	background-image: var(--bgqs-image);
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n+2):hover, .cbi-map>.cbi-section .cbi-value:nth-of-type(4n+2):hover, fieldset>table>tbody>tr:nth-of-type(4n+2):hover, table>tbody>tr:nth-of-type(4n+2):hover, div>.table>.tr:nth-of-type(4n+2):hover {
-	background-image: var(--bgqs-image);
+    background-color: rgba(var(--primary-rgbm),0.1);
+    	background-image: var(--bgqs-image);
 	                  
 }
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n):hover, .cbi-map>.cbi-section .cbi-value:nth-of-type(4n):hover, fieldset>table>tbody>tr:nth-of-type(4n):hover, table>tbody>tr:nth-of-type(4n):hover, div>.table>.tr:nth-of-type(4n):hover {
+    background-color: rgba(var(--primary-rgbs),0.1);
+    
 	background-image: var(--bgqs-image);
 }
 

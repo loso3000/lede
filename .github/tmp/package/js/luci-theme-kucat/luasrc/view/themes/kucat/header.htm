@@ -58,13 +58,11 @@
 	local mode = 'light'
     local home = "overview" 
     local user = "admin" 
-    local ssr = "passwall" 
+    local ssr = "" 
     local setbar = "1"
-	local advanced = "netwizard"
     local gohome = bar .. "status/"  ..home
     local gouser = bar .. "system/"  ..user
     local gossr = bar .. "services/"  ..ssr
-    local goadvanced = bar .. "system/"  ..advanced
 	local background = '0' 
 	local fontd = '1.2rem' 
 	local fontz = '0.92rem' 
@@ -87,11 +85,9 @@
 		primary_rgbs_ts = uci:get_first('advancedplus', 'basic', 'primary_rgbs_ts')
 		mode = uci:get_first('advancedplus', 'basic', 'mode')
 		setbar = uci:get_first('advancedplus', 'basic', 'setbar')
-		advanced = "advancedplus"
 		home =  uci:get_first('advancedplus', 'basic', 'gohome')
 		user = uci:get_first('advancedplus', 'basic', 'gouser')
 		ssr =  uci:get_first('advancedplus', 'basic', 'gossr')
-        goadvanced = bar .. "system/"  ..advanced
 		gohome = bar .. "status/" .. home
 		gouser = bar .. "system/" .. user
 		gossr = bar .. "services/" .. ssr
@@ -329,7 +325,7 @@ end
 	<% end -%>
 	<% if setbar == "1" then %>
 	header.bar-primary .container-bar-left {
- 	   width: 400px;
+ 	   width: 300px;
  	   display: block;
 	}
 	header.bar-primary .container-bar-right {
@@ -364,11 +360,9 @@ end
 		<div id="header-bar-left" class="container-bar-left">
 			<a class="labelbar pdboy-closebar" href="javascript:void(0)" onclick="pdclosebar()" title="Close" ></a>
   			<a class="labelbar pdboy-gohome" href="<%=gohome%>" title="<%=home%>"></a>
-  		    <a class="labelbar pdboy-goadvanced" href="<%=goadvanced%>" title="<%=advanced%>"></a>
-  		    <a class="labelbar pdboy-gocontrol" href="<%=url("admin/control/parentcontrol")%>" title="<%:Parent Control%>"></a>
+  		    <a class="labelbar pdboy-goadvanced" href="<%=gouser%>" title="<%=user%>"></a>
   			<a class="labelbar pdboy-gossr" href="<%=gossr%>" title="<%=ssr%>"></a>
   		    <a class="labelbar pdboy-gonet" href="<%=url("admin/network/network")%>" title="<%:Network%>"></a>
-  		    <a class="labelbar pdboy-gouser" href="<%=gouser%>" title="<%=user%>"></a>
   		    <a class="labelbar pdboy-gopoweroff" href="<%=url("admin/system/reboot")%>" title="<%:Reboot%>"></a>
 		</div>
 		<div id="header-bar-right" class="container-bar-right">
