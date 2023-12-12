@@ -58,6 +58,7 @@
 	local mode = 'light'
     local home = "overview" 
     local user = "admin" 
+    local showword = ""
     local ssr = "" 
     local setbar = "1"
     local gohome = bar .. "status/"  ..home
@@ -171,7 +172,22 @@ io.popen("curl -kLfsm 3 -o /www/luci-static/kucat/img/down4.jpg  $(curl -kLfsm 5
         bg_url = media .. "/img/down4.jpg"
     end
 end
-
+function downIcibaword()
+    local check = 1
+    if fs.access('/tmp/kucaticibaword.tmp') then
+        local localtime = sys.exec("cat /tmp/kucaticibaword.tmp | grep `date +%Y%m%d`")
+        if localtime ~= '' then 
+			 check = 0 
+        end
+    end
+    if check == 1 or not fs.access('/www/luci-static/kucat/img/showword') then
+    io.popen("echo  $(curl -kLfsm 5 'https://zhouxiaoben.info/iciba/dsapi' | awk -F 'note\":\"' '{print $2}' | awk -F '\"' '{print $1}') >/www/luci-static/kucat/img/showword ")
+        sys.exec("date +%Y%m%d  > /tmp/kucaticibaword.tmp")
+    end
+    if fs.access('/www/luci-static/kucat/img/showword') then
+        showword = sys.exec("cat /www/luci-static/kucat/img/showword")
+    end
+end
 function downbirdUrl()
     local check = 1
     if fs.access('/tmp/kucatbird.tmp') then
@@ -230,6 +246,7 @@ elseif background == "4" then
 elseif background == "5" then
 		    pcall(downbirdUrl)
 end
+pcall(downIcibaword)
 if bklock == '1' then
 	bg_lock = bg_url
 else
@@ -256,7 +273,7 @@ else
 		    bg_lock = currentbk.url
 		end
 end
--%>
+%>
 <!DOCTYPE html>
 <html lang="<%=luci.i18n.context.lang%>">
 <head>
@@ -386,6 +403,7 @@ end
 							<a class="showSide"  title="<%:Menu%>" ></a>
 							<a class="brand" href="#"><%=striptags(boardinfo.hostname or "OpenWrt")%></a>
 						</div>
+						<a class="showWord" href="https://www.github.com/sirpdboy/openwrt"><%=showword%></a>
 						<div class="status" id="indicators"></div>
 
                         <span > <a class="pdboy-qlogout" href="<%=url("admin/logout")%>" title="<%:Logout%>" > </a></span>
