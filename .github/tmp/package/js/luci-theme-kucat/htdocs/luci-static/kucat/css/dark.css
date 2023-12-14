@@ -551,7 +551,6 @@ h3 {
 }
 
 
-
 .cbi-dropdown>.open {
     background: #333
 }
@@ -571,7 +570,6 @@ h3 {
     color: #fff;
 }
 
-
 .cbi-value-title {
     color: #8391a2;
 }
@@ -587,12 +585,13 @@ h3 {
     color: #8391a2;
 }
 
-#content_syslog,
+#content_syslog{
+    box-shadow: 0 0 1px rgba(255, 255, 255,  0.12);
+}
 #syslog {
     color: #8391a2;
     font-family: "Microsoft Yahei",-apple-system,  "WenQuanYi Micro Hei", "sans-serif";
     background-color: rgba(0,0,0,0.1);
-    box-shadow: 0 0 1px rgba(255, 255, 255,  0.12);
 }
 .request>.requestBody,
 .response .markdown-body,
@@ -604,7 +603,12 @@ background-color: rgba(255,255,255,0)!important;
     background-color: rgba(255,255,255,0.35)!important;
     color: #d0d7de!important;
 }
-
+#chatlog .response .markdown-body>pre {
+background-color: rgba(0,0,0,0.15)!important;
+}
+#chatlog .response {
+    background-color: rgba(255,255,255,0.03)!important;
+}
 .ifacebox-head {
     color: #8391a2
 }
