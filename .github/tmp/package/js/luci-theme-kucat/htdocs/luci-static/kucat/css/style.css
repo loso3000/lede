@@ -639,7 +639,7 @@ span[data-indicator="uci-changes"] {
     line-height: 1.2;
     flex: auto;
     cursor: pointer;
-    width: calc(100% - 21rem);
+    width: calc(100% - 20rem);
     display: inline-block;
     text-decoration: none!important;
     vertical-align: text-bottom;
@@ -2564,7 +2564,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	position: absolute;
 	z-index: 100;
 	left: 10px;
-	top: 10px
+	top: 8px
 }
 .node-main-login>.main .cbi-value.cbi-value-last .cbi-value-field:before {
 	font-family: 'sirpdboy-kucat' !important;
@@ -2583,7 +2583,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	position: absolute;
 	z-index: 100;
 	left: 10px;
-	top: 10px
+	top: 8px
 }
 .node-main-login>.main .cbi-value.cbi-value-last, .node-main-login>.main .cbi-value {
 	display: block;

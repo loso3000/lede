@@ -12,8 +12,7 @@ e:value('0', translate('Local wallpaper'))
 e:value('1', translate('Online Bing wallpaper'))
 e:value('2', translate('Auto download unsplash wallpaper'))
 e:value('3', translate('Auto download Bing wallpaper'))
-e:value('4', translate('Auto download Iciba wallpaper'))
-e:value('5', translate('Auto download Bird 4K wallpaper'))
+e:value('4', translate('Auto download Bird 4K wallpaper'))
 e.default = '0'
 e.rmempty = false
 
