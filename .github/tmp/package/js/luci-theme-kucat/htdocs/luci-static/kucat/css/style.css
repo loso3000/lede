@@ -1141,6 +1141,7 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
     -ms-user-select: none;
     user-select: none;
     text-transform: uppercase;
+        line-height: 1;
     display: inline-block;
     padding: 0.6rem 1rem!important;
     -ms-touch-action: manipulation;
@@ -1152,7 +1153,7 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
     color: #f8f8f8;
     background-color: #008b89;
     background-image: var(--bgqs-image);
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    box-shadow: 0 0.3rem 0.3rem rgba(0,0,0,0.3);
     transform: translate(1) translate(0,0);
     transition: transform 225ms,box-shadow 225ms;
     border-radius: 0.25rem;
@@ -1548,6 +1549,8 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	max-width: none;
 }
 .cbi-dynlist>.item::after {
+	background-image: none;
+	box-shadow: none;
 	content: "\00D7";
 	pointer-events: auto;
 	display: flex;
@@ -1563,8 +1566,6 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	border-radius: 0.25rem;
 	outline: 0;
 	background-color: #d9534f;
-	background-image: none;
-	box-shadow: none;
 	box-sizing: border-box;
 }
 .cbi-dynlist > .item > span {
@@ -1634,7 +1635,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 }
 .cbi-dynlist>.add-item .cbi-button-add {
     width: 2.5rem !important;
-    padding: 7px!important;
+    padding: 5px!important;
     /* font-weight: normal; */
     font-size: 1.5rem;
     line-height: 1;
@@ -1647,7 +1648,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .cbi-dynlist, .cbi-dropdown {
 	position: relative;
 	display: inline-flex;
-    line-height: 2rem;
+    line-height: 1;
 }
 .cbi-dropdown[placeholder*="select"] {
 	max-width: 25rem;
@@ -1657,7 +1658,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .cbi-dropdown > ul {
 	display: flex;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 	width: 100%;
 	margin: 0 !important;
 	padding: 0;
@@ -1702,8 +1703,8 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	align-self: center;
 	flex-grow: 1;
 	flex-shrink: 1;
-    min-height: 20px;
-    padding: 0 10px 0 10px;
+    min-height: 30px;
+    padding: 0;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -1744,7 +1745,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	min-width: 100%;
 	max-width: none;
 	max-height: 160px !important;
-	border: 1px solid var(--inputborder-color);
+	border: 0px solid var(--inputborder-color);
 	background-color: rgba(var(--primary-rgbbody), 1);
 	box-shadow: 0 0 4px #918e8c;
 	color: var(--inputtext-color);
@@ -1752,6 +1753,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .cbi-dropdown > ul > li[display], .cbi-dropdown[open] > ul.preview, .cbi-dropdown[open] > ul.dropdown > li, .cbi-dropdown[multiple] > ul > li > label, .cbi-dropdown[multiple][open] > ul.dropdown > li, .cbi-dropdown[multiple][more] > .more, .cbi-dropdown[multiple][empty] > .more {
 	display: flex;
 	align-items: center;
+    padding: 0 10px 0 10px;
 	flex-grow: 1;
 }
 .cbi-dropdown[empty] > ul > li, .cbi-dropdown[optional][open] > ul.dropdown > li[placeholder], .cbi-dropdown[multiple][open] > ul.dropdown > li > form {
@@ -1929,7 +1931,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
     white-space: normal !important;
     font-size: var(--font-x);
     margin: 0;
-    line-height: 2rem;
+    line-height: 1;
     text-align: left;
     height: auto;
 }
@@ -1977,7 +1979,7 @@ body.modal-overlay-active #modal_overlay {
 	margin-left: 5px;
 }
 .right .cbi-button {
-	line-height: 20px;
+	line-height: 1;
 	margin: 0;
 }
 .right, .right::before {
