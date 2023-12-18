@@ -1153,7 +1153,7 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
     color: #f8f8f8;
     background-color: #008b89;
     background-image: var(--bgqs-image);
-    box-shadow: 0 0.3rem 0.3rem rgba(0,0,0,0.3);
+    box-shadow: 0 0.3rem 0.3rem rgba(0,0,0,0.15);
     transform: translate(1) translate(0,0);
     transition: transform 225ms,box-shadow 225ms;
     border-radius: 0.25rem;
@@ -1704,7 +1704,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	flex-grow: 1;
 	flex-shrink: 1;
     min-height: 30px;
-    padding: 0;
+    padding: 0 10px 0 10px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -2349,7 +2349,7 @@ input[name="ping"], input[name="traceroute"], input[name="nslookup"] {
 	display: none;
 }
 .node-main-login  > .main .cbi-page-actions{
-	padding: 1rem 0 2rem 0;
+	padding: 1rem 0 1rem 0;
 }
 .node-main-login  > .main .cbi-map {
     display: flex;
@@ -2425,7 +2425,6 @@ body.lang_pl.node-main-login .cbi-value-title {
 .node-main-login>.main fieldset, .node-main-login>.main .cbi-section, .node-main-login>.main .cbi-section>.cbi-section-node {
 	padding: 0rem;
 	padding-top: 0rem;
-	margin-bottom: 1rem;
 	background: none;
 	border: none;
 	box-shadow: none;
@@ -2434,37 +2433,44 @@ body.lang_pl.node-main-login .cbi-value-title {
 	overflow: hidden
 }
 .node-main-login>.main #maincontent {
-	text-align: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	display: flex;
-	height: 100%;
-	align-items: center;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	flex-direction: column;
+    text-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: flex;
+    height: auto;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
 }
-.node-main-login>.main .container {
-	display: inline-block;
-	position: relative;
-	text-align: center;
-	margin: 0;
-	border-radius: 0.25rem;
-	-webkit-backdrop-filter: blur(6px)!important;
-	backdrop-filter: blur(6px)!important;
-	background-color: rgba(var(--primary-rgbbody), 0.5)!important;
-	border: none;
-	-webkit-box-shadow: 3px 7px 12px rgba(0, 0, 0, 0.22);
-	box-shadow: 3px 7px 12px rgba(0, 0, 0, 0.22);
-	-webkit-transition: all 0.2s;
-	transition: all 0.1s;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	font-weight: bolder;
-	overflow-x: auto
+
+.node-main-login>.main>.main-right #maincontent .container {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    margin: 0;
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(6px)!important;
+    backdrop-filter: blur(6px)!important;
+    background-color: rgba(var(--primary-rgbbody),0.5)!important;
+    border: none;
+    -webkit-box-shadow: 3px 7px 12px rgba(0,0,0,0.22);
+    box-shadow: 3px 7px 12px rgba(0,0,0,0.22);
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    padding: 1rem 1rem 3rem 1rem;
+    user-select: none;
+    font-weight: bolder;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
+
 .node-main-login>.main .container:active {
 	-webkit-transform: scale(0.95) rotateZ(1.2deg);
 	-ms-transform: scale(0.95) rotate(1.2deg);
@@ -2475,7 +2481,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	height: 80px;
 	background-size: 80px;
 	display: block;
-    margin: 1rem 1rem 5em 1rem;
+    margin: 1rem 1rem 3rem 1rem;
 	text-indent: -500px;
 	overflow: hidden;
 	background-image: url(../logo.png);
@@ -2497,16 +2503,13 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 .node-main-login>.main .container input.cbi-button {
 	font-size: var(--font-z);
-	height: auto;
 	position: relative;
 	transition: all .15s ease;
 	letter-spacing: .2em;
 	text-transform: none;
-	padding: .625rem 1.25rem;
 	will-change: transform;
-	line-height: 1.5em;
 	border-radius: .375rem;
-	min-width: 16rem
+	min-width: 14rem
 }
 .node-main-login>.bar-primary .container-bar-left, .node-main-login>.bar-primary .container-bar-right, .node-main-login>.main .cbi-button-reset {
 	display: none !important
@@ -2539,7 +2542,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	justify-content: center;
 	text-indent: 0rem;
     background-color: rgba(255,255,255,0.3);
-	width: 16rem;
+	width: 14rem;
 	min-width: 100% !important;
 	margin: 0
 }
@@ -2547,7 +2550,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	position: relative;
 	color: #eee;
 	text-shadow: 0px 1px 3px #222;
-	width: 16rem
+	width: 14rem
 }
 .node-main-login>.main .cbi-value.cbi-value .cbi-value-field:before {
 	font-family: 'sirpdboy-kucat' !important;
@@ -2562,11 +2565,11 @@ body.lang_pl.node-main-login .cbi-value-title {
 	content: "\e91d";
 	color: #eee;
 	text-shadow: 0px 1px 3px #222;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	position: absolute;
 	z-index: 100;
 	left: 10px;
-	top: 8px
+	top: 10px
 }
 .node-main-login>.main .cbi-value.cbi-value-last .cbi-value-field:before {
 	font-family: 'sirpdboy-kucat' !important;
@@ -2581,11 +2584,11 @@ body.lang_pl.node-main-login .cbi-value-title {
 	content: "\e93c";
 	color: #eee;
 	text-shadow: 0px 1px 3px #222;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	position: absolute;
 	z-index: 100;
 	left: 10px;
-	top: 8px
+	top: 10px
 }
 .node-main-login>.main .cbi-value.cbi-value-last, .node-main-login>.main .cbi-value {
 	display: block;
@@ -2621,7 +2624,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 }
 .node-main-login footer {
 	text-align: center;
-	padding: 1rem 1rem 6rem 0;
+	margin-top: 4rem;
 	color: #eee;
 	text-shadow: 0 0 2px #222;
 	font-size: var(--font-x);
