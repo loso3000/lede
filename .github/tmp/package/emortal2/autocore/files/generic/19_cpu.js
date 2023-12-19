@@ -47,7 +47,7 @@ return baseclass.extend({
 
 			cpuTable.append(
 				E('tr', { 'class': 'tr' }, [
-					E('td', { 'class': 'td left', 'width': '33%' },
+					E('td', { 'class': 'td right', 'width': '33%' },
 						(cpuStatArray[i][0] === Infinity) ? _('Total usage') : _('CPU') + ' ' + cpuStatArray[i][0]),
 
 					E('td', { 'class': 'td' },

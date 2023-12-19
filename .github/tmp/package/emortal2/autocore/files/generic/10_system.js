@@ -76,7 +76,7 @@ return baseclass.extend({
             table.appendChild(E('tr', {
                 'class': 'tr'
             }, [E('td', {
-                'class': 'td left',
+                'class': 'td right',
                 'width': '33%'
             }, [fields[i]]), E('td', {
                 'class': 'td left'
