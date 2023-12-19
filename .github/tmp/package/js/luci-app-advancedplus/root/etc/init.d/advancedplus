@@ -27,6 +27,7 @@ config basic
 	option background '0'
 	option bkuse '1'
 	option bgqs '1'
+	option dayword '1'
 	option mode 'light'
 	option primary_rgbbody '248,248,248'
 	option primary_rgbm '20,109,179'

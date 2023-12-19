@@ -1100,6 +1100,14 @@ table .tr > .td.cbi-value-field, table .tr > .th.cbi-section-table-cell {
 	color: var(--body-color);
 	white-space: nowrap;
 }
+.cbi-section-table-row .td {
+	text-align: center;
+}
+
+table .tr > .td.cbi-value-field>[id*="ifc-description"] {
+   text-align: left ;
+   font-weight: normal!important
+}
 table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:first-child>td {
 	border-top: 0px solid #eee
 }
@@ -1174,9 +1182,7 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
 .cbi-section-table-row > .cbi-value-field [data-dynlist] > input, .cbi-section-table-row > .cbi-value-field input.cbi-input-password {
 	width: calc(100% - 1.5rem);
 }
-.cbi-section-table-row .td {
-	text-align: center !important;
-}
+
 .cbi-tabcontainer>.cbi-value:nth-of-type(4n+2), .cbi-map>.cbi-section .cbi-value:nth-of-type(4n+2), fieldset>table>tbody>tr:nth-of-type(4n+2), table>tbody>tr:nth-of-type(4n+2), div>.table>.tr:nth-of-type(4n+2) {
 	background-color: rgba(var(--primary-rgbm), var(--primary-rgbs-ts));
 	background-image: var(--bgqs-image);
@@ -2741,11 +2747,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 #iptables {
 	margin: 0;
 }
-.Firewall form {
-	margin: 2rem 2rem 0 0;
-	padding: 0;
-	box-shadow: none;
-}
+
 #cbi-firewall-redirect table *, #cbi-network-switch_vlan table *, #cbi-firewall-zone table * {
 	font-size: small;
 	white-space: nowrap;
@@ -3049,46 +3051,8 @@ background-color: rgba(255,255,255,0.12)!important;
 	width: 100%!important;
 	box-shadow: 0 0 1px rgba(0, 0, 0,  0.12)!important;
 }
-.Software >.main #view td:nth-child(1), .node-admin-system-packages>.main #view td:nth-child(1) {
-	width: auto !important
-}
-.Software >.main #view td:nth-last-child(1), .node-admin-system-packages>.main #view td:nth-last-child(1) {
-	white-space: normal;
-	font-size: var(--font_x);
-	color: var(--body-color)
-}
-.Software >.main .cbi-tabmenu>li>a, .node-admin-system-packages>.main .cbi-tabmenu>li>a {
-	padding: .5rem .8rem;
-	font-size: var(--font-z);
-}
-.Software >.main .cbi-value>pre, .node-admin-system-packages>.main .cbi-value>pre {
-	background-color: #eee;
-	padding: .5rem;
-	overflow: auto
-}
 .node-admin-system-packages>.main .cbi-page-actions {
 	padding: 1rem 0
-}
-.Software >.main .cbi-value .cbi-value-field input[type="text"] {
-	width: 10rem!important;
-}
-.Software >.main .cbi-section-node:first-child .cbi-value-last, .node-admin-system-packages>.main .cbi-section-node:first-child .cbi-value-last {
-	line-height: 1.4em
-}
-.Software >.main .cbi-section-node:first-child .cbi-value-last>div, .node-admin-system-packages>.main .cbi-section-node:first-child .cbi-value-last>div {
-	width: 100% !important;
-	border-color: rgba(0, 0, 0, 0.3) !important;
-	background-color: rgba(0, 0, 0, 0.22) !important;
-	height: 1.4rem !important;
-	border-radius: 0.25rem !important;
-	margin: 0.5rem 0 !important;
-	overflow: hidden
-}
-.Software >.main .cbi-section-node:first-child .cbi-value-last>div>div, .node-admin-system-packages>.main .cbi-section-node:first-child .cbi-value-last>div>div {
-	border-right: 0 !important;
-	border-radius: 0.25rem !important;
-	background-color: rgba(var(--primary-rgbm), 0.9)!important;
-	background-image: var(--bgqs-image);
 }
 
 .node-admin-system-leds .cbi-section em {
@@ -3188,10 +3152,15 @@ background-color: rgba(255,255,255,0.12)!important;
 .node-admin-network-network .cbi-section-table br {
 	display: initial
 }
+.node-admin-status-overview  .main #view td:nth-child(1) {
+    width: 8rem;
+    padding-right: 0.6rem;
+}
 .cbi-value-title {
     width: 15rem;
     padding-right: 1rem;
 }
+
 }
 
 @media screen and (max-width: 992px) {
@@ -3239,6 +3208,12 @@ header .fill .container .flex1 .showSide {
 .node-main-login .showSide {
 	display: none !important
 }
+
+.node-admin-status-overview  .main #view td:nth-child(1) {
+    width: 6rem;
+    padding-right: 0.6rem;
+}
+
 .modal .cbi-value-title,
 .cbi-value-title {
     width: 12rem;
@@ -3248,9 +3223,7 @@ header .fill .container .flex1 .showSide {
 .Interfaces .table {
 	overflow-x: hidden;
 }
-
-
-.Overview .table[width="100%"] > .tr {
+.node-admin-status-overview .table[width="100%"] > .tr {
 	flex-wrap: nowrap;
 }
 .tr.placeholder {
@@ -3331,6 +3304,7 @@ table>tbody>tr>td, table>tfoot>tr>td, table>thead>tr>td {
 	width: 100%;
 	min-width: 16rem;
 }
+
 }
 
 @media screen and (max-width:600px) {
@@ -3360,10 +3334,16 @@ span[data-indicator="uci-changes"] {
 .hide-sm, .hide-xs:not([data-title="MAC-Address"]) {
 	display: none;
 }
+
+.node-admin-status-overview > .main #view td:nth-child(1),
 .cbi-value-title {
     text-align: left;
 }
 
+.node-admin-status-overview  .main #view td:nth-child(1) {
+    width: 5rem;
+    padding-right: 0.4rem;
+}
 
 .cbi-value-field, .cbi-value-description {
 	display: block !important;
@@ -3384,7 +3364,10 @@ span[data-indicator="uci-changes"] {
 #maincontent>.container {
 	padding: 1rem 0.5rem 3rem 0.5rem !important
 }
-
+.node-admin-status-overview  .main #view td:nth-child(1) {
+    width: 4rem;
+    padding-right: 0.2rem;
+}
 
 .cbi-section-node {
 	padding: 10px !important;

@@ -78,6 +78,7 @@
 	local primary_opacity = '0'
 	local bkuse = '1'
 	local bklock = '1'
+	local dayword = '1'
 	if fs.access('/etc/config/advancedplus') then
 		primary_rgbbody = uci:get_first('advancedplus', 'basic', 'primary_rgbbody')
 		primary_rgbm = uci:get_first('advancedplus', 'basic', 'primary_rgbm')
@@ -100,6 +101,7 @@
 		fontz = uci:get_first('advancedplus', 'basic', 'font_z')
 		fontx = uci:get_first('advancedplus', 'basic', 'font_x')
 		bgqs = uci:get_first('advancedplus', 'basic', 'bgqs')
+		dayword = uci:get_first('advancedplus', 'basic', 'dayword')
 	end
 	local primary_ufilter =  "saturate(150%) contrast(50%) blur(" .. primary_opacity .. "px)"
 	if primary_opacity == '0' then
@@ -166,7 +168,7 @@ function downIcibaUrl()
         end
     end
     if check == 1 or not fs.access('/www/luci-static/kucat/img/down4.jpg') then
-io.popen("curl -kLfsm 3 -o /www/luci-static/kucat/img/down4.jpg  $(curl -kLfsm 5 'https://zhouxiaoben.info/iciba/dsapi' | awk -F 'picture4\":\"' '{print $2}' | awk -F '\"' '{print $1}') ")
+io.popen("curl -kLfsm 3 -o /www/luci-static/kucat/img/down4.jpg  $(curl -kLfsm 5 \"http://sentence.iciba.com/index.php?c=dailysentence&m=getdetail&title=$(date +%Y-%m-%d)\" |  awk -F 'picture2\":\"' '{print $2}' | awk -F '\"' '{print $1}' | sed 's#\\##g') ")
         sys.exec("date +%Y%m%d  > /tmp/kucaticiba.tmp")
     end
     if fs.access('/www/luci-static/kucat/img/down4.jpg') then
@@ -412,7 +414,9 @@ end
 							<a class="showSide"  title="<%:Menu%>" ></a>
 							<a class="brand" href="#"><%=striptags(boardinfo.hostname or "OpenWrt")%></a>
 						</div>
+						<% if dayword == '1' then %>
 						<a class="showWord" href="<%=showurl%>"><%=showword%></a>
+						<% end -%>
 						<div class="status" id="indicators"></div>
 
                         <span > <a class="pdboy-qlogout" href="<%=url("admin/logout")%>" title="<%:Logout%>" > </a></span>

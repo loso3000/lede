@@ -9,7 +9,7 @@ t.anonymous = true
 
 e = t:option(ListValue, 'background', translate('Wallpaper Source'),translate('Local wallpapers need to be uploaded on their own, and only the first update downloaded on the same day will be automatically downloaded.'))
 e:value('0', translate('Local wallpaper'))
-e:value('1', translate('Online Bing wallpaper'))
+--e:value('1', translate('Online Bing wallpaper'))
 e:value('2', translate('Auto download unsplash wallpaper'))
 e:value('3', translate('Auto download Bing wallpaper'))
 e:value('4', translate('Auto download Bird 4K wallpaper'))
@@ -21,6 +21,14 @@ e.rmempty = false
 e.default = '0'
 
 e = t:option(Flag, "setbar", translate("Expand Toolbar"),translate('Expand or shrink the toolbar'))
+e.rmempty = false
+e.default = '0'
+
+e = t:option(Flag, "bgqs", translate("Refreshing mode"),translate('Cancel background glass fence special effects'))
+e.rmempty = false
+e.default = '0'
+
+e = t:option(Flag, "dayword", translate("Enable Daily Word"))
 e.rmempty = false
 e.default = '0'
 
@@ -54,10 +62,6 @@ e:value('chatgpt-web', translate('Chatgpt Web'))
 e:value('ddns-go', translate('DDNS-GO'))
 e.default = 'bypass'
 e.rmempty = false
-
-e = t:option(Flag, "bgqs", translate("Refreshing mode"),translate('Cancel background glass fence special effects'))
-e.rmempty = false
-e.default = '0'
 
 e = t:option(Flag, "fontmode", translate("Care mode (large font)"))
 e.rmempty = false
