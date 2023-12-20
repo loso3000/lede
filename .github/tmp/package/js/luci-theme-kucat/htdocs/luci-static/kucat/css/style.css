@@ -2914,19 +2914,18 @@ overflow-y: hidden;
 #syslog {
     border: 1px solid var(--inputborder-color);
 }
-
-#syslog ,
-#content_syslog {
-	width: 100%;
-	min-height: 15rem;
-	font-family: var(--font-apple);
-	color: var(--body-color);
-	background-color: var(--inputbg-color);
-	font-size: small;
-	outline: none;
-	border-radius: 0.25rem;
-	overflow: hidden
+#syslog {
+    width: 100%;
+    min-height: 15rem;
+    font-family: var(--font-apple);
+    color: var(--body-color);
+    background-color: var(--inputbg-color);
+    font-size: small;
+    outline: none;
+    border-radius: 0.25rem;
+    overflow-x: hidden;
 }
+
 #syslog:focus{
 	outline: 0;
         box-shadow: 0 0 1px rgba(0,0,0,0.12)!important;
