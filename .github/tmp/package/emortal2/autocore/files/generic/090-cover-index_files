@@ -1,6 +1,4 @@
 #!/bin/sh
-[ ! -f '/etc/pcd_20_memory.js' ] || \
-	mv -f '/etc/rpcd_20_memory.js' '/www/luci-static/resources/view/status/include/20_memory.js'
 [ ! -f '/etc/rpcd_10_system.js' ] || \
 	mv -f '/etc/rpcd_10_system.js' '/www/luci-static/resources/view/status/include/10_system.js'
 [ ! -f '/etc/rpcd_luci' ] || \
