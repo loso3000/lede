@@ -1126,6 +1126,9 @@ table>tbody>tr:first-child>td, table>tfoot>tr:first-child>td, table>thead>tr:fir
  [data-page="admin-network-diagnostics"] .tr > .td {
     white-space: normal;
  }
+[data-page="admin-network-diagnostics"] .cbi-dropdown > ul{
+    overflow-y: hidden;
+ }
 .table[width="100%"] > .tr:first-child > .td {
 	margin: auto 0;
 }
