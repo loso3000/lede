@@ -65,11 +65,18 @@ case "$DISTRIB_TARGET" in
 		cpu_freq="$(awk '{printf("%.fMHz", $0 / 1000)}' "$CPUFREQ_PATH/policy0/cpuinfo_cur_freq")"
 	;;
 esac
-
+	if [ -d /sys/devices/cpu_atom/ ]; then
+    pcore=$(cat /sys/devices/cpu_core/cpus | awk -F- '{print $2}') 
+    pc=$(echo "($pcore+1)/2" | bc) 
+    ecore1=$(cat /sys/devices/cpu_atom/cpus | awk -F- '{print $1}') 
+    ecore2=$(cat /sys/devices/cpu_atom/cpus | awk -F- '{print $2}')
+    ec=$(echo "$ecore2-$ecore1+1" | bc) 
+    hydrid='('${pc}'P+'${ec}'E)'
+  fi
 if [ -n "$big_cpu_freq$cpu_freq" ] || grep -Eq "ipq|mt7622" "/etc/openwrt_release"; then
-	echo -n "$cpu_arch x $cpu_cores (主频：$big_cpu_freq$cpu_freq)"
+	echo -n "$cpu_arch x $cpu_cores (主频：$big_cpu_freq$cpu_freq) $hydrid"
 else
-	echo -n "$cpu_arch x $cpu_cores"
+	echo -n "$cpu_arch x $cpu_cores $hydrid"
 fi
 }
 
@@ -179,7 +186,7 @@ ethinfo() {
 	e=$(echo "$d" | grep "Link detected" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
 	f=$(echo "$d" |grep Speed | awk '{print $2/1000 " Gb/s"}' | sed 's/^[ \t]*//g' | tr -d "Unknown!")
 	[ -z "$f" -o "$f" = "0 Gb/s" ] && f="- Gb/s"
-	[ $i == "eth0" -a "$f" = "- Gb/s"  ]  && f="10Gb/s"  
+	[ $i == "eth0" -a "$f" = "- Gb/s"  ]  && f="10 Gb/s"  
 	g=$(echo "$d" | grep "Duplex" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
 	echo -n "$h \"$name[$i]\", \"status\": \"$e\", \"duplex\": \"$g\", \"speed\": \"$f\", \"mac\": \"$m\"},"
     done
