@@ -25,7 +25,7 @@ config basic
 	option setbar '1'
 	option primary_opacity '0'
 	option background '0'
-	option bkuse '1'
+	option bkuse '0'
 	option bgqs '1'
 	option dayword '1'
 	option mode 'light'
@@ -40,7 +40,7 @@ config theme
 	option primary_rgbs '76,157,69'
 	option primary_rgbm_ts '0.9'
 	option primary_opacity '0'
-	option bkuse '1'
+	option bkuse '0'
 	option remarks '隔栏经典蓝色'
 	option primary_rgbm 'blue'
 	option mode 'light'
@@ -114,6 +114,8 @@ config theme
 	option remarks '无隔栏模糊绿色'
 	option primary_opacity '10'
 	option use '0'
+
+
 EOF
 }
 cpumodeset()

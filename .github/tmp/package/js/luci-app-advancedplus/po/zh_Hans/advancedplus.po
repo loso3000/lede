@@ -352,4 +352,15 @@ msgstr "导航栏代理"
 msgid "OpenClash by default"
 msgstr "默认 OpenClash"
 
+msgid "The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."
+msgstr "开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"
+
+msgid "<font color=\"Red\"><strong>Configuration documents are directly edited unless you know what you are doing, please do not easily modify these configuration documents. Incorrect configuration may result in errors such as inability to power on</strong></font><br/>"
+msgstr "<font color=\"Red\"><strong>配置文档是直接编辑的除非你知道自己在干什么，否则请不要轻易修改这些配置文档。配置不正确可能会导致不能开机等错误。</strong></font><br/>"
+
+msgid "This page is about configuration"
+msgstr "本页是配置"
+
+msgid "Document content. Automatic restart takes effect after saving the application"
+msgstr "文档内容。应用保存后自动重启生效"
 
