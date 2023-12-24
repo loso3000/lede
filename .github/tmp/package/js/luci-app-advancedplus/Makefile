@@ -8,7 +8,7 @@ include $(TOPDIR)/rules.mk
 NAME:=advancedplus
 PKG_NAME:=luci-app-$(NAME)
 LUCI_TITLE:=LuCI support for Kucat theme setting by sirpdboy
-LUCI_DEPENDS:=+luci-compat
+LUCI_DEPENDS:=+luci-compat +curl
 LUCI_PKGARCH:=all
 
 PKG_VERSION:=1.7.3

@@ -1,8 +1,7 @@
 /*
  *  KuCat is a clean HTML5 theme for LuCI. It is based on luci-theme-kucat
  *
- *  kucat
- *  Copyright 2019-2023 sirpdboy-kucat <sirpdboy@qq.com>
+ *  Copyright (C) 2019-2023 The Sirpdboy Team <herboy2008@gmail.com>    
  *      Copyright 2015 Lutty Yang <lutty@wcan.in>
  *
  *  Licensed to the public under the Apache License 2.0
@@ -1299,9 +1298,9 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 }
 /* gray */
 .alert-message [class="btn"], .modal div[class="btn"], .cbi-button-find, .cbi-button-link, .cbi-button-neutral, .cbi-button[name="zero"], .cbi-button[name="restart"], .cbi-button[onclick="hide_empty(this)"] {
-	font-weight: bold;
-	border: thin solid #a99108;
-	background-color: #dbb91c;
+    font-weight: bold;
+    border: thin solid #1b4f0e;
+    background-color: #25770b;
 }
 /* dark blue */
 .btn.primary, .cbi-page-actions .cbi-button-save, .cbi-page-actions .cbi-button-apply + .cbi-button-save, .cbi-button-add, .cbi-button-save, .cbi-button-positive, .cbi-button-link, .cbi-button[value="Enable"], .cbi-button[value="Scan"], .cbi-button[value^="Back"], .cbi-button-neutral[onclick="handleConfig(event)"] {
