@@ -582,7 +582,7 @@ span[data-indicator="poll-status"] {
     cursor: pointer;
     line-height: 0.9;
     border-radius: 1rem;
-    padding: 0.6rem;
+    padding: 0.4rem;
     background-repeat: no-repeat;
     background-position: center;
     color: transparent !important;
