@@ -582,7 +582,7 @@ span[data-indicator="poll-status"] {
     cursor: pointer;
     line-height: 0.9;
     border-radius: 1rem;
-    padding: 0.4rem;
+    padding: 0.5rem;
     background-repeat: no-repeat;
     background-position: center;
     color: transparent !important;
@@ -1315,8 +1315,6 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	border: thin solid rgba(var(--primary-rgbm), 1);
 	background-color: rgba(var(--primary-rgbm), 0.9);
 }
-
-
 
 /* red */
 .btn.danger, .cbi-section-remove > .cbi-button, .cbi-button-remove, .cbi-button-reset, .cbi-button-negative, .cbi-button[value="Stop"], .cbi-button[value="Kill"], .cbi-button[onclick="reboot(this)"], .cbi-button-neutral[value="Restart"] {
@@ -2206,16 +2204,27 @@ body.modal-overlay-active #modal_overlay {
 	align-items: center;
 }
 .ifacebox-head {
-	padding: 1rem;
+    display: inline-flex;
+    padding: 1rem;
+    align-items: center;
     min-width: 7rem;
-	background-color: rgba(var(--primary-rgbm), 0.2);
+    background-color: rgba(var(--primary-rgbm), 0.2);
+    justify-content: center;
 }
+
 .ifacebox-head.active {
 	background: #5bc0de;
 	background-color: rgba(var(--primary-rgbm), 0.1);
 }
 .ifacebox-body {
-	padding: .5em
+    padding: 0.5em;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+}
+.ifacebox-body>span {
+margin: 0;
+    padding: 0;
 }
 .cbi-image-button {
 	margin-left: .5rem;
@@ -2893,11 +2902,17 @@ body.lang_pl.node-main-login .cbi-value-title {
 .cbi-page-actions.control-group .cbi-dropdown.btn.cbi-button.important {
         padding: 0.6rem 0rem 0.6rem 1rem;
 }
-
+.cbi-page-actions .cbi-dropdown.important > ul,
 .cbi-page-actions.control-group .cbi-dropdown.btn.cbi-button.cbi-button-negative.important > ul,
 .cbi-page-actions.control-group .cbi-dropdown.btn.cbi-button.cbi-button-apply.important > ul {
 overflow-y: hidden;
 }
+.cbi-page-actions .cbi-dropdown.important .cbi-button-apply,
+.cbi-page-actions.control-group .cbi-dropdown.btn.cbi-button.cbi-button-negative.important ,
+.cbi-page-actions.control-group .cbi-dropdown.btn.cbi-button.cbi-button-apply.important  {
+    padding: 0 0 0 1rem;
+}
+
 .cbi-dropdown.btn.cbi-button.cbi-button-action {
 	padding-right: 5px;
 }
