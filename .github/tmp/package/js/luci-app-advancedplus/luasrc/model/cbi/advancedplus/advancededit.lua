@@ -1,16 +1,16 @@
 local e=require"nixio.fs"
 local t=require"luci.sys"
 local t=luci.model.uci.cursor()
-m=Map("advancedplus",translate("Advanced Edit"),translate("<font color=\"Red\"><strong>配置文档是直接编辑的除非你知道自己在干什么，否则请不要轻易修改这些配置文档。配置不正确可能会导致不能开机等错误。</strong></font><br/>"))
+m=Map("advancedplus",translate("Advanced Edit"),translate("<font color=\"Red\"><strong>Configuration documents are directly edited unless you know what you are doing, please do not easily modify these configuration documents. Incorrect configuration may result in errors such as inability to power on</strong></font><br/>"))
 m.apply_on_parse=true
 s=m:section(TypedSection,"basic")
 s.anonymous=true
 
 if nixio.fs.access("/etc/dnsmasq.conf")then
 
-s:tab("dnsmasqconf",translate("dnsmasq"),translate("本页是配置/etc/dnsmasq.conf的文档内容。应用保存后自动重启生效"))
+s:tab("dnsmasqconf",translate("dnsmasq"),translate("This page is about configuration")..translate("/etc/dnsmasq.conf")..translate("Document content. Automatic restart takes effect after saving the application"))
 
-conf=s:taboption("dnsmasqconf",Value,"dnsmasqconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+conf=s:taboption("dnsmasqconf",Value,"dnsmasqconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -30,8 +30,8 @@ end
 end
 end
 if nixio.fs.access("/etc/config/network")then
-s:tab("netwrokconf",translate("网络"),translate("本页是配置/etc/config/network包含网络配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("netwrokconf",Value,"netwrokconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("netwrokconf",translate("network"),translate("This page is about configuration")..translate("/etc/config/network")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("netwrokconf",Value,"netwrokconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -51,9 +51,9 @@ end
 end
 end
 if nixio.fs.access("/etc/config/wireless")then
-s:tab("wirelessconf",translate("无线"), translate("本页是/etc/config/wireless的配置文件内容，应用保存后自动重启生效."))
+s:tab("wirelessconf",translate("wireless"), translate("This page is about configuration")..translate("/etc/config/wireless")..translate("Document content. Automatic restart takes effect after saving the application"))
 
-conf=s:taboption("wirelessconf",Value,"wirelessconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+conf=s:taboption("wirelessconf",Value,"wirelessconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -74,9 +74,9 @@ end
 end
 
 if nixio.fs.access("/etc/hosts")then
-s:tab("hostsconf",translate("hosts"),translate("本页是配置/etc/hosts的文档内容。应用保存后自动重启生效"))
+s:tab("hostsconf",translate("hosts"), translate("This page is about configuration")..translate("/etc/hosts")..translate("Document content. Automatic restart takes effect after saving the application"))
 
-conf=s:taboption("hostsconf",Value,"hostsconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+conf=s:taboption("hostsconf",Value,"hostsconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -97,8 +97,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/arpbind")then
-s:tab("arpbindconf",translate("ARP绑定"),translate("本页是配置/etc/config/arpbind包含APR绑定MAC地址文档内容。应用保存后自动重启生效"))
-conf=s:taboption("arpbindconf",Value,"arpbindconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("arpbindconf",translate("arpbind"),translate("This page is about configuration")..translate("/etc/config/arpbind")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("arpbindconf",Value,"arpbindconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -119,8 +119,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/firewall")then
-s:tab("firewallconf",translate("防火墙"),translate("本页是配置/etc/config/firewall包含防火墙协议设置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("firewallconf",Value,"firewallconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("firewallconf",translate("firewall"),translate("This page is about configuration")..translate("/etc/config/firewall")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("firewallconf",Value,"firewallconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -141,8 +141,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/mwan3")then
-s:tab("mwan3conf",translate("负载均衡"),translate("本页是配置/etc/config/mwan3包含负载均衡设置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("mwan3conf",Value,"mwan3conf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("mwan3conf",translate("mwan3"),translate("This page is about configuration")..translate("/etc/config/mwan3")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("mwan3conf",Value,"mwan3conf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -163,8 +163,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/dhcp")then
-s:tab("dhcpconf",translate("DHCP"),translate("本页是配置/etc/config/dhcp包含DHCP设置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("dhcpconf",Value,"dhcpconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("dhcpconf",translate("DHCP"),translate("This page is about configuration")..translate("/etc/config/dhcp")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("dhcpconf",Value,"dhcpconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -185,8 +185,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/ddns")then
-s:tab("ddnsconf",translate("DDNS"),translate("本页是配置/etc/config/ddns包含动态域名设置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("ddnsconf",Value,"ddnsconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("ddnsconf",translate("DDNS"),translate("This page is about configuration")..translate("/etc/config/ddns")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("ddnsconf",Value,"ddnsconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -207,8 +207,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/parentcontrol")then
-s:tab("parentcontrolconf",translate("家长控制"),translate("本页是配置/etc/config/parentcontrol包含家长控制配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("parentcontrolconf",Value,"parentcontrolconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("parentcontrolconf",translate("parentcontrol"),translate("This page is about configuration")..translate("/etc/config/parentcontrol")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("parentcontrolconf",Value,"parentcontrolconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -229,8 +229,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/autotimeset")then
-s:tab("autotimesetconf",translate("任务设置"),translate("本页是配置/etc/config/autotimeset包含定时任务设置和开机启动任务配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("autotimesetconf",Value,"autotimesetconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("autotimesetconf",translate("autotimeset"),translate("This page is about configuration")..translate("/etc/config/autotimeset")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("autotimesetconf",Value,"autotimesetconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -251,8 +251,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/wolplus")then
-s:tab("wolplusconf",translate("网络唤醒"),translate("本页是配置/etc/config/wolplus包含网络唤醒配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("wolplusconf",Value,"wolplusconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("wolplusconf",translate("wolplus"),translate("This page is about configuration")..translate("/etc/config/wolplus")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("wolplusconf",Value,"wolplusconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -273,8 +273,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/socat")then
-s:tab("socatconf",translate("端口转发"),translate("本页是配置/etc/config/socat端口转发的文档内容。应用保存后自动重启生效"))
-conf=s:taboption("socatconf",Value,"socatconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("socatconf",translate("socat"),translate("This page is about configuration")..translate("/etc/config/socat")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("socatconf",Value,"socatconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -295,8 +295,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/nginx")then
-s:tab("nginxconf",translate("NGINX"),translate("本页是配置/etc/config/nginx的文档内容。应用保存后自动重启生效"))
-conf=s:taboption("nginxconf",Value,"nginxconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("nginxconf",translate("NGINX"),translate("This page is about configuration")..translate("/etc/config/nginx")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("nginxconf",Value,"nginxconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -317,8 +317,8 @@ end
 end
 
 if nixio.fs.access("/etc/ddns-go/ddns-go-config.yaml")then
-s:tab("ddnsgoconf",translate("DDNS-GO"),translate("本页是配置/etc/ddns-go/ddns-go-config.yaml的文档内容。应用保存后自动重启生效"))
-conf=s:taboption("ddnsgoconf",Value,"ddnsgoconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("ddnsgoconf",translate("DDNS-GO"),translate("This page is about configuration")..translate("ddns-go-config.yaml")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("ddnsgoconf",Value,"ddnsgoconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -339,8 +339,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/smartdns")then
-s:tab("smartdnsconf",translate("SMARTDNS"),translate("本页是配置/etc/config/smartdns包含smartdns配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("smartdnsconf",Value,"smartdnsconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("smartdnsconf",translate("SMARTDNS"),translate("This page is about configuration")..translate("/etc/config/smartdns")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("smartdnsconf",Value,"smartdnsconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -361,8 +361,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/bypass")then
-s:tab("bypassconf",translate("BYPASS"),translate("本页是配置/etc/config/bypass包含bypass配置文档内容。应用保存后自动重启生效"))
-conf=s:taboption("bypassconf",Value,"bypassconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("bypassconf",translate("BYPASS"),translate("This page is about configuration")..translate("/etc/config/bypass")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("bypassconf",Value,"bypassconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
@@ -383,8 +383,8 @@ end
 end
 
 if nixio.fs.access("/etc/config/openclash")then
-s:tab("openclashconf",translate("openclash"),translate("本页是配置/etc/config/openclash的文档内容。应用保存后自动重启生效"))
-conf=s:taboption("openclashconf",Value,"openclashconf",nil,translate("开头的数字符号（＃）或分号的每一行（;）被视为注释；删除（;）启用指定选项。"))
+s:tab("openclashconf",translate("openclash"),translate("This page is about configuration")..translate("/etc/config/openclash")..translate("Document content. Automatic restart takes effect after saving the application"))
+conf=s:taboption("openclashconf",Value,"openclashconf",nil,translate("The starting number symbol (#) or each line of the semicolon (;) is considered a comment; Remove (;) and enable the specified option."))
 conf.template="cbi/tvalue"
 conf.rows=20
 conf.wrap="off"
