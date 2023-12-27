@@ -25,7 +25,7 @@ config basic
 	option setbar '1'
 	option primary_opacity '0'
 	option background '0'
-	option bkuse '0'
+	option bkuse '1'
 	option bgqs '1'
 	option dayword '1'
 	option mode 'light'
@@ -40,7 +40,7 @@ config theme
 	option primary_rgbs '76,157,69'
 	option primary_rgbm_ts '0.9'
 	option primary_opacity '0'
-	option bkuse '0'
+	option bkuse '1'
 	option remarks '隔栏经典蓝色'
 	option primary_rgbm 'blue'
 	option mode 'light'
@@ -135,25 +135,7 @@ dev=`ifconfig | grep "Point-to-Point" | cut -d " " -f1`
     else
 	     uci -q set netwizard.default.showhide="0"
     fi
-    uhttp=`uci -q get uhttpd.main.listen_https | awk -F ' ' '{printf $1}'`
-    if [ "x$(uci -q get advancedplus.@basic[0].uhttps)" = "x1" ] ; then
-	     [  $uhttp ] || {
-	         sed -i "/listen_https/d" /etc/config/uhttpd
-	         /etc/init.d/uhttpd stop
-	         uci -q add_list uhttpd.main.listen_https='0.0.0.0:443'
-	         uci -q add_list uhttpd.main.listen_https='[::]:443'
-	         uci commit uhttpd
-	         /etc/init.d/uhttpd restart
-	    }
-    else
-        [  $uhttp ] && 
-	{  
-	     /etc/init.d/uhttpd stop
-	    sed -i "/listen_https/d" /etc/config/uhttpd
-	    uci commit uhttpd
-	    /etc/init.d/uhttpd restart
-	}
-    fi
+
     [ "x$(uci -q get advancedplus.@basic[0].qos)" = "x1" ] && \usr\bin\qoshome
     if [ "x$(uci -q get advancedplus.@basic[0].ttl)" = "x1" ] ; then
         $ipt -t mangle -A PREROUTING -p tcp --tcp-flags RST RST -i $dev -j DROP
