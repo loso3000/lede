@@ -1,14 +1,143 @@
-#!/bin/bash
-#=================================================
-# Description: Build OpenWrt using GitHub Actions
-WORKDIR=/workdir
-HOSTNAME="EzOpWrt"
-IPADDRESS="192.168.10.1"
-OP_THEME="kucat"
-SSID=Sirpdboy
-ENCRYPTION=psk2
-KEY=123456
+#!/usr/bin/env bash
+
 config_generate=package/base-files/files/bin/config_generate
+[ ! -d files/root ] || mkdir -p files/root
+svn_exp() {
+	# 参数1是分支名, 参数2是子目录, 参数3是目标目录, 参数4仓库地址
+	trap 'rm -rf "$TMP_DIR"' 0 1 2 3
+	TMP_DIR="$(mktemp -d)" || exit 1
+	[ -d "$3" ] || mkdir -p "$3"
+	TGT_DIR="$(cd "$3"; pwd)"
+	cd "$TMP_DIR" && \
+	git init >/dev/null 2>&1 && \
+	git remote add -f origin "$4" >/dev/null 2>&1 && \
+	git checkout "remotes/origin/$1" -- "$2" && \
+	cd "$2" && cp -a . "$TGT_DIR/"
+}
+
+color() {
+	case $1 in
+		cy) echo -e "\033[1;33m$2\033[0m" ;;
+		cr) echo -e "\033[1;31m$2\033[0m" ;;
+		cg) echo -e "\033[1;32m$2\033[0m" ;;
+		cb) echo -e "\033[1;34m$2\033[0m" ;;
+	esac
+}
+clone_repo() {
+  # 参数1是仓库地址，参数2是分支名，参数3是目标目录
+  repo_url=$1
+  branch_name=$2
+  target_dir=$3
+  # 克隆仓库到目标目录，并指定分支名和深度为1
+  git clone -b $branch_name --depth 1 $repo_url $target_dir
+}
+git_exp() {
+    local repo_url branch target_dir source_dir current_dir destination_dir
+    if [[ "$1" == */* ]]; then
+        repo_url="$1"
+        shift
+    else
+        branch="-b $1"
+        repo_url="$2"
+        shift 2
+    fi
+
+    if ! git clone -q $branch --depth 1 "https://github.com/$repo_url" gitemp; then
+        echo -e "$(color cr 拉取) https://github.com/$repo_url [ $(color cr ✕) ]" | _printf
+        return 0
+    fi
+
+    for target_dir in "$@"; do
+        source_dir=$(find gitemp -maxdepth 5 -type d -name "$target_dir" -print -quit)
+        current_dir=$(find package/ feeds/ target/ -maxdepth 5 -type d -name "$target_dir" -print -quit)
+        destination_dir="${current_dir:-package/A/$target_dir}"
+        if [[ -d $current_dir && $destination_dir != $current_dir ]]; then
+            mv -f "$current_dir" ../
+        fi
+
+        if [[ -d $source_dir ]]; then
+            if mv -f "$source_dir" "$destination_dir"; then
+                if [[ $destination_dir = $current_dir ]]; then
+                    echo -e "$(color cg 替换) $target_dir [ $(color cg ✔) ]" | _printf
+                else
+                    echo -e "$(color cb 添加) $target_dir [ $(color cb ✔) ]" | _printf
+                fi
+            fi
+        fi
+    done
+
+    rm -rf gitemp
+}
+
+_printf() {
+	awk '{printf "%s %-40s %s %s %s\n" ,$1,$2,$3,$4,$5}'
+}
+
+git_url() {
+	# set -x
+	for x in $@; do
+		name="${x##*/}"
+		if [[ "$(grep "^https" <<<$x | egrep -v "helloworld$|build$|openwrt-passwall-packages$")" ]]; then
+			g=$(find package/ target/ feeds/ -maxdepth 5 -type d -name "$name" 2>/dev/null | grep "/${name}$" | head -n 1)
+			if [[ -d $g ]]; then
+				mv -f $g ../ && k="$g"
+			else
+				k="package/A/$name"
+			fi
+
+			git clone -q $x $k && f="1"
+
+			if [[ -n $f ]]; then
+				if [[ $k = $g ]]; then
+					echo -e "$(color cg 替换) $name [ $(color cg ✔) ]" | _printf
+				else
+					echo -e "$(color cb 添加) $name [ $(color cb ✔) ]" | _printf
+				fi
+			else
+				echo -e "$(color cr 拉取) $name [ $(color cr ✕) ]" | _printf
+				if [[ $k = $g ]]; then
+					mv -f ../${g##*/} ${g%/*}/ && \
+					echo -e "$(color cy 回退) ${g##*/} [ $(color cy ✔) ]" | _printf
+				fi
+			fi
+			unset -v f k g
+		else
+			for w in $(grep "^https" <<<$x); do
+				git clone -q $w ../${w##*/} && {
+					for z in `ls -l ../${w##*/} | awk '/^d/{print $NF}' | grep -Ev 'dump$|dtest$'`; do
+						g=$(find package/ feeds/ target/ -maxdepth 5 -type d -name $z 2>/dev/null | head -n 1)
+						if [[ -d $g ]]; then
+							rm -rf $g && k="$g"
+						else
+							k="package/A"
+						fi
+						if mv -f ../${w##*/}/$z $k; then
+							if [[ $k = $g ]]; then
+								echo -e "$(color cg 替换) $z [ $(color cg ✔) ]" | _printf
+							else
+								echo -e "$(color cb 添加) $z [ $(color cb ✔) ]" | _printf
+							fi
+						fi
+						unset -v k g
+					done
+				} && rm -rf ../${w##*/}
+			done
+		fi
+	done
+	# set +x
+}
+
+_packages() {
+	for z in $@; do
+		[[ $z =~ ^# ]] || echo "CONFIG_PACKAGE_$z=y" >>.config
+	done
+}
+
+_delpackage() {
+	for z in $@; do
+		[[ $z =~ ^# ]] || sed -i -E "s/(CONFIG_PACKAGE_.*$z)=y/# \1 is not set/" .config
+	done
+}
 
 [[ -n $CONFIG_S ]] || CONFIG_S=Super
 
@@ -72,7 +201,95 @@ rm -rf  ./feeds/packages/net/wget
 mv -rf ./package/wget  ./feeds/packages/net/wget
 #aria2
 rm -rf ./feeds/packages/net/aria2
+rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
+
+rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
+
+# Passwall
+rm -rf ./feeds/packages/net/pdnsd-alt
+#rm -rf ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/kcptun
+rm -rf ./feeds/packages/net/brook
+rm -rf ./feeds/packages/net/chinadns-ng
+rm -rf ./feeds/packages/net/dns2socks
+rm -rf ./feeds/packages/net/hysteria
+rm -rf ./feeds/packages/net/ipt2socks
+rm -rf ./feeds/packages/net/dns2tcp
+rm -rf ./feeds/packages/net/microsocks
+rm -rf ./feeds/packages/net/naiveproxy
+rm -rf ./feeds/packages/net/shadowsocks-rust
+rm -rf ./feeds/packages/net/simple-obfs
+rm -rf ./feeds/packages/net/ssocks
+rm -rf ./feeds/packages/net/tcping
+rm -rf ./feeds/packages/net/v2ray*
+rm -rf ./feeds/packages/net/xray*
+rm -rf ./feeds/packages/net/trojan*
+rm -rf ./feeds/packages/net/hysteria
+
+echo ' ShadowsocksR Plus+'
+# git clone https://github.com/fw876/helloworld package/ssr
+git_url "
+	https://github.com/fw876/helloworld
+	https://github.com/xiaorouji/openwrt-passwall-packages
+"
+
+#bypass
+git_exp loso3000/other luci-app-bypass 
+git_exp loso3000/other luci-app-ssr-plus
+rm ./package/A/luci-app-bypass/po/zh_Hans
+mv ./package/A/luci-app-bypass/po/zh-cn ./package/A/luci-app-bypass/po/zh_Hans
+rm ./package/A/luci-app-ssr-plus/po/zh_Hans
+mv ./package/A/luci-app-ssr-plus/po/zh-cn ./package/A/luci-app-ssr-plus/po/zh_Hans
+sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
+
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
+# sed -i 's,default n,default y,g' package/bypass/luci-app-bypass/Makefile
+sed -i 's,default n,default y,g' package/A/luci-app-ssr-plus/Makefile
+# sed -i 's,default n,default y,g' package/A/luci-app-ssr-plusdns/Makefile
+
+git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+
+# line_number_INCLUDE_Xray=$[`grep -m1 -n 'Include Xray' package/passwall/luci-app-passwall/Makefile|cut -d: -f1`-1]
+# sed -i $line_number_INCLUDE_Xray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+# sed -i $line_number_INCLUDE_Xray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+# sed -i $line_number_INCLUDE_Xray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+# line_number_INCLUDE_V2ray=$[`grep -m1 -n 'Include V2ray' package/passwall/luci-app-passwall/Makefile|cut -d: -f1`-1]
+# sed -i $line_number_INCLUDE_V2ray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+# sed -i $line_number_INCLUDE_V2ray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+# sed -i $line_number_INCLUDE_V2ray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
+
+rm -rf  ./package/A/luci-app-ssr-plus
+rm -rf  ./package/A/trojan-plus
+rm -rf  ./package/A/trojan
+
+git_exp QiuSimons/OpenWrt-Add  trojan-plus
+
+# ShadowsocksR Plus+ 依赖
+
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+rm -rf ./package/openwrt-passwall/trojan-plus
+rm -rf ./package/openwrt-passwall/v2ray-geodata
+rm -rf ./package/openwrt-passwall/trojan
+#20231119 error
+rm -rf ./package/openwrt-passwall/xray-core
+rm -rf ./package/openwrt-passwall/xray-plugin
+#rm -rf package/other/up/pass/xray-core
+#rm -rf package/other/up/pass/xray-plugin
+
+# sed -i 's,PKG_HASH.*,PKG_HASH:=5279eb1cb7555cf9292423cc9f672dc43e6e214b3411a6df26a6a1cfa59d88b7,g' ./package/openwrt-passwall/ipt2socks/Makefile
+
+
+# 在 X86 架构下移除 Shadowsocks-rust
+sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
+sed -i '/Rust:/d' package/diy/luci-app-vssr/Makefile
+sed -i '/Rust:/d' ./package/other/up/pass/luci-app-bypass/Makefile
+sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plus/Makefile
+sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plusdns/Makefile
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
@@ -104,14 +321,6 @@ sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/con
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
-# 清理
-#rm -rf feeds/*/*/{smartdns,wrtbwmon,luci-app-smartdns,luci-app-timecontrol,luci-app-ikoolproxy,luci-app-smartinfo,luci-app-socat,luci-app-netdata,luci-app-wolplus,luci-app-arpbind,luci-app-baidupcs-web}
-# rm -rf package/*/{autocore,autosamba,default-settings}
-# rm -rf feeds/*/*/{luci-app-dockerman,luci-app-aria2,luci-app-beardropper,oaf,luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-bypass,luci-app-wrtbwmon,luci-app-samba,luci-app-samba4,luci-app-unblockneteasemusic}
-
-#fserror
-#sed -i 's/fs\/cifs/fs\/smb\/client/g'  ./package/kernel/linux/modules/fs.mk
-#sed -i 's/fs\/smbfs_common/fs\/smb\/common/g'  ./package/kernel/linux/modules/fs.mk
 
 # rm -rf ./package/network/utils/iproute2/
 # svn export https://github.com/openwrt/openwrt/trunk/package/network/utils/iproute2 ./package/network/utils/iproute2
@@ -137,10 +346,13 @@ sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasr
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
 # Add ddnsto & linkease
-svn export https://github.com/linkease/nas-packages-luci/trunk/luci/ ./package/diy1/luci
-svn export https://github.com/linkease/nas-packages/trunk/network/services/ ./package/diy1/linkease
-svn export https://github.com/linkease/nas-packages/trunk/multimedia/ffmpeg-remux/ ./package/diy1/ffmpeg-remux
-svn export https://github.com/linkease/istore/trunk/luci/ ./package/diy1/istore
+git_exp linkease/nas-packages-luci luci
+git_exp linkease/nas-packages services ffmpeg-remux
+git_exp linkease/istore luci
+# svn export https://github.com/linkease/nas-packages-luci/trunk/luci/ ./package/diy1/luci
+# svn export https://github.com/linkease/nas-packages/trunk/network/services/ ./package/diy1/linkease
+# svn export https://github.com/linkease/nas-packages/trunk/multimedia/ffmpeg-remux/ ./package/diy1/ffmpeg-remux
+# svn export https://github.com/linkease/istore/trunk/luci/ ./package/diy1/istore
 sed -i 's/1/0/g' ./package/diy1/linkease/linkease/files/linkease.config
 sed -i 's/luci-lib-ipkg/luci-base/g' package/diy1/istore/luci-app-store/Makefile
 # svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
@@ -154,11 +366,17 @@ rm -rf packages/qbittorrent
 
 rm -rf ./feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/v2ray-geodata
-git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+# git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 rm -rf ./feeds/packages/net/mosdns
+rm -rf ./feeds/luci/luci-app-mosdns
+git_exp sbwml/luci-app-mosdns luci-app-mosdns
+git_exp sbwml/luci-app-mosdns mosdns
 
+# 添加额外软件包alist
+git clone https://github.com/sbwml/luci-app-alist package/alist
+sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
 
@@ -166,7 +384,8 @@ git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/l
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 #sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 
-sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/ImmortalWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/OpenWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
 
 sed -i 's/msgstr "Socat"/msgstr "端口转发"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
@@ -239,112 +458,6 @@ sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefil
 # svn export https://github.com/coolsnowwolf/packages/trunk/utils/docker ./feeds/packages/utils/docker
 # rm -rf ./feeds/packages/utils/dockerd
 # svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
-
-# rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
-
-# Passwall
-# rm -rf ./feeds/packages/net/pdnsd-alt
-# rm -rf ./feeds/packages/net/shadowsocks-libev
-# rm -rf ./feeds/packages/net/xray-core
-# rm -rf ./feeds/packages/net/kcptun
-# rm -rf ./feeds/packages/net/brook
-# rm -rf ./feeds/packages/net/chinadns-ng
-# rm -rf ./feeds/packages/net/dns2socks
-rm -rf ./feeds/packages/net/hysteria
-# rm -rf ./feeds/packages/net/ipt2socks
-# rm -rf ./feeds/packages/net/microsocks
-# rm -rf ./feeds/packages/net/naiveproxy
-# rm -rf ./feeds/packages/net/shadowsocks-rust
-# rm -rf ./feeds/packages/net/simple-obfs
-# rm -rf ./feeds/packages/net/ssocks
-# rm -rf ./feeds/packages/net/tcping
-#rm -rf ./feeds/packages/net/v2ray*
-rm -rf ./feeds/packages/net/xray*
-rm -rf ./feeds/packages/net/trojan*
-rm -rf ./feeds/packages/net/hysteria
-
-#bypass
-# rm -rf package/other/up/pass/luci-app-bypass 
-
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2
-rm -rf ./feeds/luci/applications/luci-app-vssr
-# rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-# rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-
-git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-
-line_number_INCLUDE_Xray=$[`grep -m1 -n 'Include Xray' package/passwall/luci-app-passwall/Makefile|cut -d: -f1`-1]
-sed -i $line_number_INCLUDE_Xray'd' package/passwall/luci-app-passwall/Makefile
-sed -i $line_number_INCLUDE_Xray'd' package/passwall/luci-app-passwall/Makefile
-sed -i $line_number_INCLUDE_Xray'd' package/passwall/luci-app-passwall/Makefile
-line_number_INCLUDE_V2ray=$[`grep -m1 -n 'Include V2ray' package/passwall/luci-app-passwall/Makefile|cut -d: -f1`-1]
-sed -i $line_number_INCLUDE_V2ray'd' package/passwall/luci-app-passwall/Makefile
-sed -i $line_number_INCLUDE_V2ray'd' package/passwall/luci-app-passwall/Makefile
-sed -i $line_number_INCLUDE_V2ray'd' package/passwall/luci-app-passwall/Makefile
-
-echo ' ShadowsocksR Plus+'
-# git clone https://github.com/fw876/helloworld package/ssr
-# rm -rf  ./package/ssr/luci-app-ssr-plus
-# ShadowsocksR Plus+ 依赖
-
-
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-rm -rf ./package/openwrt-passwall/trojan-plus
-rm -rf ./package/openwrt-passwall/v2ray-geodata
-rm -rf ./package/openwrt-passwall/trojan
-#20231119 error
-rm -rf ./package/openwrt-passwall/xray-core
-rm -rf ./package/openwrt-passwall/xray-plugin
-#rm -rf package/other/up/pass/xray-core
-#rm -rf package/other/up/pass/xray-plugin
-
-# sed -i 's,PKG_HASH.*,PKG_HASH:=5279eb1cb7555cf9292423cc9f672dc43e6e214b3411a6df26a6a1cfa59d88b7,g' ./package/openwrt-passwall/ipt2socks/Makefile
-# svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan package/new/trojan
-# svn export https://github.com/xiaorouji/openwrt-passwall/branches/packages/trojan-plus package/new/trojan-plus
-
-rm -rf ./feeds/packages/net/trojan-plus
-svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus ./feeds/packages/net/trojan-plus
-svn export svn export https://github.com/fw876/helloworld/trunk/lua-neturl ./feeds/packages/net/lua-neturl
-# rm -rf ./feeds/packages/net/shadowsocks-libev
-# svn export https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev ./feeds/packages/net/shadowsocks-libev
-# rm -rf ./feeds/packages/net/redsocks2
-# svn export https://github.com/fw876/helloworld/branches/main/redsocks2 ./feeds/packages/net/redsocks2
-# rm -rf ./feeds/packages/net/srelay
-# svn export https://github.com/coolsnowwolf/lede/trunk/package/lean/srelay ./feeds/packages/net/srelay
-# svn export https://github.com/fw876/helloworld/branches/main/trojan ./feeds/packages/net/trojan
-# svn export https://github.com/fw876/helloworld/branches/main/tcping ./feeds/packages/net/tcping
-# svn export https://github.com/fw876/helloworld/branches/main/dns2tcp ./feeds/packages/net/dns2tcp
-# svn export https://github.com/fw876/helloworld/branches/main/shadowsocksr-libev ./feeds/packages/net/shadowsocksr-libev
-# svn export https://github.com/fw876/helloworld/branches/main/simple-obfs ./feeds/packages/net/simple-obfs
-
-# svn export https://github.com/fw876/helloworld/branches/main/chinadns-ng ./feeds/packages/net/chinadns-ng
-# svn export https://github.com/fw876/helloworld/branches/main/hysteria package/new/hysteria
-rm -rf ./feeds/packages/net/shadow-tls
-svn export https://github.com/fw876/helloworld/trunk/shadow-tls ./feeds/packages/net/shadow-tls
-svn export https://github.com/fw876/helloworld/trunk/shadow-tls package/new/shadow-tls
-#svn export https://github.com/fw876/helloworld/branches/main/shadow-tls ./feeds/packages/net/shadow-tls
-
-svn export https://github.com/fw876/helloworld/trunk/tuic-client ./feeds/packages/net/tuic-client
-svn export https://github.com/fw876/helloworld/trunk/v2ray-plugin ./feeds/packages/net/v2ray-plugin
-# svn export https://github.com/fw876/helloworld/branches/main/shadowsocks-rust ./feeds/packages/net/shadowsocks-rust
-
-# 在 X86 架构下移除 Shadowsocks-rust
-sed -i '/Rust:/d' package/passwall/luci-app-passwall/Makefile
-sed -i '/Rust:/d' package/diy/luci-app-vssr/Makefile
-sed -i '/Rust:/d' ./package/other/up/pass/luci-app-bypass/Makefile
-sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plus/Makefile
-sed -i '/Rust:/d' ./package/other/up/pass/luci-ssr-plusdns/Makefile
-
-#bypass
-svn export https://github.com/loso3000/other/trunk/up/pass ./package/pass
-rm ./package/pass/luci-app-bypass/po/zh_Hans
-mv ./package/pass/luci-app-bypass/po/zh-cn ./package/pass/luci-app-bypass/po/zh_Hans
-rm ./package/pass/luci-app-ssr-plus/po/zh_Hans
-mv ./package/pass/luci-app-ssr-plus/po/zh-cn ./package/pass/luci-app-ssr-plus/po/zh_Hans
-sed -i 's,default n,default y,g' package/pass/luci-app-bypass/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
