@@ -203,7 +203,7 @@ mv -rf ./package/wget  ./feeds/packages/net/wget
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
-
+rm -rf ./feeds/luci/luci-app-vssr
 rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
 
 # Passwall
