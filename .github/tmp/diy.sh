@@ -266,8 +266,8 @@ rm -rf  ./package/A/trojan
 
 
 #20231119 error
-rm -rf ./package/A/xray-core
-rm -rf ./package/A/xray-plugin
+#rm -rf ./package/A/xray-core
+#rm -rf ./package/A/xray-plugin
 rm -rf ./package/A/mosdns
 
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
