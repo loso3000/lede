@@ -8,20 +8,8 @@ CONFIG_GRUB_TIMEOUT="0"
 CONFIG_GRUB_TITLE="EzOpWrt"
 CONFIG_PACKAGE_libatomic=y
 CONFIG_PACKAGE_resolveip=y
-CONFIG_PACKAGE_sqm-scripts=y
 CONFIG_PACKAGE_htop=y
-CONFIG_HTOP_LMSENSORS=y
 CONFIG_PACKAGE_kmod-nvme=y
-CONFIG_PACKAGE_kmod-crypto-ccm=y
-CONFIG_PACKAGE_kmod-crypto-cmac=y
-CONFIG_PACKAGE_kmod-crypto-ctr=y
-CONFIG_PACKAGE_kmod-crypto-gcm=y
-CONFIG_PACKAGE_kmod-crypto-gf128=y
-CONFIG_PACKAGE_kmod-crypto-ghash=y
-CONFIG_PACKAGE_kmod-crypto-hmac=y
-CONFIG_PACKAGE_kmod-crypto-rng=y
-CONFIG_PACKAGE_kmod-crypto-seqiv=y
-CONFIG_PACKAGE_kmod-crypto-sha256=y
 CONFIG_PACKAGE_kmod-fs-nfs=y
 CONFIG_PACKAGE_kmod-fs-nfs-common=y
 CONFIG_PACKAGE_kmod-fs-nfs-v3=y
@@ -35,11 +23,8 @@ CONFIG_PACKAGE_kmod-iavf=y
 CONFIG_PACKAGE_kmod-ice=y
 CONFIG_PACKAGE_kmod-ifb=y
 CONFIG_PACKAGE_kmod-igb=y
-CONFIG_PACKAGE_kmod-igb-vendor=m
 CONFIG_PACKAGE_kmod-ixgbe=y
-CONFIG_PACKAGE_kmod-ixgbe-vendor=m
 CONFIG_PACKAGE_kmod-ixgbevf=y
-CONFIG_PACKAGE_kmod-ixgbevf-vendor=m
 CONFIG_PACKAGE_kmod-via-velocity=y
 CONFIG_PACKAGE_kmod-dnsresolver=y
 CONFIG_PACKAGE_kmod-gre=y
@@ -83,15 +68,6 @@ CONFIG_PACKAGE_libcurl=y
 #
 CONFIG_LIBCURL_OPENSSL=y
 #
-# Supported protocols
-#
-CONFIG_LIBCURL_FILE=y
-CONFIG_LIBCURL_FTP=y
-CONFIG_LIBCURL_HTTP=y
-CONFIG_LIBCURL_COOKIES=y
-CONFIG_LIBCURL_TFTP=y
-CONFIG_LIBCURL_NGHTTP2=y
-#
 # Miscellaneous
 #
 CONFIG_LIBCURL_PROXY=y
@@ -132,11 +108,9 @@ CONFIG_PACKAGE_ppp-mod-pppol2tp=y
 CONFIG_PACKAGE_ppp-mod-pptp=y
 CONFIG_PACKAGE_xl2tpd=y
 
-
 # mt7916 mt7921 mt7922
 CONFIG_PACKAGE_wpad-openssl=y
 CONFIG_PACKAGE_wireless-tools=y
-
 CONFIG_PACKAGE_wireless-regdb=y
 
 CONFIG_PACKAGE_kmod-ath10k=y
