@@ -317,10 +317,8 @@ sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/con
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
-
 # rm -rf ./package/network/utils/iproute2/
 # svn export https://github.com/openwrt/openwrt/trunk/package/network/utils/iproute2 ./package/network/utils/iproute2
-
 
 #  coremark
 sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
@@ -631,4 +629,8 @@ EOF
 
 ./scripts/feeds update -i
 cat  ./x86_64/${CONFIG_S}  > .config
+case "${CONFIG_S}" in
+"Vip"*)
 cat  ./x86_64/comm  >> .config
+;;
+esac
