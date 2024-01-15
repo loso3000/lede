@@ -258,9 +258,6 @@ rm -rf ./package/A/xray-core
 rm -rf ./package/A/xray-plugin
 rm -rf ./package/A/mosdns
 
-git_exp loso3000/other xray-core
-git_exp loso3000/other xray-plugin
-
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp fw876/helloworld lua-neturl
 git_exp fw876/helloworld shadow-tls
@@ -279,9 +276,12 @@ rm -rf ./package/openwrt-passwall/trojan-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
 rm -rf ./package/openwrt-passwall/trojan
 rm -rf ./package/openwrt-passwall/mosdns
+
 #20231119 error
-rm -rf ./package/openwrt-passwall/xray-core
-rm -rf ./package/openwrt-passwall/xray-plugin
+#rm -rf ./package/openwrt-passwall/xray-core
+#rm -rf ./package/openwrt-passwall/xray-plugin
+git_exp loso3000/other xray-core
+git_exp loso3000/other xray-plugin
 
 #修正nat回流 
 cat  patch/banner > ./package/base-files/files/etc/banner
