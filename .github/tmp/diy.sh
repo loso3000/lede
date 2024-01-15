@@ -274,7 +274,7 @@ git_exp fw876/helloworld chinadns-ng
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 rm -rf ./package/openwrt-passwall/trojan-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
-rm -rf ./package/openwrt-passwall/trojan
+#rm -rf ./package/openwrt-passwall/trojan
 rm -rf ./package/openwrt-passwall/mosdns
 
 #20231119 error
