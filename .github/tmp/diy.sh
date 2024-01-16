@@ -182,10 +182,33 @@ rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
+
+
 rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
-# git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-# git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-# git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+
+# Passwall
+rm -rf ./feeds/packages/net/pdnsd-alt
+rm -rf ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/kcptun
+rm -rf ./feeds/packages/net/brook
+rm -rf ./feeds/packages/net/chinadns-ng
+rm -rf ./feeds/packages/net/dns2socks
+rm -rf ./feeds/packages/net/hysteria
+rm -rf ./feeds/packages/net/ipt2socks
+rm -rf ./feeds/packages/net/microsocks
+rm -rf ./feeds/packages/net/naiveproxy
+rm -rf ./feeds/packages/net/shadowsocks-rust
+rm -rf ./feeds/packages/net/simple-obfs
+rm -rf ./feeds/packages/net/ssocks
+rm -rf ./feeds/packages/net/tcping
+rm -rf ./feeds/packages/net/v2ray*
+rm -rf ./feeds/packages/net/xray*
+rm -rf ./feeds/packages/net/trojan*
+rm -rf ./feeds/packages/net/hysteria
+
+
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 
 rm -rf ./package/openwrt-passwall/v2ray-geodata
 rm -rf ./package/openwrt-passwall/mosdns
@@ -198,19 +221,28 @@ git_exp fw876/helloworld srelay
 #bypass
 # rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
-rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+# rm -rf ./feeds/luci/applications/luci-app-vssr
+# rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
 
-git_exp loso3000/other luci-app-bypass 
-git_exp loso3000/other luci-app-ssr-plus
 
-rm ./package/A/luci-app-bypass/po/zh_Hans
-mv ./package/A/luci-app-bypass/po/zh-cn ./package/A/luci-app-bypass/po/zh_Hans
-rm ./package/A/luci-app-ssr-plus/po/zh_Hans
-mv ./package/A/luci-app-ssr-plus/po/zh-cn ./package/A/luci-app-ssr-plus/po/zh_Hans
+git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+
+
+
+git clone https://github.com/loso3000/other ./package/other
+# git_exp loso3000/other luci-app-bypass 
+rm -rf ./package/other
+mv -f ./package/other/up/pass ./package/apass 
+rm ./package/apass/luci-app-bypass/po/zh_Hans
+mv ./package/apass/luci-app-bypass/po/zh-cn ./package/apass/luci-app-bypass/po/zh_Hans
+
+
+rm ./package/apass/luci-app-ssr-plus/po/zh_Hans
+mv ./package/apass/luci-app-ssr-plus/po/zh-cn ./package/apass/luci-app-ssr-plus/po/zh_Hans
+
 sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
-
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
@@ -264,20 +296,11 @@ sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
-# Add ddnsto & linkease
-# git_exp linkease/nas-packages-luci luci
-# git_exp linkease/nas-packages services ffmpeg-remux
-# git_exp linkease/istore luci
 git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
 git clone  https://github.com/linkease/nas-packages ./package/nas-packages
 git clone  https://github.com/linkease/istore ./package/istore
-# svn export https://github.com/linkease/nas-packages-luci/trunk/luci/ ./package/diy1/luci
-# svn export https://github.com/linkease/nas-packages/trunk/network/services/ ./package/diy1/linkease
-# svn export https://github.com/linkease/nas-packages/trunk/multimedia/ffmpeg-remux/ ./package/diy1/ffmpeg-remux
-# svn export https://github.com/linkease/istore/trunk/luci/ ./package/diy1/istore
 sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease.config
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
-# svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
 
 #qbittorrent
 rm -rf packages/qbittorrent
@@ -348,20 +371,14 @@ sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/n
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
 
 
-# Fix libssh
-# rm -rf feeds/packages/libs
-# svn export https://github.com/openwrt/packages/trunk/libs/libssh feeds/packages/libs/
-
-# git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
-# sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
-
 # Add OpenClash
 
 # Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
-svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./package/diy/luci-app-openclash
+git_exp vernesong/OpenClash luci-app-openclash
+# svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./package/diy/luci-app-openclash
 # svn export https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/new/luci-app-openclash
-sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
+sed -i 's/+libcap /+libcap +libcap-bin /' package/A/luci-app-openclash/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
