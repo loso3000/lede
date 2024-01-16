@@ -207,20 +207,17 @@ rm -rf ./feeds/packages/net/xray*
 rm -rf ./feeds/packages/net/trojan*
 rm -rf ./feeds/packages/net/hysteria
 
+
 git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 
 
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-rm -rf ./package/openwrt-passwall/trojan-plus
+
 rm -rf ./package/openwrt-passwall/v2ray-geodata
-rm -rf ./package/openwrt-passwall/trojan
 rm -rf ./package/openwrt-passwall/mosdns
-#20231119 error
-#rm -rf ./package/openwrt-passwall/xray-core
-#rm -rf ./package/openwrt-passwall/xray-plugin
-rm -rf ./feeds/packages/net/shadowsocks-libev
+
 
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp fw876/helloworld lua-neturl
