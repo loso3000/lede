@@ -184,10 +184,10 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 
 #ssr
-git_url "
- 	https://github.com/xiaorouji/openwrt-passwall-packages
-	https://github.com/fw876/helloworld
-"
+#git_url "
+# 	https://github.com/xiaorouji/openwrt-passwall-packages
+#	https://github.com/fw876/helloworld
+#"
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 
 rm -rf ./package/openwrt-passwall/v2ray-geodata
@@ -203,15 +203,15 @@ git_exp fw876/helloworld srelay
 # rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
 # rm -rf ./feeds/luci/applications/luci-app-vssr
-# rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
 
 
 #git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
 #git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
-git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
-git_exp xiaorouji/openwrt-passwall luci-app-passwall
+#git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
+#git_exp xiaorouji/openwrt-passwall luci-app-passwall
 
 
 git clone https://github.com/loso3000/other ./package/other
