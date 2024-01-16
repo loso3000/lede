@@ -183,16 +183,12 @@ rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
 
-
-rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
-
 # Passwall
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/shadowsocks-libev
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/kcptun
 rm -rf ./feeds/packages/net/brook
-rm -rf ./feeds/packages/net/chinadns-ng
 rm -rf ./feeds/packages/net/dns2socks
 rm -rf ./feeds/packages/net/hysteria
 rm -rf ./feeds/packages/net/ipt2socks
@@ -206,8 +202,6 @@ rm -rf ./feeds/packages/net/v2ray*
 rm -rf ./feeds/packages/net/xray*
 rm -rf ./feeds/packages/net/trojan*
 rm -rf ./feeds/packages/net/hysteria
-
-
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 
 rm -rf ./package/openwrt-passwall/v2ray-geodata
@@ -216,6 +210,7 @@ rm -rf ./package/openwrt-passwall/mosdns
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp fw876/helloworld lua-neturl
 git_exp fw876/helloworld shadow-tls
+git_exp fw876/helloworld chinadns-ng
 git_exp fw876/helloworld srelay
 
 #bypass
