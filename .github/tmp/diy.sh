@@ -154,9 +154,6 @@ mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
-#rm -rf  ./include/kernel-5.4
-#svn export https://github.com/coolsnowwolf/lede/trunk/include/kernel-5.4 ./include/kernel-5.4
-
 case "${CONFIG_S}" in
 Plus)
 ;;
@@ -204,9 +201,13 @@ rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
-#ssr 
+
+
+rm -rf ./feeds/luci/applications/chinadns-ng package/feeds/packages/chinadns-ng
+
+# Passwall
 rm -rf ./feeds/packages/net/pdnsd-alt
-# rm -rf ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/shadowsocks-libev
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/kcptun
 rm -rf ./feeds/packages/net/brook
@@ -225,38 +226,20 @@ rm -rf ./feeds/packages/net/xray*
 rm -rf ./feeds/packages/net/trojan*
 rm -rf ./feeds/packages/net/hysteria
 
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-# git_url "
-# 	https://github.com/xiaorouji/openwrt-passwall-packages
-# 	https://github.com/fw876/helloworld
-# "
+git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
-git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
-git_exp xiaorouji/openwrt-passwall luci-app-passwall
 
-git_exp loso3000/other luci-app-bypass 
-git_exp loso3000/other luci-app-ssr-plus
-rm ./package/A/luci-app-bypass/po/zh_Hans
-mv ./package/A/luci-app-bypass/po/zh-cn ./package/A/luci-app-bypass/po/zh_Hans
-rm ./package/A/luci-app-ssr-plus/po/zh_Hans
-mv ./package/A/luci-app-ssr-plus/po/zh-cn ./package/A/luci-app-ssr-plus/po/zh_Hans
-sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
-# sed -i 's,default n,default y,g' package/bypass/luci-app-bypass/Makefile
-sed -i 's,default n,default y,g' package/A/luci-app-ssr-plus/Makefile
-# sed -i 's,default n,default y,g' package/A/luci-app-ssr-plusdns/Makefile
-
-rm -rf  ./package/A/luci-app-ssr-plus
-rm -rf  ./package/A/trojan-plus
-rm -rf  ./package/A/trojan
-
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+rm -rf ./package/openwrt-passwall/trojan-plus
+rm -rf ./package/openwrt-passwall/v2ray-geodata
+rm -rf ./package/openwrt-passwall/trojan
+rm -rf ./package/openwrt-passwall/mosdns
 #20231119 error
-rm -rf ./package/A/xray-core
-rm -rf ./package/A/xray-plugin
-rm -rf ./package/A/mosdns
+#rm -rf ./package/openwrt-passwall/xray-core
+#rm -rf ./package/openwrt-passwall/xray-plugin
+rm -rf ./feeds/packages/net/shadowsocks-libev
 
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp fw876/helloworld lua-neturl
@@ -271,26 +254,27 @@ git_exp fw876/helloworld dns2tcp
 git_exp fw876/helloworld srelay
 git_exp fw876/helloworld chinadns-ng
 
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-rm -rf ./package/openwrt-passwall/trojan-plus
-rm -rf ./package/openwrt-passwall/v2ray-geodata
-#rm -rf ./package/openwrt-passwall/trojan
-rm -rf ./package/openwrt-passwall/mosdns
+#bypass
+rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2
+rm -rf ./feeds/luci/applications/luci-app-vssr
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
 
-#20231119 error
-#rm -rf ./package/openwrt-passwall/xray-core
-#rm -rf ./package/openwrt-passwall/xray-plugin
-git_exp loso3000/other xray-core
-git_exp loso3000/other xray-plugin
+git_exp loso3000/other luci-app-bypass 
+git_exp loso3000/other luci-app-ssr-plus
 
-#修正nat回流 
+rm ./package/A/luci-app-bypass/po/zh_Hans
+mv ./package/A/luci-app-bypass/po/zh-cn ./package/A/luci-app-bypass/po/zh_Hans
+rm ./package/A/luci-app-ssr-plus/po/zh_Hans
+mv ./package/A/luci-app-ssr-plus/po/zh-cn ./package/A/luci-app-ssr-plus/po/zh_Hans
+sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
+
+
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
-
 cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
-#rm -rf  ./include/kernel-6.1
-#curl -fsSL  https://raw.githubusercontent.com/coolsnowwolf/lede/master/include/kernel-6.1 > ./include/kernel-6.1
 
 mkdir -p files/usr/share
 mkdir -p files/etc/root
@@ -438,24 +422,6 @@ svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./pac
 # svn export https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/new/luci-app-openclash
 sed -i 's/+libcap /+libcap +libcap-bin /' package/new/luci-app-openclash/Makefile
 
-# Add luci-app-dockerman
-# rm -rf ./feeds/luci/applications/luci-app-docker
-# rm -rf ./package/diy/luci-app-dockerman
-# git clone --depth=1 https://github.com/lisaac/luci-lib-docker ./package/new/luci-lib-docker
-# git clone --depth=1 https://github.com/lisaac/luci-app-dockerman ./package/new/luci-app-dockerman
-# rm -rf ./feeds/luci/collections/luci-lib-docker
-# svn export https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker ./feeds/luci/collections/luci-lib-docker
-
-# rm -rf ./feeds/luci/applications/luci-app-dockerman
-# svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
-
-# rm -rf ./feeds/packages/utils/containerd
-# svn export https://github.com/coolsnowwolf/packages/trunk/utils/containerd ./feeds/packages/utils/containerd
-# rm -rf ./feeds/packages/utils/docker
-# svn export https://github.com/coolsnowwolf/packages/trunk/utils/docker ./feeds/packages/utils/docker
-# rm -rf ./feeds/packages/utils/dockerd
-# svn export https://github.com/coolsnowwolf/packages/trunk/utils/dockerd ./feeds/packages/utils/dockerd
-
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
 # Remove some default packages
@@ -471,7 +437,7 @@ sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-script
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 
 # 修复 hostapd 报错
-#cp -f $GITHUB_WORKSPACE/scriptx/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
+cp -f  ./patch/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
 
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
@@ -497,7 +463,7 @@ ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 
-date1="${CONFIG_S}-${DATA}_by_Sirpdboy"
+date1="${CONFIG_Y}-${DATA}_by_Sirpdboy"
 if [ "$VER1" = "5.4" ]; then
 date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
 elif [ "$VER1" = "5.15" ]; then
