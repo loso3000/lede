@@ -2,5 +2,5 @@
 
 START=99
 start(){
-
+echo "Service autotimesetrun started!" >/dev/null
 }
