@@ -2,18 +2,6 @@
 
 config_generate=package/base-files/files/bin/config_generate
 [ ! -d files/root ] || mkdir -p files/root
-svn_exp() {
-	# 参数1是分支名, 参数2是子目录, 参数3是目标目录, 参数4仓库地址
-	trap 'rm -rf "$TMP_DIR"' 0 1 2 3
-	TMP_DIR="$(mktemp -d)" || exit 1
-	[ -d "$3" ] || mkdir -p "$3"
-	TGT_DIR="$(cd "$3"; pwd)"
-	cd "$TMP_DIR" && \
-	git init >/dev/null 2>&1 && \
-	git remote add -f origin "$4" >/dev/null 2>&1 && \
-	git checkout "remotes/origin/$1" -- "$2" && \
-	cd "$2" && cp -a . "$TGT_DIR/"
-}
 
 color() {
 	case $1 in
@@ -23,14 +11,7 @@ color() {
 		cb) echo -e "\033[1;34m$2\033[0m" ;;
 	esac
 }
-clone_repo() {
-  # 参数1是仓库地址，参数2是分支名，参数3是目标目录
-  repo_url=$1
-  branch_name=$2
-  target_dir=$3
-  # 克隆仓库到目标目录，并指定分支名和深度为1
-  git clone -b $branch_name --depth 1 $repo_url $target_dir
-}
+
 git_exp() {
     local repo_url branch target_dir source_dir current_dir destination_dir
     if [[ "$1" == */* ]]; then
@@ -244,15 +225,7 @@ rm -rf ./feeds/packages/net/shadowsocks-libev
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp fw876/helloworld lua-neturl
 git_exp fw876/helloworld shadow-tls
-git_exp fw876/helloworld tuic-client
-git_exp fw876/helloworld v2ray-plugin
-git_exp fw876/helloworld shadowsocks-rust
-git_exp fw876/helloworld chinadns-ng
-git_exp fw876/helloworld simple-obfs
-git_exp fw876/helloworld shadowsocksr-libev
-git_exp fw876/helloworld dns2tcp
 git_exp fw876/helloworld srelay
-git_exp fw876/helloworld chinadns-ng
 
 #bypass
 rm -rf ./feeds/luci/applications/luci-app-passwall
