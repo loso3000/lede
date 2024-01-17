@@ -179,36 +179,57 @@ rm -rf  ./feeds/packages/net/wget
 mv -rf ./package/wget  ./feeds/packages/net/wget
 #aria2
 rm -rf ./feeds/packages/net/aria2
-rm -rf ./feeds/packages/net/ariang
+#rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
+
+# Passwall
+rm -rf ./feeds/packages/net/pdnsd-alt
+#rm -rf ./feeds/packages/net/shadowsocks-libev
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/kcptun
+rm -rf ./feeds/packages/net/brook
+rm -rf ./feeds/packages/net/chinadns-ng
+rm -rf ./feeds/packages/net/dns2socks
+rm -rf ./feeds/packages/net/hysteria
+rm -rf ./feeds/packages/net/ipt2socks
+rm -rf ./feeds/packages/net/dns2tcp
+rm -rf ./feeds/packages/net/microsocks
+rm -rf ./feeds/packages/net/naiveproxy
+rm -rf ./feeds/packages/net/shadowsocks-rust
+rm -rf ./feeds/packages/net/simple-obfs
+rm -rf ./feeds/packages/net/ssocks
+rm -rf ./feeds/packages/net/tcping
+rm -rf ./feeds/packages/net/v2ray*
+rm -rf ./feeds/packages/net/xray*
+rm -rf ./feeds/packages/net/trojan*
+rm -rf ./feeds/packages/net/hysteria
 
 #ssr
 #git_url "
 # 	https://github.com/xiaorouji/openwrt-passwall-packages
 #	https://github.com/fw876/helloworld
 #"
-#git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+git clone https://github.com/fw876/helloworld package/helloworld
 
+rm -rf package/helloworld/mosdns
+rm -rf package/helloworld/luci-app-ssr-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
 rm -rf ./package/openwrt-passwall/mosdns
 
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
-git_exp fw876/helloworld lua-neturl
-git_exp fw876/helloworld shadow-tls
-git_exp fw876/helloworld chinadns-ng
-git_exp fw876/helloworld srelay
 
 #bypass
-# rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
 # rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
 
 
-#git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-#git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 #git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
 #git_exp xiaorouji/openwrt-passwall luci-app-passwall
