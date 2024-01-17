@@ -187,7 +187,7 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 rm -rf ./feeds/packages/net/pdnsd-alt
 #rm -rf ./feeds/packages/net/shadowsocks-libev
 rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/kcptun
+# rm -rf ./feeds/packages/net/kcptun
 rm -rf ./feeds/packages/net/brook
 rm -rf ./feeds/packages/net/chinadns-ng
 rm -rf ./feeds/packages/net/dns2socks
@@ -223,7 +223,7 @@ git_exp QiuSimons/OpenWrt-Add  trojan-plus
 #bypass
 rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
-# rm -rf ./feeds/luci/applications/luci-app-vssr
+rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
 
