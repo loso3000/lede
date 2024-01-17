@@ -351,13 +351,9 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 
 
 # Add OpenClash
-
-# Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
-git_exp vernesong/OpenClash luci-app-openclash
-# svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash ./package/diy/luci-app-openclash
-# svn export https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/new/luci-app-openclash
-sed -i 's/+libcap /+libcap +libcap-bin /' package/A/luci-app-openclash/Makefile
+git clone https://github.com/vernesong/OpenClash.git package/openclash
+sed -i 's/+libcap /+libcap +libcap-bin /' package/openclash/luci-app-openclash/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
