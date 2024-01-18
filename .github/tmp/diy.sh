@@ -213,6 +213,8 @@ rm -rf ./feeds/packages/net/hysteria
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 git clone https://github.com/fw876/helloworld package/helloworld
 
+rm -rf package/openwrt-passwall/xray-core
+rm -rf package/openwrt-passwall/xray-plugin
 rm -rf package/helloworld/mosdns
 rm -rf package/helloworld/luci-app-ssr-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
