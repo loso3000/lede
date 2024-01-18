@@ -202,6 +202,8 @@ rm -rf ./package/openwrt-passwall/mosdns
 
 git_exp QiuSimons/OpenWrt-Add  trojan-plus
 
+git_exp xiaorouji/openwrt-passwall-packages sing-box
+git_exp fw876/helloworld  shadow-tls
 #bypass
 rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
