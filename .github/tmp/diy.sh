@@ -205,7 +205,7 @@ git_exp QiuSimons/OpenWrt-Add  trojan-plus
 git_exp xiaorouji/openwrt-passwall-packages sing-box
 git_exp fw876/helloworld  shadow-tls
 #bypass
-rm -rf ./feeds/luci/applications/luci-app-passwall
+# rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
 rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
@@ -213,7 +213,7 @@ rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-
 
 
 # git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+# git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
 
 #git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
 #git_exp xiaorouji/openwrt-passwall luci-app-passwall
