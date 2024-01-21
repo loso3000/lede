@@ -174,12 +174,11 @@ rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf  ./feeds/packages/net/open-app-filter
 rm -rf  ./feeds/packages/net/oaf
 rm -rf  ./feeds/luci/applications/luci-app-appfilter
-#rm -rf  ./package/wget 
-rm -rf  ./feeds/packages/net/wget
-mv -rf ./package/wget  ./feeds/packages/net/wget
+
+# rm -rf  ./feeds/packages/net/wget
+# mv -rf ./package/wget  ./feeds/packages/net/wget
 #aria2
 rm -rf ./feeds/packages/net/aria2
-#rm -rf ./feeds/packages/net/ariang
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
 
@@ -200,10 +199,10 @@ rm -rf package/helloworld/luci-app-ssr-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
 rm -rf ./package/openwrt-passwall/mosdns
 
-git_exp QiuSimons/OpenWrt-Add  trojan-plus
+git_exp QiuSimons/OpenWrt-Add trojan-plus
 
 git_exp xiaorouji/openwrt-passwall-packages sing-box
-git_exp fw876/helloworld  shadow-tls
+git_exp fw876/helloworld shadow-tls
 #bypass
 # rm -rf ./feeds/luci/applications/luci-app-passwall
 # rm -rf ./feeds/luci/applications/luci-app-passwall2
@@ -248,7 +247,7 @@ echo "修改默认主题"
 # sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
 
 rm -rf ./feeds/luci/themes/luci-theme-design
- git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
 #rm -rf ./feeds/luci/themes/luci-theme-argon
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 
@@ -287,7 +286,7 @@ sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
 #qbittorrent
-rm -rf packages/qbittorrent
+# rm -rf packages/qbittorrent
 #rm -rf ./feeds/packages/net/qbittorrent
 #rm -rf ./feeds/packages/net/qBittorrent-Enhanced-Edition
 #rm -rf ./feeds/packages/net/qBittorrent-static
@@ -306,8 +305,8 @@ rm -rf ./feeds/luci/luci-app-mosdns
 # 添加额外软件包alist
 git clone https://github.com/sbwml/luci-app-alist package/alist
 sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
-rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
+# rm -rf feeds/packages/lang/golang
+# git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
 
 #设置upnpd
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
@@ -354,19 +353,14 @@ sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/n
 # echo '默认开启 Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
 
-
 # Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
 git clone https://github.com/vernesong/OpenClash.git package/openclash
 sed -i 's/+libcap /+libcap +libcap-bin /' package/openclash/luci-app-openclash/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
-
-# Remove some default packages
-# sed -i 's/luci-app-ddns//g;s/luci-app-upnp//g;s/luci-app-adbyby-plus//g;s/luci-app-vsftpd//g;s/luci-app-ssr-plus//g;s/luci-app-unblockmusic//g;s/luci-app-vlmcsd//g;s/luci-app-wol//g;s/luci-app-nlbwmon//g;s/luci-app-accesscontrol//g' include/target.mk
-# sed -i 's/luci-app-adbyby-plus//g;s/luci-app-vsftpd//g;s/luci-app-ssr-plus//g;s/luci-app-unblockmusic//g;s/luci-app-vlmcsd//g;s/luci-app-wol//g;s/luci-app-nlbwmon//g;s/luci-app-accesscontrol//g' include/target.mk
 #Add x550
-# git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
+git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
