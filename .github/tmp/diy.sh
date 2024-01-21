@@ -194,10 +194,10 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 rm -rf package/openwrt-passwall/xray-core
 rm -rf package/openwrt-passwall/xray-plugin
-rm -rf package/helloworld/mosdns
+# rm -rf package/helloworld/mosdns
 rm -rf package/helloworld/luci-app-ssr-plus
 rm -rf ./package/openwrt-passwall/v2ray-geodata
-rm -rf ./package/openwrt-passwall/mosdns
+# rm -rf ./package/openwrt-passwall/mosdns
 
 git_exp QiuSimons/OpenWrt-Add trojan-plus
 
@@ -292,14 +292,13 @@ sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 #rm -rf ./feeds/packages/net/qBittorrent-static
 #rm -rf ./feeds/luci/applications/luci-app-qbittorrent  package/feeds/packages/luci-app-qbittorrent
 
-rm -rf ./feeds/luci/applications/luci-app-mosdns
-rm -rf feeds/packages/net/v2ray-geodata
-# git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
-git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+# rm -rf ./feeds/luci/applications/luci-app-mosdns
+# rm -rf feeds/packages/net/v2ray-geodata
+# git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
+# git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/mosdns
-rm -rf ./feeds/luci/luci-app-mosdns
+# rm -rf ./feeds/packages/net/mosdns
+# rm -rf ./feeds/luci/luci-app-mosdns
 # git_exp sbwml/luci-app-mosdns luci-app-mosdns
 # git_exp sbwml/luci-app-mosdns mosdns
 
