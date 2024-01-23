@@ -126,10 +126,11 @@ sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,in
 sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
-rm -rf package/feeds/packages/prometheus-node-exporter-lua
-rm -rf feeds/packages/prometheus-node-exporter-lua
+# rm -rf package/feeds/packages/prometheus-node-exporter-lua
+# rm -rf feeds/packages/prometheus-node-exporter-lua
 
-rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
+# rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
+rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/automount
 mv -rf ./package/emortal2/autocore  ./package/emortal/autocore 
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
@@ -200,7 +201,6 @@ rm -rf ./package/openwrt-passwall/v2ray-geodata
 # rm -rf ./package/openwrt-passwall/mosdns
 
 git_exp QiuSimons/OpenWrt-Add trojan-plus
-
 git_exp xiaorouji/openwrt-passwall-packages sing-box
 git_exp fw876/helloworld shadow-tls
 #bypass
@@ -218,7 +218,7 @@ rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-
 #git_exp xiaorouji/openwrt-passwall luci-app-passwall
 
 git clone https://github.com/loso3000/other ./package/other
-# git_exp loso3000/other luci-app-bypass 
+# git_exp loso3000/other luci-app-bypass
 mv -f ./package/other/up/pass ./package/apass 
 rm ./package/apass/luci-app-bypass/po/zh_Hans
 mv ./package/apass/luci-app-bypass/po/zh-cn ./package/apass/luci-app-bypass/po/zh_Hans
@@ -234,8 +234,6 @@ cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
 mkdir -p files/usr/share
 mkdir -p files/etc/root
-#touch files/etc/ezopenwrt_version
-#touch files/usr/share/kmodreg
 
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
@@ -257,9 +255,6 @@ sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/con
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
-# rm -rf ./package/network/utils/iproute2/
-# svn export https://github.com/openwrt/openwrt/trunk/package/network/utils/iproute2 ./package/network/utils/iproute2
-
 #  coremark
 sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
 
@@ -279,9 +274,9 @@ sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
-git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
-git clone  https://github.com/linkease/nas-packages ./package/nas-packages
-git clone  https://github.com/linkease/istore ./package/istore
+# git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
+# git clone  https://github.com/linkease/nas-packages ./package/nas-packages
+# git clone  https://github.com/linkease/istore ./package/istore
 sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease.config
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
