@@ -68,6 +68,9 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 # Passwall
 
 #bypass
+
+rm -rf ./feeds/packages/net/xray-core
+
 rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 
