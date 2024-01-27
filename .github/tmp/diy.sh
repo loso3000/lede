@@ -182,43 +182,16 @@ rm -rf  ./feeds/luci/applications/luci-app-appfilter
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
-
 # Passwall
-
-#ssr
-#git_url "
-# 	https://github.com/xiaorouji/openwrt-passwall-packages
-#	https://github.com/fw876/helloworld
-#"
-# git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-# git clone https://github.com/fw876/helloworld package/helloworld
-
-rm -rf package/openwrt-passwall/xray-core
-rm -rf package/openwrt-passwall/xray-plugin
-# rm -rf package/helloworld/mosdns
-rm -rf package/helloworld/luci-app-ssr-plus
-rm -rf ./package/openwrt-passwall/v2ray-geodata
-# rm -rf ./package/openwrt-passwall/mosdns
 
 git_exp QiuSimons/OpenWrt-Add trojan-plus
 git_exp xiaorouji/openwrt-passwall-packages sing-box
 git_exp fw876/helloworld shadow-tls
 #bypass
-# rm -rf ./feeds/luci/applications/luci-app-passwall
-# rm -rf ./feeds/luci/applications/luci-app-passwall2
 rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-# rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-
-
-# git clone https://github.com/xiaorouji/openwrt-passwall2.git package/passwall2
-# git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-
-#git_exp xiaorouji/openwrt-passwall2 luci-app-passwall2
-#git_exp xiaorouji/openwrt-passwall luci-app-passwall
 
 git clone https://github.com/loso3000/other ./package/other
-# git_exp loso3000/other luci-app-bypass
 mv -f ./package/other/up/pass ./package/apass 
 rm ./package/apass/luci-app-bypass/po/zh_Hans
 mv ./package/apass/luci-app-bypass/po/zh-cn ./package/apass/luci-app-bypass/po/zh_Hans
@@ -280,28 +253,17 @@ sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasr
 sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease.config
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
-#qbittorrent
-# rm -rf packages/qbittorrent
-#rm -rf ./feeds/packages/net/qbittorrent
-#rm -rf ./feeds/packages/net/qBittorrent-Enhanced-Edition
-#rm -rf ./feeds/packages/net/qBittorrent-static
-#rm -rf ./feeds/luci/applications/luci-app-qbittorrent  package/feeds/packages/luci-app-qbittorrent
 
-# rm -rf ./feeds/luci/applications/luci-app-mosdns
-# rm -rf feeds/packages/net/v2ray-geodata
-# git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
-# git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+rm -rf ./feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/packages/net/v2ray-geodata
+git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
-# rm -rf ./feeds/packages/net/mosdns
-# rm -rf ./feeds/luci/luci-app-mosdns
-# git_exp sbwml/luci-app-mosdns luci-app-mosdns
-# git_exp sbwml/luci-app-mosdns mosdns
 
-# 添加额外软件包alist
+# alist
 git clone https://github.com/sbwml/luci-app-alist package/alist
-sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
-# rm -rf feeds/packages/lang/golang
-# git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
 #设置upnpd
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
