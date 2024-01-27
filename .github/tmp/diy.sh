@@ -1,124 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 config_generate=package/base-files/files/bin/config_generate
 [ ! -d files/root ] || mkdir -p files/root
-
-color() {
-	case $1 in
-		cy) echo -e "\033[1;33m$2\033[0m" ;;
-		cr) echo -e "\033[1;31m$2\033[0m" ;;
-		cg) echo -e "\033[1;32m$2\033[0m" ;;
-		cb) echo -e "\033[1;34m$2\033[0m" ;;
-	esac
-}
-
-git_exp() {
-    local repo_url branch target_dir source_dir current_dir destination_dir
-    if [[ "$1" == */* ]]; then
-        repo_url="$1"
-        shift
-    else
-        branch="-b $1"
-        repo_url="$2"
-        shift 2
-    fi
-
-    if ! git clone -q $branch --depth 1 "https://github.com/$repo_url" gitemp; then
-        echo -e "$(color cr 拉取) https://github.com/$repo_url [ $(color cr ✕) ]" | _printf
-        return 0
-    fi
-
-    for target_dir in "$@"; do
-        source_dir=$(find gitemp -maxdepth 5 -type d -name "$target_dir" -print -quit)
-        current_dir=$(find package/ feeds/ target/ -maxdepth 5 -type d -name "$target_dir" -print -quit)
-        destination_dir="${current_dir:-package/A/$target_dir}"
-        if [[ -d $current_dir && $destination_dir != $current_dir ]]; then
-            mv -f "$current_dir" ../
-        fi
-
-        if [[ -d $source_dir ]]; then
-            if mv -f "$source_dir" "$destination_dir"; then
-                if [[ $destination_dir = $current_dir ]]; then
-                    echo -e "$(color cg 替换) $target_dir [ $(color cg ✔) ]" | _printf
-                else
-                    echo -e "$(color cb 添加) $target_dir [ $(color cb ✔) ]" | _printf
-                fi
-            fi
-        fi
-    done
-
-    rm -rf gitemp
-}
-
-_printf() {
-	awk '{printf "%s %-40s %s %s %s\n" ,$1,$2,$3,$4,$5}'
-}
-
-git_url() {
-	# set -x
-	for x in $@; do
-		name="${x##*/}"
-		if [[ "$(grep "^https" <<<$x | egrep -v "helloworld$|build$|openwrt-passwall-packages$")" ]]; then
-			g=$(find package/ target/ feeds/ -maxdepth 5 -type d -name "$name" 2>/dev/null | grep "/${name}$" | head -n 1)
-			if [[ -d $g ]]; then
-				mv -f $g ../ && k="$g"
-			else
-				k="package/A/$name"
-			fi
-
-			git clone -q $x $k && f="1"
-
-			if [[ -n $f ]]; then
-				if [[ $k = $g ]]; then
-					echo -e "$(color cg 替换) $name [ $(color cg ✔) ]" | _printf
-				else
-					echo -e "$(color cb 添加) $name [ $(color cb ✔) ]" | _printf
-				fi
-			else
-				echo -e "$(color cr 拉取) $name [ $(color cr ✕) ]" | _printf
-				if [[ $k = $g ]]; then
-					mv -f ../${g##*/} ${g%/*}/ && \
-					echo -e "$(color cy 回退) ${g##*/} [ $(color cy ✔) ]" | _printf
-				fi
-			fi
-			unset -v f k g
-		else
-			for w in $(grep "^https" <<<$x); do
-				git clone -q $w ../${w##*/} && {
-					for z in `ls -l ../${w##*/} | awk '/^d/{print $NF}' | grep -Ev 'dump$|dtest$'`; do
-						g=$(find package/ feeds/ target/ -maxdepth 5 -type d -name $z 2>/dev/null | head -n 1)
-						if [[ -d $g ]]; then
-							rm -rf $g && k="$g"
-						else
-							k="package/A"
-						fi
-						if mv -f ../${w##*/}/$z $k; then
-							if [[ $k = $g ]]; then
-								echo -e "$(color cg 替换) $z [ $(color cg ✔) ]" | _printf
-							else
-								echo -e "$(color cb 添加) $z [ $(color cb ✔) ]" | _printf
-							fi
-						fi
-						unset -v k g
-					done
-				} && rm -rf ../${w##*/}
-			done
-		fi
-	done
-	# set +x
-}
-
-_packages() {
-	for z in $@; do
-		[[ $z =~ ^# ]] || echo "CONFIG_PACKAGE_$z=y" >>.config
-	done
-}
-
-_delpackage() {
-	for z in $@; do
-		[[ $z =~ ^# ]] || sed -i -E "s/(CONFIG_PACKAGE_.*$z)=y/# \1 is not set/" .config
-	done
-}
 
 [[ -n $CONFIG_S ]] || CONFIG_S=Super
 
@@ -184,9 +67,6 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 # Passwall
 
-git_exp QiuSimons/OpenWrt-Add trojan-plus
-git_exp xiaorouji/openwrt-passwall-packages sing-box
-git_exp fw876/helloworld shadow-tls
 #bypass
 rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
