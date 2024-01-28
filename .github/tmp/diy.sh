@@ -79,7 +79,7 @@ rm -rf ./feeds/packages/net/trojan-plus
 rm -rf package/feeds/packages/naiveproxy
 rm -rf ./feeds/packages/net/naiveproxy
 
-rm -rf ./feeds/luci/applications/luci-app-vssr
+# rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 
 git clone https://github.com/loso3000/other ./package/other
