@@ -69,6 +69,10 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 #bypass
 
+rm -rf package/feeds/packages/mosdns
+rm -rf package/feeds/packages/v2ray-plugin
+rm -rf package/feeds/packages/xray-plugin
+rm -rf package/feeds/packages/v2ray-core
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/trojan-plus
 
