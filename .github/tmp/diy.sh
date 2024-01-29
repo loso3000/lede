@@ -148,9 +148,9 @@ sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
-# git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
-# git clone  https://github.com/linkease/nas-packages ./package/nas-packages
-# git clone  https://github.com/linkease/istore ./package/istore
+git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
+git clone  https://github.com/linkease/nas-packages ./package/nas-packages
+git clone  https://github.com/linkease/istore ./package/istore
 sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease.config
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
@@ -345,7 +345,6 @@ EOF
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
-# https://github.com/sirpdboy/openWrt
 # EzOpenWrt By Sirpdboy
 IPK=$1
 nowkmoddir=/etc/kmod.d/$IPK
