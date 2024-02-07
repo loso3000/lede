@@ -157,12 +157,15 @@ sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
 rm -rf ./feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/v2ray-geodata
-git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
+rm -rf ./feeds/packages/net/mosdns
+rm -rf ./feeds/luci/luci-app-mosdns
 
 # alist
 git clone https://github.com/sbwml/luci-app-alist package/alist
+sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
@@ -173,7 +176,6 @@ git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/l
 sed -i "s/ImmortalWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "s/OpenWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
-
 sed -i 's/msgstr "Socat"/msgstr "端口转发"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
 
 sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
@@ -213,7 +215,7 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 
 # Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
-git clone https://github.com/vernesong/OpenClash.git package/openclash
+git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
 sed -i 's/+libcap /+libcap +libcap-bin /' package/openclash/luci-app-openclash/Makefile
 
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
@@ -227,7 +229,7 @@ sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-script
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 
 # 修复 hostapd 报错
-cp -f  ./patch/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
+#cp -f $GITHUB_WORKSPACE/scriptx/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
 
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
@@ -274,6 +276,7 @@ cat>buildmd5.sh<<-\EOF
 rm -rf  bin/targets/x86/64/config.buildinfo
 rm -rf  bin/targets/x86/64/feeds.buildinfo
 rm -rf  bin/targets/x86/64/*x86-64-generic-kernel.bin
+rm -rf  bin/targets/x86/64/*rootfs.tar.gz
 rm -rf  bin/targets/x86/64/*x86-64-generic-squashfs-rootfs.img.gz
 rm -rf  bin/targets/x86/64/*x86-64-generic-rootfs.tar.gz
 rm -rf  bin/targets/x86/64/*x86-64-generic.manifest
@@ -284,6 +287,7 @@ rm -rf bin/targets/x86/64/*x86-64-generic-ext4-rootfs.img.gz
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined-efi.img.gz
 rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined.img.gz
 rm -rf bin/targets/x86/64/profiles.json
+rm -rf bin/targets/x86/64/*kernel.bin
 sleep 2
 r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
@@ -309,7 +313,7 @@ md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined-efi.img
 fi
 
 #md5
-cd bin/targets/*/*
+cd bin/targets/x86/64
 
 md5sum ${md5_EzOpWrt} > EzOpWrt_combined.md5  || true
 md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_combined-efi.md5 || true
