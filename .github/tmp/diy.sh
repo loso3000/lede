@@ -73,6 +73,7 @@ rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
 rm -rf ./package/ssr/xray-plugin
+rm -rf ./package/ssr/luci-app-ssr-plus
 rm -rf ./package/ssr/naiveproxy
 
 
