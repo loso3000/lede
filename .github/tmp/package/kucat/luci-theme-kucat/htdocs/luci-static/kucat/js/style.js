@@ -16,9 +16,7 @@
     //   },
     //   false
     // );
-  })();
   
-
 function pdopenbar() {
     document.getElementById("header-bar-left").style.width = "300px";
     document.getElementById("header-bar-left").style.display = "block";
