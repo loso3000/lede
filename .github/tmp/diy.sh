@@ -81,6 +81,7 @@ rm -rf package/feeds/packages/xray-plugin
 rm -rf package/feeds/packages/v2ray-core
 rm -rf package/feeds/packages/v2ray-plugin
 
+rm -rf ./feeds/packages/net/hysteria
 rm -rf ./feeds/packages/net/v2ray-core
 rm -rf ./feeds/packages/net/v2ray-plugin
 rm -rf ./feeds/packages/net/xray-core
