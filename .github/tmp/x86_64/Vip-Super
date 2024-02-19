@@ -1,3 +1,4 @@
+
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 CONFIG_TARGET_x86_64_DEVICE_generic=y
@@ -12,7 +13,6 @@ CONFIG_TARGET_ROOTFS_PARTSIZE=1925
 # CONFIG_SIGNED_PACKAGES is not set
 # CONFIG_GRUB_IMAGES is not set
 CONFIG_GRUB_EFI_IMAGES=y
-
 CONFIG_GRUB_TIMEOUT="0"
 CONFIG_GRUB_TITLE="EzOpWrt"
 CONFIG_PACKAGE_libatomic=y
@@ -47,6 +47,7 @@ CONFIG_PACKAGE_kmod-ixgbe-vendor=m
 CONFIG_PACKAGE_kmod-ixgbevf=y
 CONFIG_PACKAGE_kmod-ixgbevf-vendor=m
 CONFIG_PACKAGE_kmod-via-velocity=y
+CONFIG_PACKAGE_kmod-dnsresolver=y
 CONFIG_PACKAGE_kmod-gre=y
 CONFIG_PACKAGE_kmod-inet-diag=y
 CONFIG_PACKAGE_kmod-l2tp=y
@@ -75,25 +76,14 @@ CONFIG_PACKAGE_kmod-usb2-pci=y
 CONFIG_PACKAGE_kmod-usb3=y
 CONFIG_PACKAGE_kmod-usbip=y
 CONFIG_PACKAGE_kmod-ath=y
+CONFIG_ATH_USER_REGD=y
+CONFIG_PACKAGE_ATH_DFS=y
 CONFIG_PACKAGE_libimobiledevice=y
 CONFIG_PACKAGE_libplist=y
 CONFIG_PACKAGE_libusbmuxd=y
 CONFIG_PACKAGE_bind-libs=y
 CONFIG_PACKAGE_libcap=y
 CONFIG_PACKAGE_libcurl=y
-#
-# SSL support
-#
-CONFIG_LIBCURL_OPENSSL=y
-#
-# Supported protocols
-#
-CONFIG_LIBCURL_FILE=y
-CONFIG_LIBCURL_FTP=y
-CONFIG_LIBCURL_HTTP=y
-CONFIG_LIBCURL_COOKIES=y
-CONFIG_LIBCURL_TFTP=y
-CONFIG_LIBCURL_NGHTTP2=y
 #
 # Miscellaneous
 #
@@ -112,11 +102,12 @@ CONFIG_PACKAGE_libudev-zero=y
 CONFIG_PACKAGE_libusb-1.0=y
 CONFIG_PACKAGE_libuv=y
 CONFIG_PACKAGE_libxml2=y
-CONFIG_PACKAGE_curl=y
 CONFIG_PACKAGE_ip6tables-extra=y
 CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
 CONFIG_PACKAGE_iptables-mod-ipopt=y
 # CONFIG_PACKAGE_miniupnpd=y  #error log
+# CONFIG_PACKAGE_libmbedtls is not set
+# CONFIG_PACKAGE_libustream-mbedtls is not set
 CONFIG_PACKAGE_bind-host=y
 CONFIG_PACKAGE_ddns-scripts=y
 CONFIG_PACKAGE_ddns-scripts-cloudflare=y
@@ -134,6 +125,7 @@ CONFIG_PACKAGE_openssh-sftp-server=y
 CONFIG_PACKAGE_ppp-mod-pppol2tp=y
 CONFIG_PACKAGE_ppp-mod-pptp=y
 CONFIG_PACKAGE_xl2tpd=y
+
 
 CONFIG_PACKAGE_ds-lite=y #dslite vpn gw
 #ds-lite
@@ -179,6 +171,7 @@ CONFIG_DRIVER_WEXT_SUPPORT=y
 CONFIG_DRIVER_11N_SUPPORT=y
 CONFIG_DRIVER_11AC_SUPPORT=y
 
+#passwlall
 
 #passwlall
 CONFIG_PACKAGE_iptables-mod-socket=y
@@ -287,6 +280,10 @@ CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Libev_Client=y
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Hysteria is not set
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan is not set
 
+CONFIG_PACKAGE_luci-base=y
+CONFIG_PACKAGE_luci-compat=y
+
+CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_curl=y
 CONFIG_PACKAGE_ip6tables-extra=y
 CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
@@ -304,7 +301,6 @@ CONFIG_PACKAGE_ddns-scripts-godaddy=y
 CONFIG_PACKAGE_ddns-scripts-services=y
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
 
-CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_kmod-bonding=y
 CONFIG_PACKAGE_dns2socks=y
 CONFIG_PACKAGE_dns2tcp=y
@@ -364,7 +360,22 @@ CONFIG_PACKAGE_kmod-usb3=y
 CONFIG_PACKAGE_kmod-usbip=y
 CONFIG_PACKAGE_kmod-usb-ohci=y
 CONFIG_PACKAGE_kmod-usb-ohci-pci=y
-#docke
+
+CONFIG_PACKAGE_kmod-lp=y
+CONFIG_PACKAGE_kmod-usb-printer=y
+
+### Docker
+#CONFIG_DOCKER_CGROUP_OPTIONS=y
+#CONFIG_DOCKER_NET_ENCRYPT=y
+#CONFIG_DOCKER_NET_MACVLAN=y
+#CONFIG_DOCKER_NET_OVERLAY=y
+#CONFIG_DOCKER_NET_TFTP=y
+#CONFIG_DOCKER_OPTIONAL_FEATURES=y
+#CONFIG_DOCKER_STO_BTRFS=y
+#CONFIG_DOCKER_STO_EXT4=y
+#CONFIG_PACKAGE_luci-app-dockerman=m
+#CONFIG_PACKAGE_luci-lib-docker=y
+
 CONFIG_PACKAGE_luci-app-dockerman=m
 CONFIG_KERNEL_CGROUP_FREEZER=y
 CONFIG_KERNEL_CGROUP_DEVICE=y
@@ -417,3 +428,4 @@ CONFIG_PACKAGE_luci-lib-docker=y
 CONFIG_PACKAGE_libnl-tiny=y
 CONFIG_PACKAGE_libnl-tiny1=y
 CONFIG_PACKAGE_libnl-tiny2022-05-17=y
+
