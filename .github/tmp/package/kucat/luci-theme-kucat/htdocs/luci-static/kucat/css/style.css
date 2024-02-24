@@ -30,10 +30,11 @@
     --input-hover-color: #fff;
     --input-hover-bgcolor: rgba(248,248,248,0.5);
     --input-bgcolor: rgba(255,255,255,0.6);
+    --input-boxcolor: rgba(0, 0, 0, 0.12);
+    --input-boxhovercolor: rgba(0, 0, 0, 0.22);
     --font-apple: -apple-system,"Google Sans","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
     --font-sans: "Microsoft Yahei","Google Sans","WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
 }
-
 [data-theme="dark"] {
     --primary-solid: #fd8c73;
     --primarytextcolor: #8391a2;
@@ -41,7 +42,7 @@
     --menu-color: #bbb;
     --menu-hover-color: #e9eff3;
     --menu-item-color: #b4c9e3;
-    --menu-item-titlebg-color: #343a40;
+    --menu-item-titlebg-color: rgba(255, 255, 255, 0.1);
     --menu-item-hover-bgcolor: rgba(255, 255, 255, 0.2);
     --body-text-color: #8391a2;
     --body-color: #8391a2;
@@ -51,9 +52,12 @@
     --input-hover-color: #ccc;
     --input-hover-bgcolor: rgba(255,255,255,0.22);
     --input-bgcolor: rgba(0,0,0,0.2);
+    --input-boxcolor: rgba(255,255,255,0.1);
+    --input-boxhovercolor: rgba(255, 255, 255, 0.22);
     --font-apple: -apple-system,"Google Sans","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
     --font-sans: "Microsoft Yahei", "Google Sans","WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
 }
+
 .tr {
 	display: table-row;
 }
@@ -1285,22 +1289,22 @@ background-image: url("data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9
 	text-decoration: none
 }
 .btn:focus, .cbi-button:focus, .item:hover::after, .item:focus::after {
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-	-webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+	box-shadow: 0 0.5rem 1rem var(--input-boxhovercolor);
+	-webkit-box-shadow: 0 0.5rem 1rem var(--input-boxhovercolor);
+	-moz-box-shadow: 0 0.5rem 1rem var(--input-boxhovercolor);
 }
 button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	transform: scale(1.05) translate(0, -0.15rem);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
-	-webkit-box-shadow:  0 0.5rem 1rem rgba(0, 0, 0, 0.35);
-	-moz-box-shadow:  0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+	box-shadow: 0 0.5rem 1rem var(--input-boxhovercolor);
+	-webkit-box-shadow:  0 0.5rem 1rem var(--input-boxhovercolor);
+	-moz-box-shadow:  0 0.5rem 1rem var(--input-boxhovercolor);
 
 }
 .btn:active, .cbi-button:active, button:active,.item:active {
 	transform: scale(1) translate(0, 0.15rem);
-	box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-	-webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 0 6px var(--input-boxhovercolor);
+	-webkit-box-shadow: 0 0 6px var(--input-boxhovercolor);
+	-moz-box-shadow: 0 0 6px var(--input-boxhovercolor);
 }
 .btn:disabled, .cbi-button:disabled {
 	cursor: not-allowed;
@@ -1331,7 +1335,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .cbi-page-actions .cbi-button-apply, .cbi-section-actions .cbi-button-edit, .cbi-button-edit, .cbi-button-apply, .cbi-button-reload, .cbi-button-action, .cbi-button[value="Submit"], .cbi-button[value="Upload"], .cbi-button[value$="Apply"], .cbi-button[onclick="addKey(event)"] {
 	font-weight: normal;
 	border-color: rgba(var(--primary-rgbm), 1);
-	color: var(--menu-color)!important;
+	color: var(--menu-hover-color)!important;
 	border: thin solid rgba(var(--primary-rgbm), 1);
 	background-color: rgba(var(--primary-rgbm), 0.9);
 }
@@ -1375,13 +1379,13 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	border-right: 0.18751rem solid var(--primary-solid)!important;
 	border-left: 0.18751rem solid var(--primary-solid)!important;
 	transform: scale(1.05) translate(0, -0.1rem);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
-	background-color: rgba(var(--primary-rgbm), 0.3);
+	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
+	background-color: rgba(var(--primary-rgbm), 0.2);
 }
 .tabs > li:hover {
-	background: rgba(var(--primary-rgbm), 0.3);
+	background: rgba(var(--primary-rgbm), 0.2);
 	transform: scale(1.05) translate(0, -0.15rem);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
 }
 .tabs li[class~="active"] a {
 	color: var(--primary-title-color)
@@ -1411,7 +1415,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	border-radius:  var(--Radius2);
 	padding: 0.5rem 0rem;
 	transform: scale(1) translate(0, 0);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+	box-shadow: 0 0.5rem 1rem  var(--input-boxcolor);
 	transition: transform 225ms, box-shadow 225ms;
 	background: var(--menu-item-titlebg-color);
 	margin: 0.2rem 0rem 0.2rem 0.4rem !important;
@@ -1425,7 +1429,7 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	color: var(--primary-title-color);
 	background: rgba(var(--primary-rgbm), 0.3);
 	transform: scale(1.05) translate(0, -0.15rem);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
 	margin-bottom: 0
 }
 .cbi-tabmenu li:hover a {
@@ -1435,8 +1439,8 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	border-right: 0.18751rem solid var(--primary-solid) !important;
 	border-left: 0.18751rem solid var(--primary-solid) !important;
 	transform: scale(1.05) translate(0, -0.1rem);
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-	background-color: rgba(var(--primary-rgbm), 0.3);
+	box-shadow: 0 0.5rem 1rem  var(--input-boxcolor);
+	background-color: rgba(var(--primary-rgbm), 0.2);
 }
 [data-tab-title] {
 	overflow: hidden;
