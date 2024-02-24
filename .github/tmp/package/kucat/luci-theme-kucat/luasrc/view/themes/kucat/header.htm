@@ -106,9 +106,8 @@
 	    primary_ufilter = 'none'
 	end
 	local bgqs_image = '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent)'
-	local bgqs_color = 'rgba(var(--primary-rgbm),var(--primary-rgbm-ts))'
 	if bgqs == '1' then
-	    bgqs_image = 'none'	
+	    bgqs_image = 'rgba(var(--primary-rgbm),var(--primary-rgbm-ts))'
 	end
 	local bg_url = media..'/img/bg1.jpg'
 	if background == '0' then
@@ -192,24 +191,32 @@
     <meta name="browsermode" content="application">
     <meta name="msapplication-tap-highlight" content="no">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-	<meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
-	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
 	<meta name="application-name" content="<%=striptags( (boardinfo.hostname or "OpenWrt") ) %> - LuCI">
 	<meta name="apple-mobile-web-app-title" content="<%=striptags( (boardinfo.hostname or "OpenWrt") ) %> - LuCI">
 	<meta name="msapplication-TileImage" content="<%=media%>/logo.png"/>
 	<link rel="icon" type="image/png" sizes="192x192" href="<%=media%>/logo.png">
+	<link rel="icon" href="<%=media%>/logo.svg" sizes="any">
 	<meta name="msapplication-TileColor" content="<%=bar_color%>">
 	<meta name="theme-color" content="<%=bar_color%>">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-touch-fullscreen" content="yes" /> 
+    <link rel="apple-touch-icon" sizes="144x144" href="<%=media%>/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon-precomposed" href="<%=media%>/img/apple-touch-icon.png" sizes="144x144">
 
 	<link rel="stylesheet" href="<%=media%>/css/style.css?v=<%= ver.luciversion %>">
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
 	<link rel="shortcut icon" href="<%=media%>/favicon.ico">
+    <% if node and node.css then %>
+        <link rel="stylesheet" href="<%=resource%>/<%=node.css%>">
+    <% end -%>
+
 	<style title="text/css">
-	<% if mode == 'dark' then %>
-		<%=dark_css%>
+	<% if css then %>
+		<%= css %>
 	<% end -%>
+
 	:root {
 		--primary-rgbbody:<%=primary_rgbbody%>;
 		--primary-rgbm: <%=primary_rgbm%>;
@@ -222,7 +229,6 @@
 		--font-x: <%=fontx%>;
 		--theme-background: <%=desktopbk_use%>;
 		--bgqs-image: <%=bgqs_image%>;
-		--bgqs-color: <%=bgqs_color%>;
 	}
 
 	<% if setbar == "1" then %>
@@ -245,20 +251,29 @@
 	}
 	<% end -%>
  </style>
-	<% if node and node.css then %>
-	<link rel="stylesheet" href="<%=resource%>/<%=node.css%>">
-	<% end -%>
+
     <script src="<%=url('admin/translations', luci.i18n.context.lang)%><%# ?v=PKG_VERSION %>"></script>
 	<script src="<%=resource%>/cbi.js"></script>
 	<script src="<%=resource%>/luci.js?v=<%=ver.luciversion%>"></script>
 	<script src="<%=media%>/style.js"></script>
-	<% if css then %>
-	<style title="text/css">
-		<%= css %>
-	</style>
-	<% end -%>
+
 </head>
-<body class="lang_<%=luci.i18n.context.lang%> <% if luci.dispatcher.context.authsession then %>logged-in<% end %> <% if not (path == "") then %>node-<%= path %><% else %>node-main-login<% end %>" data-page="<%= pcdata(path) %>">
+<body class="lang_<%=luci.i18n.context.lang%> <% if luci.dispatcher.context.authsession then %>logged-in<% end %> <% if not (path == "") then %>node-<%= path %><% else %>node-main-login<% end %>" data-page="<%= pcdata(path) %>"
+	<% if mode ~= 'auto' then %>
+	data-theme = "<%= mode %>"
+	<% end -%>
+>
+	<% if mode == 'auto' then %>
+	<script>
+		function setTheme() {
+			let color_scheme = window.matchMedia('(prefers-color-scheme: dark)');
+			document.body.setAttribute('data-theme', color_scheme.matches? 'dark': 'light');
+		}
+		setTheme();
+		window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setTheme);
+	</script>	
+	<% end -%>
+
     <header class="bar-primary">
 		<div id="header-bar-left" class="container-bar-left">
 			<a class="labelbar pdboy-closebar" href="javascript:void(0)" onclick="pdclosebar()" title="Close" ></a>

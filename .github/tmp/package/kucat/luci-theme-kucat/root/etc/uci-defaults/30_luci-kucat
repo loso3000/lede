@@ -23,7 +23,7 @@ config basic
 	option background '0'
 	option setbar '1'
 	option bkuse '0'
-	option mode 'light'
+	option mode 'auto'
 	option primary_rgbm_ts '0.8'
 	option primary_opacity '0'
 	option primary_rgbm '26,131,97'
