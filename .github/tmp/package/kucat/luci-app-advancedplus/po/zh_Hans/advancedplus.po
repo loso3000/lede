@@ -14,7 +14,6 @@ msgstr "Argon主题设置"
 msgid "Design Config"
 msgstr "Design主题设置"
 
-
 msgid "Advanced Setting"
 msgstr "高级设置"
 
@@ -260,6 +259,9 @@ msgstr "状态相关快捷键设置"
 
 msgid "Enable color matching"
 msgstr "启用配色方案"
+
+msgid "Using the Color palette"
+msgstr "使用颜色调色板"
 
 msgid "RoyalBlue"
 msgstr "皇家高端蓝"
