@@ -12,12 +12,6 @@ sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci
 # rm -rf package/feeds/packages/prometheus-node-exporter-lua
 # rm -rf feeds/packages/prometheus-node-exporter-lua
 
-# rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
-rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
-mv -rf ./package/emortal2/autocore  ./package/emortal/autocore 
-mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
-mv -rf  ./package/emortal2/automount   ./package/emortal/automount
-mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
 case "${CONFIG_S}" in
 Plus)
@@ -110,6 +104,12 @@ cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
 mkdir -p files/usr/share
 mkdir -p files/etc/root
+# rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
+rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
+mv -rf ./package/emortal2/autocore  ./package/emortal/autocore 
+mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
+mv -rf  ./package/emortal2/automount   ./package/emortal/automount
+mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
 
 rm -rf ./feeds/luci/themes/luci-theme-design
@@ -131,6 +131,7 @@ sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root
 sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
 
 
+sed -i 's,media .. \"\/b,resource .. \"\/b,g' package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 
 #修改默认主机名
