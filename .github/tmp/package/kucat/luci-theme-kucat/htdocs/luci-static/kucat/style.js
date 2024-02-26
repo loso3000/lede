@@ -1,4 +1,12 @@
-
+/*
+ *  luci-theme-kucat
+ *  Copyright (C) 2019-2024 The Sirpdboy Team <herboy2008@gmail.com> 
+ *
+ *  Have a bug? Please create an issue here on GitHub!
+ *      https://github.com/sirpdboy/luci-theme-kucat/issues
+ *
+ *  Licensed to the public under the Apache License 2.0
+ */
     // const isDark = localStorage.getItem("isDark");
     // if (isDark == 1) {
     //   const element = document.querySelector("body");

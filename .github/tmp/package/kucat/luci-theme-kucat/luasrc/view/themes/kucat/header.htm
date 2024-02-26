@@ -67,7 +67,7 @@
 	local primary_rgbs_ts = '0.1'
 	local primary_opacity = '0'
 	local bkuse = '0'
-    local desktopbk_use = 'linear-gradient(90deg, rgba(var(--primary-rgbm), 1) 0%, rgba(var(--primary-rgbbody), 1) 100%)'
+	local bk_use='rgba(var(--primary-rgbbody),1)'
     local loginbk_use = 'background: linear-gradient(0deg, rgba(var(--primary-rgbm), 1) 0%, rgba(var(--primary-rgbbody), 1) 100%)'
 	local bklock = '1'
 	local dayword = '0'
@@ -172,10 +172,10 @@
   	   showword = sys.exec("/usr/libexec/kucat/kucat_word")
 	end
 	if bkuse == '1'  then
-	   desktopbk_use = "url(" .. bg_lock .. ") no-repeat center center fixed"
+	   bk_use='url('..bg_lock..') no-repeat center center fixed'
  	   loginbk_use = "background-image:url(" .. bg_url .. ")"
 	end
-%>
+-%>
 
 <!DOCTYPE html>
 <html lang="<%=luci.i18n.context.lang%>">
@@ -225,7 +225,7 @@
 		--font-d: <%=fontd%>;
 		--font-z: <%=fontz%>;
 		--font-x: <%=fontx%>;
-		--theme-background: <%=desktopbk_use%>;
+		--theme-background: <%=bk_use%>;
 		--bgqs-image: <%=bgqs_image%>;
 	}
 

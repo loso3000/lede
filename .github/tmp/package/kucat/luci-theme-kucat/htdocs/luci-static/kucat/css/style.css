@@ -1,11 +1,25 @@
 /*
- *  KuCat is a clean HTML5 theme for LuCI. It is based on luci-theme-kucat
+ *  luci-theme-kucat
+ *  Copyright (C) 2019-2024 The Sirpdboy Team <herboy2008@gmail.com> 
  *
- *  Copyright (C) 2019-2024 The Sirpdboy Team <herboy2008@gmail.com>    
- *      Copyright 2015 Lutty Yang <lutty@wcan.in>
+ *  Have a bug? Please create an issue here on GitHub!
+ *      https://github.com/sirpdboy/luci-theme-kucat/issues
+ *
+ *  luci-theme-bootstrap:
+ *      Copyright 2008 Steven Barth <steven@midlink.org>
+ *      Copyright 2008 Jo-Philipp Wich <jow@openwrt.org>
+ *      Copyright 2012 David Menting <david@nut-bolt.nl>
+ *
+ *  luci-theme-material:
+ *      https://github.com/LuttyYang/luci-theme-material/
+ *  luci-theme-argon:
+ *      https://github.com/jerrykuku/luci-theme-argon
+ *  luci-theme-opentopd:
+ *      https://github.com/sirpdboy/luci-theme-opentopd
  *
  *  Licensed to the public under the Apache License 2.0
  */
+
 
 @import url("fonts.css?v=3");
  :root {
@@ -15,15 +29,15 @@
  }
 [data-theme='light'] {
     --primary-solid: #fd8c73;
-    --primarytextcolor: #6c757d;
-    --primary-title-color: #555583;
+    --primarytextcolor: #677087;
+    --primary-title-color: #67678f;
     --menu-color: #f5f5f5f5;
     --menu-hover-color: #fff;
-    --menu-item-color: #6c757d;
-    --menu-item-titlebg-color: #e4eaec;
+    --menu-item-color: #5a636b;
+    --menu-item-titlebg-color: rgba(var(--primary-rgbm),0.22);
     --menu-item-hover-bgcolor: rgba(248,248,248, 0.2);
     --body-text-color: #3c4655;
-    --body-color: #6c757d;
+    --body-color: #65656b;
     --inputbg-color: rgba(248,248,248,0.15);
     --inputtext-color: #4d5256;
     --inputborder-color: rgba(0,0,0,0.2);
@@ -32,28 +46,30 @@
     --input-bgcolor: rgba(255,255,255,0.6);
     --input-boxcolor: rgba(0, 0, 0, 0.12);
     --input-boxhovercolor: rgba(0, 0, 0, 0.22);
+    --input-checkcolor: rgba(var(--primary-rgbm),1);
     --font-apple: -apple-system,"Google Sans","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
     --font-sans: "Microsoft Yahei","Google Sans","WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
 }
 [data-theme="dark"] {
     --primary-solid: #fd8c73;
-    --primarytextcolor: #8391a2;
+    --primarytextcolor: #bbb;
     --primary-title-color: #bbb;
     --menu-color: #bbb;
     --menu-hover-color: #e9eff3;
     --menu-item-color: #b4c9e3;
-    --menu-item-titlebg-color: rgba(255, 255, 255, 0.15);
+    --menu-item-titlebg-color: rgba(var(--primary-rgbm),0.4);
     --menu-item-hover-bgcolor: rgba(255, 255, 255, 0.2);
     --body-text-color: #8391a2;
-    --body-color: #8391a2;
+    --body-color: #8b8e91;
     --inputbg-color: rgba(255,255,255,0.11);
     --inputtext-color: #bbb;
     --inputborder-color: rgba(255,255,255,0.2);
     --input-hover-color: #ccc;
     --input-hover-bgcolor: rgba(255,255,255,0.22);
     --input-bgcolor: rgba(0,0,0,0.2);
-    --input-boxcolor: rgba(255,255,255,0.1);
+    --input-boxcolor: rgba(255,255,255,0.15);
     --input-boxhovercolor: rgba(255, 255, 255, 0.22);
+    --input-checkcolor: rgba(255, 255, 255, 0.7);
     --font-apple: -apple-system,"Google Sans","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
     --font-sans: "Microsoft Yahei", "Google Sans","WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
 }
@@ -179,20 +195,18 @@
 	color: var(--inputtext-color);
 }
 html {
-	margin: 0px;
-	padding: 0px;
-	height: 100%;
-	background: var(--theme-background);
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-html {
-	-webkit-text-size-adjust: 100%;
-	overflow-y: hidden;
-	-ms-text-size-adjust: 100%
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    background: var(--theme-background) ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-text-size-adjust: 100%;
+    overflow-y: hidden;
+    -ms-text-size-adjust: 100%
 }
 html, body {
     font-family: var(--font-sans);
@@ -309,7 +323,7 @@ input:checked[type="checkbox"]:before {
 	transform: rotate(45deg);
 	width: 12px;
 	margin-left: 5px;
-	border-color: rgba(var(--primary-rgbm), 1);
+	border-color: var(--input-checkcolor);
 	border-width: 3px;
 	border-top-color: transparent;
 	border-left-color: transparent;
@@ -367,7 +381,7 @@ code {
 abbr {
 	cursor: help;
 	text-decoration: underline;
-	color: #005470;
+	color: #146db3;
 }
 hr {
 	margin: 1rem 0;
@@ -1376,26 +1390,29 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	margin: 9px 0 4px 3px;
 	padding: 1px 6px;
 }
+
 .tabs li[class~="active"] {
 	border-right: 0.18751rem solid var(--primary-solid)!important;
 	border-left: 0.18751rem solid var(--primary-solid)!important;
 	transform: scale(1.05) translate(0, -0.1rem);
 	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
-	background-color: rgba(var(--primary-rgbm), 0.2);
+	background-color: rgba(var(--primary-rgbm), 0.7);
 }
 .tabs > li:hover {
-	background: rgba(var(--primary-rgbm), 0.2);
+	background: rgba(var(--primary-rgbm), 0.7);
 	transform: scale(1.05) translate(0, -0.15rem);
 	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
 }
+
 .tabs li[class~="active"] a {
-	color: var(--primary-title-color)
+	color: var(--menu-hover-color)
 }
+
 .tabs li:hover a {
-	color: var(--primary-title-color)
+	color: var(--menu-hover-color)
 }
 .tabs li a {
-	padding: 0.3rem 1rem;
+	padding: 0.5rem 1rem;
 	text-decoration: none;
 	color: var(--primarytextcolor)
 }
@@ -1411,8 +1428,8 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 .tabs > li, .cbi-tabmenu li {
 	display: inline-block;
 	font-size: var(--font-z);
-	border-left: 0.18751rem solid rgba(255, 255, 255, 0)!important;
-	border-right: 0.18751rem solid rgba(255, 255, 255, 0)!important;
+	border-left: 0.18751rem solid var(--menu-item-titlebg-color)!important;
+	border-right: 0.18751rem solid var(--menu-item-titlebg-color)!important;
 	border-radius:  var(--Radius2);
 	padding: 0.5rem 0rem;
 	transform: scale(1) translate(0, 0);
@@ -1421,27 +1438,33 @@ button:hover, .btn:hover, .cbi-button:hover ,.item:hover{
 	background: var(--menu-item-titlebg-color);
 	margin: 0.2rem 0rem 0.2rem 0.4rem !important;
 }
+
 .cbi-tabmenu li a {
 	text-decoration: none;
 	padding: 0.7rem 1rem;
 	color: var(--primarytextcolor);
 }
 .cbi-tabmenu > li:hover {
-	color: var(--primary-title-color);
-	background: rgba(var(--primary-rgbm), 0.3);
+	color: var(--menu-hover-color);
+	background: rgba(var(--primary-rgbm), 0.7);
 	transform: scale(1.05) translate(0, -0.15rem);
 	box-shadow: 0 0.5rem 1rem  var(--input-boxhovercolor);
 	margin-bottom: 0
 }
 .cbi-tabmenu li:hover a {
-	color: var(--primary-title-color)
+	color: var(--menu-hover-color)
 }
+
 .cbi-tabmenu > li[class~="cbi-tab"] {
 	border-right: 0.18751rem solid var(--primary-solid) !important;
 	border-left: 0.18751rem solid var(--primary-solid) !important;
 	transform: scale(1.05) translate(0, -0.1rem);
 	box-shadow: 0 0.5rem 1rem  var(--input-boxcolor);
-	background-color: rgba(var(--primary-rgbm), 0.2);
+	background-color: rgba(var(--primary-rgbm), 0.7);
+}
+
+.cbi-tabmenu li[class~="cbi-tab"] a {
+   color: var(--menu-hover-color)
 }
 [data-tab-title] {
 	overflow: hidden;
@@ -2117,6 +2140,13 @@ body.modal-overlay-active #modal_overlay {
     box-shadow: none;
     background-color: rgba(255, 255, 255, 0);
 }
+
+.cbi-section em {
+    font-size: var(--font-x);
+    font-weight: 600;
+    color: var(--body-color);
+    text-align: center
+}
 .network-status-table {
 	display: flex;
 	flex-wrap: wrap;
@@ -2246,6 +2276,7 @@ body.modal-overlay-active #modal_overlay {
     min-width: 7rem;
     background-color: rgba(var(--primary-rgbm), 0.2);
     transform: translate(-50, -50%);
+    color: var(--body-color)
     text-align: center!important;
 }
 .ifacebox-head.active {
@@ -2261,12 +2292,18 @@ body.modal-overlay-active #modal_overlay {
 .zonebadge {
 	padding: .2rem .5rem!important;
 	display: inline-block;
-	padding: .2rem .5rem;
+    min-width: 20rem
+}
+.zonebadge strong {
+    font-size: var(--font-x);
+    color: var(--body-color)
 }
 .zonebadge .ifacebadge {
 	margin: .1rem .2rem;
-	padding: .2rem 1rem;
-	border: thin solid #6c6c6c;
+    background-color: #ccc;
+    padding: .2rem 1rem;
+    border: 1px solid #bbb
+
 }
 .zonebadge > input[type="text"] {
 	background-color: rgba(var(--primary-rgbbody), 1);
@@ -2291,6 +2328,8 @@ body.modal-overlay-active #modal_overlay {
 .cbi-value-field > ul > li .ifacebadge {
 	margin-top: -.5rem;
 	margin-left: .4rem;
+
+    color: var(--body-color)
 	background-color: #eee;
 }
 .cbi-section-table-row>.cbi-value-field .cbi-input-text, .cbi-section-table-row>.cbi-value-field .cbi-input-password, .cbi-section-table-row > .cbi-value-field .cbi-dropdown {
@@ -2927,9 +2966,12 @@ overflow-y: hidden;
 .cbi-dropdown.btn.cbi-button.cbi-button-action {
 	padding-right: 5px;
 }
-.node-admin-system-ttyd-ttyd iframe {
+/* luci-app-ttyd */
+.node-admin-system-ttyd-ttyd #view>iframe {
 	border-radius:  var(--Radius2)!important;
+	  min-height:600px!important;
 }
+
 /* fix node-admin-status-overview color */
 .node-admin-status-overview h3 {
 	color: unset !important;
