@@ -1,7 +1,6 @@
 'use strict';
 'require baseclass';
 'require ui';
-
 return baseclass.extend({
 	__init__: function() {
 		ui.menu.load().then(L.bind(this.render, this));
@@ -42,15 +41,16 @@ return baseclass.extend({
 
 	handleMenuExpand: function(ev) {
 		var a = ev.target, ul1 = a.parentNode, ul2 = a.nextElementSibling;
+		var collapse = false;
 
 		document.querySelectorAll('li.slide.active').forEach(function(li) {
 			if (li !== a.parentNode || li == ul1) {
 				li.classList.remove('active');
 				li.childNodes[0].classList.remove('active');
 			}
-
-			if (li == ul1)
-				return;
+			if (!collapse && li == ul1) {
+				collapse = true;
+			}
 		});
 
 		if (!ul2)
@@ -58,11 +58,18 @@ return baseclass.extend({
 
 		if (ul2.parentNode.offsetLeft + ul2.offsetWidth <= ul1.offsetLeft + ul1.offsetWidth)
 			ul2.classList.add('align-left');
+		if (!collapse) {
+			ul1.classList.add('active');
+			a.classList.add('active');
 
-		ul1.classList.add('active');
-		a.classList.add('active');
+		}
+		else
+		{
+			ul1.classList.remove('active');
+			a.classList.remove('active');
+		}
+		
 		a.blur();
-
 		ev.preventDefault();
 		ev.stopPropagation();
 	},
