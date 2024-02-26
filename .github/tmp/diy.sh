@@ -13,7 +13,7 @@ sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci
 # rm -rf feeds/packages/prometheus-node-exporter-lua
 
 # rm -rf $(find ./package/emortal/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
-rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/automount
+rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
 mv -rf ./package/emortal2/autocore  ./package/emortal/autocore 
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
@@ -111,6 +111,11 @@ cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 mkdir -p files/usr/share
 mkdir -p files/etc/root
 
+
+rm -rf ./feeds/luci/themes/luci-theme-design
+git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+rm -rf ./feeds/luci/themes/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
 # sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
@@ -118,12 +123,14 @@ echo "修改默认主题"
 sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
 # sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 # sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
-sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-bootstrap
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
+sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
 
-rm -rf ./feeds/luci/themes/luci-theme-design
-git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
-#rm -rf ./feeds/luci/themes/luci-theme-argon
+
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 
 #修改默认主机名
