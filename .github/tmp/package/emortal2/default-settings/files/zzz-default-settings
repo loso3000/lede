@@ -309,6 +309,7 @@ new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
 if [ ` cat /etc/config/luci | grep immortalwrt` ] ;then 
 
 
+sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
 sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
 echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
@@ -327,7 +328,7 @@ else
     echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
 }
 
-    # sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
+    sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
     # opkg mirror
     sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
 
