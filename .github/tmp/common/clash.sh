@@ -1,21 +1,20 @@
 
 #!/bin/bash
 OP=$1
-if [ $OP == amd64 ] ;then
 BASE_FILES=${GITHUB_WORKSPACE}/openwrt/package/base-files/files
-			singbox_version="1.8.5"
+			singbox_version="1.9.0-beta.4"
 			hysteria_version="2.2.4"
 			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-amd64.tar.gz
+				https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-$OP.tar.gz
 			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
+				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-$OP
 			
-			tar -xvzf /tmp/sing-box-${singbox_version}-linux-amd64.tar.gz -C /tmp
-			Copy /tmp/sing-box-${singbox_version}-linux-amd64/sing-box ${BASE_FILES}/usr/bin
-			Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
+			tar -xvzf /tmp/sing-box-${singbox_version}-linux-$OP.tar.gz -C /tmp
+			Copy /tmp/sing-box-${singbox_version}-linux-$OP/sing-box ${BASE_FILES}/usr/bin
+			Copy /tmp/hysteria-linux-$OP ${BASE_FILES}/usr/bin hysteria
 
 			chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
-fi
+
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 #修改默认主题
