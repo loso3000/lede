@@ -68,6 +68,7 @@ rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
 rm -rf ./package/ssr/xray-plugin
 rm -rf ./package/ssr/luci-app-ssr-plus
+rm -rf ./package/ssr/luci-app-passwall
 rm -rf ./package/ssr/naiveproxy
 
 
@@ -87,8 +88,8 @@ rm -rf ./feeds/packages/net/naiveproxy
 
 rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2
+# rm -rf ./feeds/luci/applications/luci-app-passwall
+# rm -rf ./feeds/luci/applications/luci-app-passwall2
 
 git clone https://github.com/loso3000/other ./package/other
 mv -f ./package/other/up/pass ./package/apass 
