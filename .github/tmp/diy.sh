@@ -102,8 +102,8 @@ mv ./package/apass/luci-app-ssr-plus/po/zh-cn ./package/apass/luci-app-ssr-plus/
 sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 rm -rf ./package/other
 
-# rm -rf ./package/apass/xray-core
-# rm -rf ./package/apass/xray-plugin
+rm -rf ./package/apass/xray-core
+rm -rf ./package/apass/xray-plugin
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
