@@ -70,17 +70,19 @@ rm -rf ./package/ssr/xray-plugin
 rm -rf ./package/ssr/luci-app-ssr-plus
 rm -rf ./package/ssr/luci-app-passwall
 rm -rf ./package/ssr/naiveproxy
+rm -rf ./package/ssr/v2ray-plugin
+rm -rf ./package/ssr/v2ray-core
 
 
 rm -rf package/feeds/packages/mosdns
-rm -rf package/feeds/packages/xray-plugin
 rm -rf package/feeds/packages/v2ray-core
 rm -rf package/feeds/packages/v2ray-plugin
 
 rm -rf ./feeds/packages/net/hysteria
 rm -rf ./feeds/packages/net/v2ray-core
 rm -rf ./feeds/packages/net/v2ray-plugin
-rm -rf ./feeds/packages/net/xray-core
+# rm -rf ./feeds/packages/net/xray-core
+# rm -rf package/feeds/packages/xray-plugin
 rm -rf ./feeds/packages/net/trojan-plus
 
 rm -rf package/feeds/packages/naiveproxy
@@ -99,6 +101,9 @@ rm ./package/apass/luci-app-ssr-plus/po/zh_Hans
 mv ./package/apass/luci-app-ssr-plus/po/zh-cn ./package/apass/luci-app-ssr-plus/po/zh_Hans
 sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 rm -rf ./package/other
+
+# rm -rf ./package/apass/xray-core
+# rm -rf ./package/apass/xray-plugin
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
