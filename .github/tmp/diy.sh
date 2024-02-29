@@ -62,7 +62,7 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 # Passwall
 
 #bypass
-git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
+# git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
@@ -74,27 +74,32 @@ rm -rf ./package/ssr/v2ray-plugin
 rm -rf ./package/ssr/v2ray-core
 
 
-rm -rf package/feeds/packages/mosdns
-rm -rf package/feeds/packages/v2ray-core
-rm -rf package/feeds/packages/v2ray-plugin
+#  rm -rf package/feeds/packages/mosdns
+# rm -rf package/feeds/packages/xray-plugin
+# rm -rf package/feeds/packages/v2ray-core
+# rm -rf package/feeds/packages/v2ray-plugin
 
 rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/v2ray-core
-rm -rf ./feeds/packages/net/v2ray-plugin
+# rm -rf ./feeds/packages/net/v2ray-core
+# rm -rf ./feeds/packages/net/v2ray-plugin
 # rm -rf ./feeds/packages/net/xray-core
-# rm -rf package/feeds/packages/xray-plugin
-rm -rf ./feeds/packages/net/trojan-plus
+# rm -rf ./feeds/packages/net/trojan-plus
 
-rm -rf package/feeds/packages/naiveproxy
-rm -rf ./feeds/packages/net/naiveproxy
+# rm -rf package/feeds/packages/naiveproxy
+# rm -rf ./feeds/packages/net/naiveproxy
 
-rm -rf ./feeds/luci/applications/luci-app-vssr
+# rm -rf ./feeds/luci/applications/luci-app-vssr
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-# rm -rf ./feeds/luci/applications/luci-app-passwall
-# rm -rf ./feeds/luci/applications/luci-app-passwall2
 
 git clone https://github.com/loso3000/other ./package/other
-mv -f ./package/other/up/pass ./package/apass 
+mv -f ./package/other/up/pass/shadow-tls ./package/apass/
+mv -f ./package/other/up/pass/lua-neturl ./package/apass/
+mv -f ./package/other/up/pass/naiveproxy ./package/apass/
+mv -f ./package/other/up/pass/redsocks2 ./package/apass/
+mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
+
+mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
+mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 rm ./package/apass/luci-app-bypass/po/zh_Hans
 mv ./package/apass/luci-app-bypass/po/zh-cn ./package/apass/luci-app-bypass/po/zh_Hans
 rm ./package/apass/luci-app-ssr-plus/po/zh_Hans
@@ -120,36 +125,12 @@ mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
 
 
-rm -rf ./feeds/luci/themes/luci-theme-design
-git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
-rm -rf ./feeds/luci/themes/luci-theme-argon
-git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
-# 使用默认取消自动
-# sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
-# sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
-echo "修改默认主题"
-sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
-# sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
-# sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
-sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
-sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
-
-
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
-
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
 #修改默认时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
-# TTYD 免登录
-# sed -i 's|/bin/login|/bin/login -f root|g' feeds/packages/utils/ttyd/files/ttyd.config
 
 #  coremark
 sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
@@ -240,11 +221,37 @@ rm -rf  ./feeds/luci/applications/luci-app-openclash
 git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
 sed -i 's/+libcap /+libcap +libcap-bin /' package/openclash/luci-app-openclash/Makefile
 
+rm -rf ./feeds/luci/themes/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
+# 使用默认取消自动
+# sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
+# sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
+echo "修改默认主题"
+sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
+# sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+# sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
+sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
+sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
+
+
+sed -i 's,media .. \"\/b,resource .. \"\/b,g' package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
+sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
+
+rm -rf ./feeds/luci/themes/luci-theme-design
+ git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+#rm -rf ./feeds/luci/themes/luci-theme-argon
+sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
+# 取消主题默认设置
+find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
+sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
 sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 #Add x550
 git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
 
-sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 
 # 修改makefile
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
@@ -253,9 +260,6 @@ sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-script
 # 修复 hostapd 报错
 #cp -f $GITHUB_WORKSPACE/scriptx/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
 
-# 取消主题默认设置
-find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
-sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
 
 # sed -i 's/KERNEL_PATCHVER:=6.1/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
 # sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
@@ -294,7 +298,7 @@ echo '---------------------------------' >> ./package/base-files/files/etc/banne
 
 cat>buildmd5.sh<<-\EOF
 #!/bin/bash
-
+# rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")rm -rf  bin/targets/x86/64/config.buildinfo
 rm -rf  bin/targets/x86/64/config.buildinfo
 rm -rf  bin/targets/x86/64/feeds.buildinfo
 rm -rf  bin/targets/x86/64/*x86-64-generic-kernel.bin
@@ -409,6 +413,7 @@ EOF
 
 
 ./scripts/feeds update -i
+./scripts/feeds install -i
 cat  ./x86_64/${CONFIG_S}  > .config
 case "${CONFIG_S}" in
 "Vip"*)
