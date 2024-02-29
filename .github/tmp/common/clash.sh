@@ -2,15 +2,14 @@
 #!/bin/bash
 OP=$1
 BASE_FILES=${GITHUB_WORKSPACE}/openwrt/package/base-files/files
-			singbox_version="1.9.0-beta.4"
+			#singbox_version="1.9.0-beta.4"
 			hysteria_version="2.2.4"
-			wget --quiet --no-check-certificate -P /tmp \
-				https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-$OP.tar.gz
+			#wget --quiet --no-check-certificate -P /tmp https://github.com/SagerNet/sing-box/releases/download/v${singbox_version}/sing-box-${singbox_version}-linux-$OP.tar.gz
 			wget --quiet --no-check-certificate -P /tmp \
 				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-$OP
 			
-			tar -xvzf /tmp/sing-box-${singbox_version}-linux-$OP.tar.gz -C /tmp
-			Copy /tmp/sing-box-${singbox_version}-linux-$OP/sing-box ${BASE_FILES}/usr/bin
+			#tar -xvzf /tmp/sing-box-${singbox_version}-linux-$OP.tar.gz -C /tmp
+			#Copy /tmp/sing-box-${singbox_version}-linux-$OP/sing-box ${BASE_FILES}/usr/bin
 			Copy /tmp/hysteria-linux-$OP ${BASE_FILES}/usr/bin hysteria
 
 			chmod 777 ${BASE_FILES}/usr/bin/sing-box ${BASE_FILES}/usr/bin/hysteria
