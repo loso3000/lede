@@ -7,6 +7,9 @@ test -n "$ver" || ver=0
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argon/sysauth.htm
 uci -q set luci.main.lang='auto'
 uci -q set luci.main.mediaurlbase='/luci-static/kucat'
+
+# stop avahi cups
+/etc/init.d/avahi-daemon disable  && /etc/init.d/avahi-daemon stop  
 debug=0
 setup_ssid()
 {
