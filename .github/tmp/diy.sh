@@ -98,6 +98,7 @@ mv -f ./package/other/up/pass/lua-neturl ./package/apass/
 mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
+mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 
 mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
 mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
