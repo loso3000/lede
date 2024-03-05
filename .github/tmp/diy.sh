@@ -58,10 +58,6 @@ rm -rf  ./feeds/luci/applications/luci-app-appfilter
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
-rm -rf  ./feeds/luci/applications/luci-app-netdata
-rm -rf ./package/diy/luci-app-netdata
-rm -rf  ./package/other/up/netdate/netdata-ssl
-git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 
 # Passwall
 
@@ -103,6 +99,13 @@ mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
+
+rm -rf  ./feeds/luci/applications/luci-app-netdata
+rm -rf ./package/diy/luci-app-netdata
+rm -rf ./package/js/luci-app-netdata
+rm -rf  ./package/other/up/netdate/netdata-ssl
+git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
+mv -f ./package/other/up/netdata/luci-app-netdata ./package/apass/
 
 mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
 mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
