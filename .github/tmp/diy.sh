@@ -48,7 +48,6 @@ sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr
 rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
-rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf  ./feeds/packages/net/open-app-filter
 rm -rf  ./feeds/packages/net/oaf
 rm -rf  ./feeds/luci/applications/luci-app-appfilter
@@ -59,11 +58,16 @@ rm -rf  ./feeds/luci/applications/luci-app-appfilter
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
+rm -rf  ./feeds/luci/applications/luci-app-netdata
+rm -rf ./package/diy/luci-app-netdata
+rm -rf  ./package/other/up/netdate/netdata-ssl
+git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
+
 # Passwall
 
 #bypass
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
+# rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+# git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 #rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
