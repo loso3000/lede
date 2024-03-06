@@ -102,10 +102,12 @@ mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf ./package/diy/luci-app-netdata
-rm -rf ./package/js/luci-app-netdata
+rm -rf ./feeds/packages/admin/netdata
+# rm -rf ./package/js/luci-app-netdata
 rm -rf  ./package/other/up/netdate/netdata-ssl
-git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
-mv -f ./package/other/up/netdata/luci-app-netdata ./package/apass/
+# git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
+mv -f ./package/other/up/netdata/luci-app-netdata ./package/apass/luci-app-netdata
+mv -f ./package/other/up/netdata/netdata ./package/apass/netdata
 
 mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
 mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
