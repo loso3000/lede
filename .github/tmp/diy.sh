@@ -93,6 +93,7 @@ rm -rf ./feeds/packages/net/hysteria
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 
 git clone https://github.com/loso3000/other ./package/other
+git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
 
 mv -f ./package/other/up/pass/shadow-tls ./package/apass/
 mv -f ./package/other/up/pass/lua-neturl ./package/apass/
@@ -103,8 +104,6 @@ mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/packages/admin/netdata
-rm -rf ./package/js/luci-app-netdata
-rm -rf  ./package/other/up/netdate/netdata-ssl
 # git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 mv -f ./package/other/up/netdata/ ./package/apass/
 mv -f ./package/other/up/netspeedtest/ ./package/apass/
