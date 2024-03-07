@@ -14,6 +14,7 @@ msgstr "Argon主题设置"
 msgid "Design Config"
 msgstr "Design主题设置"
 
+
 msgid "Advanced Setting"
 msgstr "高级设置"
 
