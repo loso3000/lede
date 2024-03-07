@@ -9,6 +9,7 @@ BASE_FILES=${GITHUB_WORKSPACE}/openwrt/package/base-files/files
 				https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-$OP
 			
 			tar -xvzf /tmp/sing-box-${singbox_version}-linux-$OP.tar.gz -C /tmp
+			mkdir -p ${BASE_FILES}/usr/bin
 			Copy /tmp/sing-box-${singbox_version}-linux-$OP/sing-box ${BASE_FILES}/usr/bin
 			Copy /tmp/hysteria-linux-$OP ${BASE_FILES}/usr/bin hysteria
 
