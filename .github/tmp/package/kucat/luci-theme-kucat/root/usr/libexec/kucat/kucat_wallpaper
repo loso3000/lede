@@ -8,26 +8,15 @@
 # 
 # Licensed to the public under the Apache License 2.0
 
-
 # author github@sirpdboy
-local kucat='kucat'
-[ -s "/etc/config/advancedplus" ] &&kucat='advancedplus'
-local background="$(uci -q get $kucat.@basic[0].background || echo '0')"
-local KUCATTMP="/var/kucat_date_${background}.tmp"
-local BGURL="/www/luci-static/kucat/img/down${background}.jpg"
-local REBGURL="/luci-static/kucat/img/down${background}.jpg"
-local DFBGURL="/luci-static/kucat/img/bg1.jpg"
-local LOCK="/var/lock/kucat_lock_${background}.lock"
-test_url() {
-	local url=$1
-	local status=$(/usr/bin/curl -I -o /dev/null -skL --connect-timeout 1 --retry 1 -w %{http_code} "$url")
-	case "$status" in
-		204|\
-		200)
-			echo '1'
-		;;
-	esac
-}
+kucat='kucat'
+[ -s "/etc/config/advancedplus" ] && kucat='advancedplus'
+background="$(uci -q get $kucat.@basic[0].background || echo '0')"
+KUCATTMP="/var/kucat_date_${background}.tmp"
+BGURL="/www/luci-static/kucat/img/down${background}.jpg"
+REBGURL="/luci-static/kucat/img/down${background}.jpg"
+DFBGURL="/luci-static/kucat/img/bg1.jpg"
+LOCK="/var/lock/kucat_lock_${background}.lock"
 
 curl_bgurl() {
 	case "$background" in
@@ -72,8 +61,7 @@ check_url() {
 		   fi
 		fi
 	fi
-# local checknet=$(test_url "https://www.baidu.com")
-local checknet=`ping -c 1 -W 1 223.5.5.5 > /dev/null 2>&1 &&echo 1 || echo 2`
+checknet=`ping -c 1 -W 1 223.5.5.5 > /dev/null 2>&1 &&echo 1 || echo 2`
 if [ "x$checknet" == "x1" ]; then 
 	bgurl_down
 else
