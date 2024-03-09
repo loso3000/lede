@@ -11,7 +11,7 @@ LUCI_DEPENDS:=+luci-compat +curl +wget +luci-theme-kucat
 LUCI_PKGARCH:=all
 
 PKG_VERSION:=1.7.8
-PKG_RELEASE:=20240229
+PKG_RELEASE:=20240310
 
 define Package/$(PKG_NAME)/conffiles
 /etc/config/advancedplus
