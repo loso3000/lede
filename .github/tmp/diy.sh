@@ -202,19 +202,20 @@ sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease
 sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
 
-#rm -rf ./feeds/packages/net/mosdns
-#rm -rf  ./feeds/luci/applications/luci-app-mosdns
-#rm -rf feeds/packages/net/v2ray-geodata
-#git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-#git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
-#git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
+rm -rf ./feeds/packages/net/mosdns
+rm -rf  ./feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/packages/net/v2ray-geodata
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 # alist
-# rm -rf ./feeds/packages/net/alist
-# rm -rf  ./feeds/luci/applications/luci-app-alist
-# git clone https://github.com/sbwml/luci-app-alist package/alist
+ rm -rf ./feeds/packages/net/alist
+ rm -rf  ./feeds/luci/applications/luci-app-alist
+ git clone https://github.com/sbwml/luci-app-alist package/alist
 # sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
-# rm -rf feeds/packages/lang/golang
+ rm -rf feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 #设置upnpd
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
