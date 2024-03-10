@@ -87,6 +87,9 @@ rm -rf ./feeds/packages/net/v2ray-geodata
 rm -rf ./feeds/packages/net/v2ray-plugin
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
+
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
 #bypass
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 ./package/passwall2
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
