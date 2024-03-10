@@ -61,6 +61,35 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 # Passwall
 
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
+
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 ./package/passwall2
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
+git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
+#bypass
+rm -rf ./package/ssr/luci-app-ssr-plus
+rm -rf ./package/ssr/luci-app-passwall
+rm -rf ./package/ssr/luci-app-passwall2
+# rm -rf ./package/ssr/xray-core
+rm -rf ./package/ssr/mosdns
+rm -rf ./package/ssr/trojan-plus
+# rm -rf ./package/ssr/xray-plugin
+rm -rf ./package/ssr/naiveproxy
+# rm -rf ./package/ssr/v2ray-plugin
+# rm -rf ./package/ssr/v2ray-core
+rm -rf ./package/ssr/pdnsd
+
+git clone https://github.com/loso3000/other ./package/other
+git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
+mv -f ./package/other/up/pass/shadow-tls ./package/apass/
+mv -f ./package/other/up/pass/lua-neturl ./package/apass/
+mv -f ./package/other/up/pass/naiveproxy ./package/apass/
+mv -f ./package/other/up/pass/redsocks2 ./package/apass/
+mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
+mv -f ./package/other/up/pass/trojan-plus ./package/apass/
+
 rm -rf ./feeds/packages/net/brook
 rm -rf ./feeds/packages/net/chinadns-ng
 rm -rf ./feeds/packages/net/dns2socks
@@ -87,53 +116,6 @@ rm -rf ./feeds/packages/net/v2ray-geodata
 rm -rf ./feeds/packages/net/v2ray-plugin
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
-
-rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
-#bypass
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 ./package/passwall2
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
-git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
-rm -rf ./package/ssr/luci-app-ssr-plus
-rm -rf ./package/ssr/luci-app-passwall
-rm -rf ./package/ssr/luci-app-passwall2
-
-rm -rf ./package/ssr/xray-core
-rm -rf ./package/ssr/mosdns
-rm -rf ./package/ssr/trojan-plus
-rm -rf ./package/ssr/xray-plugin
-rm -rf ./package/ssr/naiveproxy
-rm -rf ./package/ssr/v2ray-plugin
-# rm -rf ./package/ssr/v2ray-core
-rm -rf ./package/ssr/pdnsd
-
-
-#  rm -rf package/feeds/packages/mosdns
-# rm -rf package/feeds/packages/xray-plugin
-# rm -rf package/feeds/packages/v2ray-core
-# rm -rf package/feeds/packages/v2ray-plugin
-
-rm -rf ./feeds/packages/net/hysteria
-# rm -rf ./feeds/packages/net/v2ray-core
-# rm -rf ./feeds/packages/net/v2ray-plugin
-# rm -rf ./feeds/packages/net/xray-core
-# rm -rf ./feeds/packages/net/trojan-plus
-
-# rm -rf package/feeds/packages/naiveproxy
-# rm -rf ./feeds/packages/net/naiveproxy
-
-# rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
-
-git clone https://github.com/loso3000/other ./package/other
-git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
-
-mv -f ./package/other/up/pass/shadow-tls ./package/apass/
-mv -f ./package/other/up/pass/lua-neturl ./package/apass/
-mv -f ./package/other/up/pass/naiveproxy ./package/apass/
-mv -f ./package/other/up/pass/redsocks2 ./package/apass/
-mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
-mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/packages/admin/netdata
