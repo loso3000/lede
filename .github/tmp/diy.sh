@@ -74,9 +74,9 @@ rm -rf ./feeds/packages/net/lua-neturl
 rm -rf ./feeds/packages/net/naiveproxy
 rm -rf ./feeds/packages/net/pdnsd
 rm -rf ./feeds/packages/net/redsocks2
-rm -rf ./feeds/packages/net/shadowsocks-libev
+#rm -rf ./feeds/packages/net/shadowsocks-libev
 rm -rf ./feeds/packages/net/simple-obfs
-rm -rf ./feeds/packages/net/shadowsocks-rust
+#rm -rf ./feeds/packages/net/shadowsocks-rust
 rm -rf ./feeds/packages/net/tcping
 rm -rf ./feeds/packages/net/sing-box
 rm -rf ./feeds/packages/net/trojan-plus
