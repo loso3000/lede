@@ -11,6 +11,9 @@ sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf package/feeds/packages/prometheus-node-exporter-lua
 # rm -rf feeds/packages/prometheus-node-exporter-lua
+#samrtdns
+rm -rf ./feeds/luci/applications/luci-app-smartdns
+rm -rf  ./feeds/packages/net/smartdns
 
 
 case "${CONFIG_S}" in
