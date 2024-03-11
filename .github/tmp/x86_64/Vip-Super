@@ -184,7 +184,7 @@ CONFIG_PACKAGE_luci-app-control-parentcontrol=y
 CONFIG_PACKAGE_luci-app-parentcontrol=y
 CONFIG_PACKAGE_luci-app-ddns-go=y
 
-CONFIG_PACKAGE_luci-app-appfilter=y
+CONFIG_PACKAGE_luci-app-oaf=y
 # CONFIG_PACKAGE_luci-app-appfilter=y  #del
 
 CONFIG_PACKAGE_luci-app-adguardhome=y
@@ -419,3 +419,15 @@ CONFIG_PACKAGE_libnl-tiny=y
 CONFIG_PACKAGE_libnl-tiny1=y
 # CONFIG_PACKAGE_libnl-tiny2022-05-17=y
 
+
+# CONFIG_PACKAGE_luci-app-appfilter=y
+CONFIG_DEVEL=y
+CONFIG_BPF_TOOLCHAIN_HOST=y
+# CONFIG_BPF_TOOLCHAIN_NONE is not set
+CONFIG_KERNEL_BPF_EVENTS=y
+CONFIG_KERNEL_CGROUP_BPF=y
+CONFIG_KERNEL_DEBUG_INFO=y
+CONFIG_KERNEL_DEBUG_INFO_BTF=y
+# CONFIG_KERNEL_DEBUG_INFO_REDUCED is not set
+CONFIG_PACKAGE_luci-app-daed=y
+CONFIG_PACKAGE_luci-app-daed-next=y
