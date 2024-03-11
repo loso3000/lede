@@ -1,6 +1,6 @@
 #!/bin/sh
 # author 2021 jjm2473
-# author 2020-2023 sirpdboy
+# author 2020-2024 sirpdboy
 TMP_T=/var/autotimeset/autotimeset.tmp
 LOG=/etc/autotimeset/autotimeset.log
 log(){
@@ -115,8 +115,12 @@ trigger() {
 		;;
 	customscript)
 	         script=`cat /etc/autotimeset/timesetcustomscript | wc -l`
-	         # [ $script > 1 ] && chmod +x /etc/autotimeset/timesetcustomscript && /etc/autotimeset/timesetcustomscript
-	         [ $script > 1 ] && source /etc/autotimeset/timesetcustomscript
+	         [[ $script > 0 ]] && source /etc/autotimeset/timesetcustomscript
+		 log  "CustomScript succeeded!"
+		;;
+	customscript2)
+	         script=`cat /etc/autotimeset/timesetcustomscript2 | wc -l`
+	         [[ $script > 0 ]] && source /etc/autotimeset/timesetcustomscript2
 		 log  "CustomScript succeeded!"
 		;;
 	upwifi)
