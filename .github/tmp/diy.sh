@@ -118,7 +118,7 @@ rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
-rm -rf ./feeds/packages/admin/netdata
+# rm -rf ./feeds/packages/admin/netdata
 # git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 mv -f ./package/other/up/netdata/ ./package/apass/
 mv -f ./package/other/up/netspeedtest/ ./package/apass/
