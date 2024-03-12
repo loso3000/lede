@@ -100,8 +100,8 @@ rm -rf ./package/ssr/luci-app-passwall2
 rm -rf ./package/ssr/trojan-plus
 rm -rf ./package/ssr/shadowsocks-libev
 rm -rf ./package/ssr/shadowsocks-rust
-rm -rf ./package/ssr/v2ray-core
-rm -rf ./package/ssr/v2ray-plugin
+#rm -rf ./package/ssr/v2ray-core
+#rm -rf ./package/ssr/v2ray-plugin
 rm -rf ./package/ssr/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
 
@@ -147,8 +147,8 @@ rm -rf ./feeds/packages/net/v2ray-geodata
 
 #rm -rf ./feeds/packages/net/shadowsocks-libev
 #rm -rf ./feeds/packages/net/shadowsocks-rust
-# rm -rf ./feeds/packages/net/v2ray-core
-# rm -rf ./feeds/packages/net/v2ray-plugin
+rm -rf ./feeds/packages/net/v2ray-core
+rm -rf ./feeds/packages/net/v2ray-plugin
 # rm -rf ./feeds/packages/net/xray-core
 #rm -rf ./feeds/packages/net/xray-plugin
 
