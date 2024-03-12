@@ -116,7 +116,7 @@ git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
 #mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 # mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
-#mv -f ./package/other/up/pass/xray-core ./package/apass/
+mv -f ./package/other/up/pass/xray-core ./package/apass/
 #mv -f ./package/other/up/pass/xray-plugin ./package/apass/
 #mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
 
@@ -149,7 +149,7 @@ rm -rf ./feeds/packages/net/v2ray-geodata
 #rm -rf ./feeds/packages/net/shadowsocks-rust
 rm -rf ./feeds/packages/net/v2ray-core
 rm -rf ./feeds/packages/net/v2ray-plugin
-# rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/xray-core
 #rm -rf ./feeds/packages/net/xray-plugin
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
