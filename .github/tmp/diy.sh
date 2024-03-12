@@ -76,14 +76,15 @@ git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 rm -rf ./package/ssr/luci-app-ssr-plus
 rm -rf ./package/ssr/luci-app-passwall
 rm -rf ./package/ssr/luci-app-passwall2
-# rm -rf ./package/ssr/xray-core
+rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
-# rm -rf ./package/ssr/xray-plugin
+ rm -rf ./package/ssr/xray-plugin
 rm -rf ./package/ssr/naiveproxy
-# rm -rf ./package/ssr/v2ray-plugin
+rm -rf ./package/ssr/v2ray-plugin
 # rm -rf ./package/ssr/v2ray-core
-# rm -rf ./package/ssr/pdnsd
+rm -rf ./package/ssr/pdnsd
+
 
 git clone https://github.com/loso3000/other ./package/other
 git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
@@ -93,6 +94,13 @@ mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 # mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
+mv -f ./package/other/up/pass/xray-core ./package/apass/
+mv -f ./package/other/up/pass/xray-plugin ./package/apass/
+mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
+
+#rm -rf ./package/apass/xray-core
+#rm -rf ./package/apass/xray-plugin
+
 
 rm -rf ./feeds/packages/net/brook
 rm -rf ./feeds/packages/net/chinadns-ng
@@ -136,13 +144,11 @@ rm -rf  ./feeds/packages/net/daed
 rm -rf  ./feeds/luci/applications/luci-app-daed
 mv -f ./package/other/up/daed ./package/apass/
 
-rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socatmv -f ./package/other/up/luci-app-socat ./package/apass/
+rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
+mv -f ./package/other/up/luci-app-socat ./package/apass/
 
 
 rm -rf ./package/other
-
-rm -rf ./package/apass/xray-core
-rm -rf ./package/apass/xray-plugin
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
