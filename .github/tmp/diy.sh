@@ -83,7 +83,7 @@ rm -rf ./package/ssr/trojan-plus
 rm -rf ./package/ssr/naiveproxy
 rm -rf ./package/ssr/v2ray-plugin
 # rm -rf ./package/ssr/v2ray-core
-rm -rf ./package/ssr/pdnsd
+# rm -rf ./package/ssr/pdnsd
 
 
 git clone https://github.com/loso3000/other ./package/other
