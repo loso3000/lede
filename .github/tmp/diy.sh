@@ -91,7 +91,7 @@ mv -f ./package/other/up/pass/shadow-tls ./package/apass/
 mv -f ./package/other/up/pass/lua-neturl ./package/apass/
 mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 mv -f ./package/other/up/pass/redsocks2 ./package/apass/
-mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
+# mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 
 rm -rf ./feeds/packages/net/brook
@@ -130,6 +130,15 @@ mv -f ./package/other/up/netdata/ ./package/apass/
 mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
 mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
+
+#dae
+rm -rf  ./feeds/packages/net/daed
+rm -rf  ./feeds/luci/applications/luci-app-daed
+mv -f ./package/other/up/daed ./package/apass/
+
+rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socatmv -f ./package/other/up/luci-app-socat ./package/apass/
+
+
 rm -rf ./package/other
 
 rm -rf ./package/apass/xray-core
