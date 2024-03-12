@@ -173,9 +173,6 @@ CONFIG_PACKAGE_luci-app-chatgpt=y
 CONFIG_PACKAGE_luci-app-chatgpt-web=y
 CONFIG_PACKAGE_luci-app-netwizard=y
 CONFIG_PACKAGE_luci-app-autotimeset=y
-CONFIG_PACKAGE_luci-app-bypass=y
-# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Hysteria is not set
-# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Trojan is not set
 CONFIG_PACKAGE_luci-app-wrtbwmon=y
 CONFIG_PACKAGE_luci-app-partexp=y
 CONFIG_PACKAGE_luci-app-store=y
@@ -227,6 +224,11 @@ CONFIG_PACKAGE_luci-app-wolplus=y
 ### ImmortalWrt Proxy - nft
 # CONFIG_PACKAGE_luci-app-homeproxy=y
 
+CONFIG_PACKAGE_luci-app-bypass=y
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Hysteria is not set
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Trojan is not set
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_v2ray-plugin is not set
+# CONFIG_PACKAGE_luci-app-vssr_INCLUDE_v2ray-plugin is not set
 ### Passwall
 CONFIG_PACKAGE_luci-app-openclash=y
 CONFIG_PACKAGE_luci-app-passwall=y
@@ -249,6 +251,7 @@ CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Xray=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Xray_Plugin=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Libev_Client=y
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Hysteria is not set
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_v2ray-plugin is not set
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan is not set
 
 
