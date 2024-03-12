@@ -76,29 +76,51 @@ git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 rm -rf ./package/ssr/luci-app-ssr-plus
 rm -rf ./package/ssr/luci-app-passwall
 rm -rf ./package/ssr/luci-app-passwall2
-rm -rf ./package/ssr/mosdns
+
+#rm -rf ./package/ssr/brook
+#rm -rf ./package/ssr/chinadns-ng
+#rm -rf ./package/ssr/dns2socks
+#rm -rf ./package/ssr/dns2tcp
+#rm -rf ./package/ssr/pdnsd-alt
+#rm -rf ./package/ssr/ipt2socks
+#rm -rf ./package/ssr/microsocks
+#rm -rf ./package/ssr/lua-neturl
+#rm -rf ./package/ssr/naiveproxy
+# rm -rf ./package/ssr/redsocks2
+# rm -rf ./package/ssr/simple-obfs
+# rm -rf ./package/ssr/tcping
+# rm -rf ./package/ssr/trojan
+# rm -rf ./package/ssr/tuic-client
+
+#rm -rf ./package/ssr/hysteria
+#rm -rf ./package/ssr/gn
+#rm -rf ./package/ssr/pdnsd
+# rm -rf ./package/ssr/sing-box
+# rm -rf ./package/ssr/v2ray-geodata
 rm -rf ./package/ssr/trojan-plus
-rm -rf ./package/ssr/xray-core
-rm -rf ./package/ssr/xray-plugin
-rm -rf ./package/ssr/naiveproxy
-rm -rf ./package/ssr/v2ray-plugin
+rm -rf ./package/ssr/shadowsocks-libev
+rm -rf ./package/ssr/shadowsocks-rust
 rm -rf ./package/ssr/v2ray-core
-# rm -rf ./package/ssr/pdnsd
+rm -rf ./package/ssr/v2ray-plugin
+rm -rf ./package/ssr/xray-core
+rm -rf ./feeds/packages/net/xray-plugin
+
+rm -rf ./package/ssr/mosdns
 
 
 git clone https://github.com/loso3000/other ./package/other
 git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
-mv -f ./package/other/up/pass/shadow-tls ./package/apass/
-mv -f ./package/other/up/pass/lua-neturl ./package/apass/
-mv -f ./package/other/up/pass/naiveproxy ./package/apass/
-mv -f ./package/other/up/pass/redsocks2 ./package/apass/
+#mv -f ./package/other/up/pass/shadow-tls ./package/apass/
+#mv -f ./package/other/up/pass/lua-neturl ./package/apass/
+#mv -f ./package/other/up/pass/naiveproxy ./package/apass/
+#mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 # mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 #mv -f ./package/other/up/pass/xray-core ./package/apass/
 #mv -f ./package/other/up/pass/xray-plugin ./package/apass/
 #mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
 
-rm -rf ./package/apass/xray-core
+#rm -rf ./package/apass/xray-core
 #rm -rf ./package/apass/xray-plugin
 
 
@@ -115,19 +137,20 @@ rm -rf ./feeds/packages/net/lua-neturl
 rm -rf ./feeds/packages/net/naiveproxy
 rm -rf ./feeds/packages/net/pdnsd
 rm -rf ./feeds/packages/net/redsocks2
-#rm -rf ./feeds/packages/net/shadowsocks-libev
 rm -rf ./feeds/packages/net/simple-obfs
-#rm -rf ./feeds/packages/net/shadowsocks-rust
 rm -rf ./feeds/packages/net/tcping
 rm -rf ./feeds/packages/net/sing-box
 rm -rf ./feeds/packages/net/trojan-plus
 rm -rf ./feeds/packages/net/trojan
 rm -rf ./feeds/packages/net/tuic-client
 rm -rf ./feeds/packages/net/v2ray-geodata
+
+#rm -rf ./feeds/packages/net/shadowsocks-libev
+#rm -rf ./feeds/packages/net/shadowsocks-rust
 # rm -rf ./feeds/packages/net/v2ray-core
 # rm -rf ./feeds/packages/net/v2ray-plugin
 # rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/xray-plugin
+#rm -rf ./feeds/packages/net/xray-plugin
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 # rm -rf ./feeds/packages/admin/netdata
