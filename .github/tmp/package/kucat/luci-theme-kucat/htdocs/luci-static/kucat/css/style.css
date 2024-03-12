@@ -988,7 +988,7 @@ h1 {
 	padding-bottom: 10px
 }
 h2 {
-	font-size: 1.7rem;
+	font-size: 1.5em;
 	padding: 0.5rem 1.5rem 0.2rem;
 	font-weight: bold;
 	text-transform: capitalize;
@@ -1051,7 +1051,7 @@ h5 {
 .cbi-map-descr, .cbi-section-descr {
 	font-size: small;
 	line-height: 1.42857143;
-	margin: 0 1.5rem 1rem 1.5rem;
+	margin: 0.5rem 1.5rem 1rem 1.5rem;
 }
 .cbi-section-table-descr {
   display:none;
