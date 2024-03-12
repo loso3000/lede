@@ -76,13 +76,13 @@ git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 rm -rf ./package/ssr/luci-app-ssr-plus
 rm -rf ./package/ssr/luci-app-passwall
 rm -rf ./package/ssr/luci-app-passwall2
-rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
- rm -rf ./package/ssr/xray-plugin
+rm -rf ./package/ssr/xray-core
+rm -rf ./package/ssr/xray-plugin
 rm -rf ./package/ssr/naiveproxy
 rm -rf ./package/ssr/v2ray-plugin
-# rm -rf ./package/ssr/v2ray-core
+rm -rf ./package/ssr/v2ray-core
 # rm -rf ./package/ssr/pdnsd
 
 
@@ -94,11 +94,11 @@ mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 # mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
-mv -f ./package/other/up/pass/xray-core ./package/apass/
-mv -f ./package/other/up/pass/xray-plugin ./package/apass/
-mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
+#mv -f ./package/other/up/pass/xray-core ./package/apass/
+#mv -f ./package/other/up/pass/xray-plugin ./package/apass/
+#mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
 
-#rm -rf ./package/apass/xray-core
+rm -rf ./package/apass/xray-core
 #rm -rf ./package/apass/xray-plugin
 
 
@@ -123,10 +123,10 @@ rm -rf ./feeds/packages/net/sing-box
 rm -rf ./feeds/packages/net/trojan-plus
 rm -rf ./feeds/packages/net/trojan
 rm -rf ./feeds/packages/net/tuic-client
-rm -rf ./feeds/packages/net/v2ray-core
 rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/v2ray-plugin
-rm -rf ./feeds/packages/net/xray-core
+# rm -rf ./feeds/packages/net/v2ray-core
+# rm -rf ./feeds/packages/net/v2ray-plugin
+# rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
@@ -141,6 +141,7 @@ sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 
 #dae
 rm -rf  ./feeds/packages/net/daed
+rm -rf  ./package/kernel/bpf-headers
 rm -rf  ./feeds/luci/applications/luci-app-daed
 mv -f ./package/other/up/daed ./package/apass/
 
