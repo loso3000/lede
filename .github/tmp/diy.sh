@@ -484,3 +484,4 @@ cat  ./x86_64/comm  >> .config
 cat  ./x86_64/comm  >> .config
 ;;
 esac
+exit
