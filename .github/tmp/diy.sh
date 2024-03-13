@@ -151,6 +151,7 @@ rm -rf  ./feeds/luci/applications/luci-app-netdata
 # rm -rf ./feeds/packages/admin/netdata
 # git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 mv -f ./package/other/up/netdata/ ./package/apass/
+rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 mv -f ./package/other/up/tool ./package/
 
 mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
@@ -161,10 +162,8 @@ sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 rm -rf  ./feeds/packages/net/daed
 rm -rf  ./package/kernel/bpf-headers
 rm -rf  ./feeds/luci/applications/luci-app-daed
+# mv -f ./package/other/up/daed ./package/apass/
 mv -f ./package/other/up/daed ./package/apass/
-
-rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
-mv -f ./package/other/up/luci-app-socat ./package/apass/
 
 
 rm -rf ./package/other
