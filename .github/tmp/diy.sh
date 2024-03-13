@@ -54,7 +54,10 @@ rm -rf  ./feeds/luci/applications/luci-app-arpbind
 rm -rf  ./feeds/packages/net/open-app-filter
 rm -rf  ./feeds/packages/net/oaf
 rm -rf  ./feeds/luci/applications/luci-app-appfilter
-rm -rf  ./feeds/luci/applications/luci-app-oaf
+rm -rf  ./feeds/luci/applications/luci-app-timecontrol
+rm -rf  ./feeds/luci/applications/luci-app-socat
+rm -rf  ./feeds/luci/applications/luci-app-fileassistant
+rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
 
 # rm -rf  ./feeds/packages/net/wget
 # mv -rf ./package/wget  ./feeds/packages/net/wget
@@ -108,14 +111,14 @@ rm -rf ./package/ssr/mosdns
 
 
 git clone https://github.com/loso3000/other ./package/other
-#mv -f ./package/other/up/pass/shadow-tls ./package/apass/
-#mv -f ./package/other/up/pass/lua-neturl ./package/apass/
+mv -f ./package/other/up/pass/shadow-tls ./package/apass/
+mv -f ./package/other/up/pass/lua-neturl ./package/apass/
 #mv -f ./package/other/up/pass/naiveproxy ./package/apass/
 #mv -f ./package/other/up/pass/redsocks2 ./package/apass/
 # mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
 mv -f ./package/other/up/pass/trojan-plus ./package/apass/
 mv -f ./package/other/up/pass/xray-core ./package/apass/
-mv -f ./package/other/up/pass/xray-plugin ./package/apass/
+#mv -f ./package/other/up/pass/xray-plugin ./package/apass/
 #mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
 
 
@@ -159,11 +162,10 @@ mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
 
 #dae
-rm -rf  ./feeds/packages/net/daed
-rm -rf  ./package/kernel/bpf-headers
-rm -rf  ./feeds/luci/applications/luci-app-daed
+#rm -rf  ./feeds/packages/net/daed
+#rm -rf  ./package/kernel/bpf-headers
+#rm -rf  ./feeds/luci/applications/luci-app-daed
 # mv -f ./package/other/up/daed ./package/apass/
-mv -f ./package/other/up/daed ./package/apass/
 
 
 rm -rf ./package/other
