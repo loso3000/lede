@@ -106,21 +106,9 @@ rm -rf ./package/ssr/shadowsocks-rust
 #rm -rf ./package/ssr/v2ray-core
 #rm -rf ./package/ssr/v2ray-plugin
 rm -rf ./package/ssr/xray-core
-
 rm -rf ./package/ssr/mosdns
 
-
 git clone https://github.com/loso3000/other ./package/other
-mv -f ./package/other/up/pass/shadow-tls ./package/apass/
-mv -f ./package/other/up/pass/lua-neturl ./package/apass/
-#mv -f ./package/other/up/pass/naiveproxy ./package/apass/
-#mv -f ./package/other/up/pass/redsocks2 ./package/apass/
-# mv -f ./package/other/up/pass/kmod-igb-intel ./package/apass/
-mv -f ./package/other/up/pass/trojan-plus ./package/apass/
-mv -f ./package/other/up/pass/xray-core ./package/apass/
-#mv -f ./package/other/up/pass/xray-plugin ./package/apass/
-#mv -f ./package/other/up/pass/v2ray-plugin ./package/apass/
-
 
 # rm -rf ./feeds/packages/net/brook
 # rm -rf ./feeds/packages/net/chinadns-ng
@@ -150,23 +138,34 @@ rm -rf ./feeds/packages/net/trojan-plus
 rm -rf ./feeds/packages/net/xray-core
 #rm -rf ./feeds/packages/net/xray-plugin
 
+
+rm -rf ./feeds/packages/net/mosdns
+rm -rf ./feeds/packages/net/trojan-plus
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/xray-plugin
+rm -rf ./feeds/packages/net/naiveproxy
+rm -rf ./feeds/packages/net/v2ray-plugin
+rm -rf ./feeds/packages/net/v2ray-core
+rm -rf ./feeds/packages/net/pdnsd
+rm -rf ./feeds/packages/net/lua-neturl
+rm -rf ./feeds/packages/net/redsocks2
+rm -rf ./feeds/packages/net/shadow-tls
+
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 # rm -rf ./feeds/packages/admin/netdata
 # git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 mv -f ./package/other/up/netdata/ ./package/apass/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 mv -f ./package/other/up/tool ./package/
-
-mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
-mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
-sed -i 's,default n,default y,g' package/A/luci-app-bypass/Makefile
+mv -f ./package/other/up/pass ./package/
+# mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
+# mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
+sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
 #dae
 #rm -rf  ./feeds/packages/net/daed
 #rm -rf  ./package/kernel/bpf-headers
 #rm -rf  ./feeds/luci/applications/luci-app-daed
-# mv -f ./package/other/up/daed ./package/apass/
-
 
 rm -rf ./package/other
 
