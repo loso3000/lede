@@ -356,25 +356,6 @@ echo '---------------------------------' >> ./package/base-files/files/etc/banne
 [ -f ./files/root/.zshrc ] || cp  -Rf patch/z.zshrc files/root/.zshrc
 [ -f ./files/root/.zshrc ] || cp  -Rf ./z.zshrc ./files/root/.zshrc
 
-
-cat>>package/kernel/linux/modules/netsupport.mk<<-\EOF
-define KernelPackage/xdp-sockets-diag
-  SUBMENU:=$(NETWORK_SUPPORT_MENU)
-  TITLE:=PF_XDP sockets monitoring interface support for ss utility
-  KCONFIG:= \
-	CONFIG_XDP_SOCKETS=y \
-	CONFIG_XDP_SOCKETS_DIAG
-  FILES:=$(LINUX_DIR)/net/xdp/xsk_diag.ko
-  AUTOLOAD:=$(call AutoLoad,31,xsk_diag)
-endef
-
-define KernelPackage/xdp-sockets-diag/description
- Support for PF_XDP sockets monitoring interface used by the ss tool
-endef
-
-$(eval $(call KernelPackage,xdp-sockets-diag))
-EOF
-
 cat>buildmd5.sh<<-\EOF
 #!/bin/bash
 # rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")rm -rf  bin/targets/x86/64/config.buildinfo
