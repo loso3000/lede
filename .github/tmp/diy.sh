@@ -97,15 +97,8 @@ rm -rf ./package/ssr/luci-app-passwall2
 # rm -rf ./package/ssr/trojan
 # rm -rf ./package/ssr/tuic-client
 
-#rm -rf ./package/ssr/hysteria
-#rm -rf ./package/ssr/gn
-#rm -rf ./package/ssr/pdnsd
-# rm -rf ./package/ssr/sing-box
-# rm -rf ./package/ssr/v2ray-geodata
 rm -rf ./package/ssr/shadowsocks-libev
 rm -rf ./package/ssr/shadowsocks-rust
-#rm -rf ./package/ssr/v2ray-core
-#rm -rf ./package/ssr/v2ray-plugin
 
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
@@ -114,7 +107,7 @@ rm -rf ./package/ssr/xray-plugin
 rm -rf ./package/ssr/naiveproxy
 rm -rf ./package/ssr/v2ray-plugin
 rm -rf ./package/ssr/v2ray-core
-rm -rf ./package/ssr/pdnsd
+# rm -rf ./package/ssr/pdnsd
 rm -rf ./package/ssr/lua-neturl
 rm -rf ./package/ssr/redsocks2
 rm -rf ./package/ssr/shadow-tls
@@ -285,6 +278,8 @@ sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/n
 
 # echo '默认开启 Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
+# nlbwmon - disable syslog
+sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
 
 # Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
