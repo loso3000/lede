@@ -73,14 +73,14 @@ rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-
 # rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
 
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 ./package/passwall2
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
+# git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
 git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 git clone https://github.com/loso3000/other ./package/other
 
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
-rm -rf ./package/ssr/luci-app-passwall
-rm -rf ./package/ssr/luci-app-passwall2
+# rm -rf ./package/ssr/luci-app-passwall
+# rm -rf ./package/ssr/luci-app-passwall2
 
 #rm -rf ./package/ssr/brook
 #rm -rf ./package/ssr/chinadns-ng
