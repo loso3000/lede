@@ -61,7 +61,7 @@ start() {
 			}
 			ethtool -K "$i" tx-scatter-gather on
 			ethtool -K "$i" gso on
-			ethtool -K "$i" tso on
+			ethtool -K "$i" tso off
 			ethtool -K "$i" ufo on
 		}
 	done
