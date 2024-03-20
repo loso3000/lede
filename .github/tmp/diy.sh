@@ -70,13 +70,14 @@ rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app
 
 rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
 rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
-# rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
+rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
 
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 ./package/passwall2
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall ./package/passwall
 git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 git clone https://github.com/loso3000/other ./package/other
 
+rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
 # rm -rf ./package/ssr/luci-app-passwall
