@@ -25,12 +25,8 @@
 	local nutil = require "nixio.util"
 	local uci = require 'luci.model.uci'.cursor()
 	
-	local urlencode  
-	if luci.http.protocol and luci.http.protocol.urlencode then  
-    	urlencode = luci.http.protocol.urlencode  
-	else  
-    	urlencode = luci.util.urlencode  
-	end  
+	local urlencode = luci.http.protocol and luci.http.protocol.urlencode or luci.util.urlencode
+
 	local boardinfo = util.ubus("system", "board") or { }
 
 	local node = disp.context.dispatched

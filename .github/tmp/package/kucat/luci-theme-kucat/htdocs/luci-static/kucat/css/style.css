@@ -211,6 +211,7 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+	background: fixed;
 	background-repeat: no-repeat;
 }
 body div {
@@ -2500,6 +2501,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+	background: fixed;
 	background-repeat: no-repeat;
 }
 .node-main-login>.main>.main-right>.login-bg.blur {
