@@ -48,6 +48,9 @@ sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr
 # rm -rf ./package/emortal2
 #rm -rf  package/js2
 
+rm -rf  ./feeds/packages/network/utils/iptables
+# mv -rf ./package/wget  ./feeds/packages/network/utils/iptables
+
 rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
