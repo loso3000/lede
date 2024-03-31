@@ -285,6 +285,8 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 # nlbwmon - disable syslog
 sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
 
+git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
+sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
 # Add OpenClash
 rm -rf  ./feeds/luci/applications/luci-app-openclash
 git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
