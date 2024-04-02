@@ -64,9 +64,6 @@ sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr
 # rm -rf ./package/emortal2
 #rm -rf  package/js2
 
-rm -rf  ./feeds/packages/network/utils/iptables
-# mv -rf ./package/wget  ./feeds/packages/network/utils/iptables
-
 rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
@@ -183,6 +180,8 @@ mv -f ./package/other/up/pass ./package/
 # mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
+rm -rf  ./feeds/packages/network/utils/iptables
+mv -rf  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
 #dae
 #rm -rf  ./feeds/packages/net/daed
 #rm -rf  ./package/kernel/bpf-headers
