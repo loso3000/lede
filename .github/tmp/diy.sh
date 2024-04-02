@@ -180,6 +180,9 @@ mv -f ./package/other/up/pass ./package/
 # mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
+rm -f ./package/kernel/linux/modules/netfilter.mk
+wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
+
 rm -rf  ./feeds/packages/network/utils/iptables
 mv -rf  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
 #dae
