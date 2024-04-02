@@ -179,45 +179,22 @@ mv -f ./package/other/up/pass ./package/
 # mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
 # mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
+
 # kernel modules
-# rm -f ./package/kernel/linux/modules/netfilter.mk
-# wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
-
-export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
-rm -rf package/kernel/linux
-git checkout package/kernel/linux
-pushd package/kernel/linux/modules
-    rm -f [a-z]*.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/block.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/can.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/crypto.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/firewire.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/fs.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/gpio-cascade.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/hwmon.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/i2c.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/iio.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/input.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/leds.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/lib.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/multiplexer.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/netdevices.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/netfilter.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/netsupport.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/nls.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/other.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/pcmcia.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/sound.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/spi.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/usb.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/video.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/virt.mk
-    curl -Os https://$mirror/package/kernel/linux/modules/w1.mk
-    curl -Os https://$mirror/package/kernel/linux/moduless/wpan.mk
-popd
-
 rm -rf  ./feeds/packages/network/utils/iptables
 mv -rf  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
+
+rm -f ./package/kernel/linux/modules/netfilter.mk
+wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
+
+#export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
+#rm -rf package/kernel/linux
+#git checkout package/kernel/linux
+#pushd package/kernel/linux/modules
+    # rm -f [a-z]*.mk
+    #curl -Os https://$mirror/package/kernel/linux/modules/netfilter.mk
+#popd
+
 #dae
 #rm -rf  ./feeds/packages/net/daed
 #rm -rf  ./package/kernel/bpf-headers
