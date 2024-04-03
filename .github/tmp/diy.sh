@@ -18,11 +18,11 @@ rm -rf  ./feeds/packages/net/smartdns
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
 # kernel - 5.4
-curl -s https://$mirror/tags/kernel-5.4 > include/kernel-5.4
+# curl -s https://$mirror/tags/kernel-5.4 > include/kernel-5.4
 
 # kenrel Vermagic
 # sed -ie 's/^\(.\).*vermagic$/\1cp $(TOPDIR)\/.vermagic $(LINUX_DIR)\/.vermagic/' include/kernel-defaults.mk
-grep HASH include/kernel-5.4 | awk -F'HASH-' '{print $2}' | awk '{print $1}' | md5sum | awk '{print $1}' > .vermagic
+# grep HASH include/kernel-5.4 | awk -F'HASH-' '{print $2}' | awk '{print $1}' | md5sum | awk '{print $1}' > .vermagic
 
 
 case "${CONFIG_S}" in
