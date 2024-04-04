@@ -504,11 +504,13 @@ opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends
 	uci -q get dockerd.globals 2>/dev/null && {
 		uci -q set dockerd.globals.data_root='/opt/docker/'
 		uci -q set dockerd.globals.auto_start='1'
-  		uci commit dockerd
+		uci commit dockerd
   		/etc/init.d/dockerd enabled
 		rm -rf /tmp/luci*
 		/etc/init.d/dockerd restart
-		/etc/init.d/rpcd restart
+		 /etc/init.d/avahi-daemon enabled
+		 /etc/init.d/avahi-daemon start
+
 	}
 }
 case "$IPK" in
@@ -520,7 +522,6 @@ case "$IPK" in
 	;;
 esac
 EOF
-
 
 ./scripts/feeds update -i
 ./scripts/feeds install -i
