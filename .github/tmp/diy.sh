@@ -43,11 +43,11 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
-;;
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 Vip-Mini)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
@@ -55,10 +55,11 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 ;;
 Vip-Plus)
 ;;
@@ -71,11 +72,11 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 ;;
 *)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
@@ -84,10 +85,11 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 ;;
 esac
 
