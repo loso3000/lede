@@ -15,6 +15,7 @@ sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci
 rm -rf ./feeds/luci/applications/luci-app-smartdns
 rm -rf  ./feeds/packages/net/smartdns
 
+export github="github.com"
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
 
@@ -34,8 +35,7 @@ git clone -b v3.32.0 --depth 1 https://$github/sbwml/luci-app-alist package/alis
 sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
 
 case "${CONFIG_S}" in
-Free-Plus)
-;;
+
 *Super)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
@@ -48,7 +48,7 @@ sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/contro
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
-Vip-Mini)
+*Mini)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
@@ -61,9 +61,17 @@ sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 ;;
-Vip-Plus)
-;;
-Vip-Bypass)
+*Plus|*Bypass)
+sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
+sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
+sed -i 's/services/vpn/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/view/alist/*.htm
+sed -i 's/services/nas/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/services/nas/g' ./package/alist/luci-app-alist/luasrc/view/alist/*.htm
 ;;
 Free-Mini)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
