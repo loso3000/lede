@@ -17,6 +17,15 @@ rm -rf  ./feeds/packages/net/smartdns
 
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
+# Add luci-app-dockerman
+rm -rf ./feeds/luci/applications/luci-app-dockerman
+# rm -rf ./feeds/luci/applications/luci-app-docker
+rm -rf ./feeds/luci/collections/luci-lib-docker
+# rm -rf ./package/diy/luci-app-dockerman
+#rm -rf ./feeds/packages/utils/docker
+git clone --depth=1 https://$github/lisaac/luci-lib-docker ./package/new/luci-lib-docker
+git clone --depth=1 https://$github/lisaac/luci-app-dockerman ./package/new/dockerman
+
 # kernel - 5.4
 # curl -s https://$mirror/tags/kernel-5.4 > include/kernel-5.4
 
