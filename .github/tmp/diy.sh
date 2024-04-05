@@ -17,14 +17,6 @@ rm -rf  ./feeds/packages/net/smartdns
 
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
-# Add luci-app-dockerman
-rm -rf ./feeds/luci/applications/luci-app-dockerman
-# rm -rf ./feeds/luci/applications/luci-app-docker
-rm -rf ./feeds/luci/collections/luci-lib-docker
-# rm -rf ./package/diy/luci-app-dockerman
-#rm -rf ./feeds/packages/utils/docker
-git clone --depth=1 https://$github/lisaac/luci-lib-docker ./package/new/luci-lib-docker
-git clone --depth=1 https://$github/lisaac/luci-app-dockerman ./package/new/dockerman
 
 # kernel - 5.4
 # curl -s https://$mirror/tags/kernel-5.4 > include/kernel-5.4
@@ -220,6 +212,13 @@ wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsn
 
 rm -rf ./package/other
 
+# Add luci-app-dockerman
+# rm -rf ./feeds/luci/applications/luci-app-dockerman
+# rm -rf ./feeds/luci/collections/luci-lib-docker
+# git clone --depth=1 https://$github/lisaac/luci-lib-docker ./package/new/luci-lib-docker
+# git clone --depth=1 https://$github/lisaac/luci-app-dockerman ./package/new/dockerman
+
+cat patch/dockerman.lua > ./feeds/luci/applications/luci-app-dockerman/luasrc/controller/dockerman.lua
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
