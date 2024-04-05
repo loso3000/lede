@@ -311,12 +311,6 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
-# alist
-# rm -rf ./feeds/packages/net/alist
-# rm -rf  ./feeds/luci/applications/luci-app-alist
-# git clone https://github.com/sbwml/luci-app-alist package/alist
-# sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
-
 #设置upnpd
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 #sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
