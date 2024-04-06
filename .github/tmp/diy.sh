@@ -235,10 +235,11 @@ sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
 # kernel modules
 rm -rf  ./feeds/packages/network/utils/iptables
-mv -rf  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
+mv -f  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
 
 rm -f ./package/kernel/linux/modules/netfilter.mk
-wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
+# wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
+wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/package/kernel/linux/modules/netfilter.mk
 
 #export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 #rm -rf package/kernel/linux
