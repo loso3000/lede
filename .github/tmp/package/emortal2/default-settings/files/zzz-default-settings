@@ -150,7 +150,6 @@ set turboacc.config.hw_flow='0'
 set turboacc.config.sw_flow='0'
 
 EOF
-
 sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/aria2.lua
 sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
 sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/hd_idle.lua
@@ -171,7 +170,8 @@ sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
 sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
 sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
 sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/*.htm
+sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
+sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
 
 elif  [ $frmware = Bypass ] ;then
 uci -q batch <<-EOF
@@ -211,7 +211,8 @@ sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
 sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
 sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
 sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/*.htm
+sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
+sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
 else
 
 uci -q batch <<-EOF
@@ -239,7 +240,8 @@ sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
 sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
 sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/alist.lua
 sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/*.htm
+sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/alist_status.htm
+sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/admin_info.htm
 fi
 uci commit dropbear
 uci commit vsftpd
