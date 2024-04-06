@@ -31,7 +31,7 @@ export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 # alist
 # git clone https://$github/sbwml/luci-app-alist package/alist
 git clone -b v3.32.0 --depth 1 https://$github/sbwml/luci-app-alist package/alist
-sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/zh-cn/alist.po
+sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/*/alist.po
 
 case "${CONFIG_S}" in
 
@@ -70,13 +70,13 @@ sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
 sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
 sed -i 's/services/vpn/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/admin_info.htm
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-alist/view/alist/alist_status.htm
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/view/alist/admin_info.htm
-sed -i 's/nas/services/g' ./package/alist/luci-app-alist/view/alist/alist_status.htm
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/view/alist/admin_info.htm
+sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-alist/view/alist/alist_status.htm
+sed -i 's/services/nas/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
+sed -i 's/services/nas/g' ./package/alist/luci-app-alist/view/alist/admin_info.htm
+sed -i 's/services/nas/g' ./package/alist/luci-app-alist/view/alist/alist_status.htm
 ;;
 Free-Mini)
 sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
@@ -234,12 +234,10 @@ rm -rf ./feeds/packages/net/shadow-tls
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 # rm -rf ./feeds/packages/admin/netdata
 # git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
-mv -f ./package/other/up/netdata/ ./package/apass/
+mv -f ./package/other/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 mv -f ./package/other/up/tool ./package/
-mv -f ./package/other/up/pass ./package/
-# mv -f ./package/other/up/pass/luci-app-bypass ./package/apass/
-# mv -f ./package/other/up/pass/luci-app-ssr-plus ./package/apass/
+mv -f ./package/other/up/pass ./package/pass
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
 # kernel modules
@@ -350,7 +348,7 @@ sed -i 's/解锁网易云灰色歌曲/解锁灰色歌曲/g'  `grep "解锁网易
 sed -i 's/解除网易云音乐播放限制/解锁灰色歌曲/g'  `grep "解除网易云音乐播放限制" -rl ./`
 sed -i 's/家庭云//g'  `grep "家庭云" -rl ./`
 
-sed -i 's/msgstr "挂载 SMB 网络共享"/msgstr "挂载网络共享"/g' ./feeds/luci/applications/luci-app-cifs-mount/po/*/cifs.po
+sed -i 's/msgstr "挂载 SMB 网络共享"/msgstr "挂载网络共享"/g'  `grep "挂载 SMB 网络共享" -rl ./`
 
 sed -i 's/监听端口/监听端口 用户名admin密码adminadmin/g' ./feeds/luci/applications/luci-app-qbittorrent/po/*/qbittorrent.po
 # echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRP穿透问题
