@@ -318,8 +318,8 @@ CONFIG_PACKAGE_luci-app-adguardhome=y
 CONFIG_PACKAGE_luci-app-partexp=y
 CONFIG_PACKAGE_luci-app-arpbind=n
 
-CONFIG_PACKAGE_vhusbdt=y
-CONFIG_PACKAGE_luci-app-vhusbdt=y
+CONFIG_PACKAGE_vhusbd=y
+CONFIG_PACKAGE_luci-app-vhusbd=y
 
 CONFIG_PACKAGE_luci-app-cifs-mount=y
 
