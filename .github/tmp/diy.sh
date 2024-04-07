@@ -27,10 +27,11 @@ export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
 # alist
 #  rm -rf ./feeds/packages/net/alist
-#  rm -rf  ./feeds/luci/applications/luci-app-alist
+rm -rf  ./feeds/luci/applications/luci-app-alist
 # alist
 # git clone https://$github/sbwml/luci-app-alist package/alist
-# git clone -b v3.32.0 --depth 1 https://$github/sbwml/luci-app-alist package/alist
+git clone -b v3.23.0 --depth 1 https://$github/sbwml/luci-app-alist package/alist
+rm -rf ./package/alist/alist
 # sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/*/alist.po
 
 case "${CONFIG_S}" in
