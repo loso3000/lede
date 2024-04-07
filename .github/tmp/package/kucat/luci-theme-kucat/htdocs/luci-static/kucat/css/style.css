@@ -893,11 +893,10 @@ text-decoration: none!important;
 .main .main-left .nav>li>a[data-title=iStore]:before {
 	content: "\e908"
 }
-.main .main-left .nav>li>a[data-title=Inital_Setup]:before {
-	content: "\e93a"
-}
+.main .main-left .nav>li>a[data-title=Inital_Setup]:before,
+.main .main-left .nav>li>a[data-title=Netwizard]:before,
 .main .main-left .nav>li>a[data-title=Wizard]:before {
-	content: "\e90b"
+	content: "\e93e"
 }
 .main .main-left .nav>li>a[data-title=Docker]:before {
 	content: "\e902"
@@ -916,6 +915,7 @@ text-decoration: none!important;
 .main .main-left .nav>li>a[data-title=Log_out]:before {
 	content: "\e935"
 }
+.main .main-left .nav>li>a[data-title=Netizard]:after, 
 .main .main-left .nav>li>a[data-title=Wizard]:after, 
 .main .main-left .nav>li>a[data-title=iStore]:after, 
 .main .main-left .nav>li>a[data-title=Logout]:after , 
