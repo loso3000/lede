@@ -1,5 +1,11 @@
 #!/bin/bash
 
+is_vip() {
+case "${CONFIG_S}" in
+     "Vip"*) return 0 ;;
+     *) return 1 ;;
+esac
+}
 config_generate=package/base-files/files/bin/config_generate
 [ ! -d files/root ] || mkdir -p files/root
 
@@ -120,17 +126,6 @@ sed -i '/NAS/d' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/luasrc/controller/alist.lua
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/view/alist/admin_info.htm
 sed -i 's/nas/services/g' ./package/alist/luci-app-alist/view/alist/alist_status.htm
-;;
-esac
-
-case "${CONFIG_S}" in
-"Free"*)
-#修改默认IP地址
-sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
-;;
-*)
-#修改默认IP地址
-sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 ;;
 esac
 
@@ -453,11 +448,10 @@ else
 fi
 
 
-VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
-
+ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
 date1="${CONFIG_S}-${DATA}_by_Sirpdboy"
 if [ "$VER1" = "5.4" ]; then
 date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
@@ -465,73 +459,138 @@ elif [ "$VER1" = "5.15" ]; then
 date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver515}_by_Sirpdboy"
 elif [ "$VER1" = "6.1" ]; then
 date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver61}_by_Sirpdboy"
+elif [ "$VER1" = "6.6" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver66}_by_Sirpdboy"
 fi
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
-[ ! -d files/root ] || mkdir -p files/root
-[ -f ./files/root/.zshrc ] || cp  -Rf patch/z.zshrc files/root/.zshrc
-[ -f ./files/root/.zshrc ] || cp  -Rf ./z.zshrc ./files/root/.zshrc
+[ -f ./files/root/.zshrc ] || mv -f ./package/other/patch/z.zshrc ./files/root/.zshrc
+[ -f ./files/root/.zshrc ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/.zshrc > ./files/root/.zshrc
+[ -f ./files/etc/profiles ] || mv -f ./package/other/patch/profiles ./files/etc/profiles
+[ -f ./files/etc/profiles ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/profiles > ./files/etc/profiles
+
+#判断固件版本
+if [ ${TARGET_DEVICE} = "x86_64" ] ; then
 
 cat>buildmd5.sh<<-\EOF
 #!/bin/bash
-# rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")rm -rf  bin/targets/x86/64/config.buildinfo
-rm -rf  bin/targets/x86/64/config.buildinfo
-rm -rf  bin/targets/x86/64/feeds.buildinfo
-rm -rf  bin/targets/x86/64/*x86-64-generic-kernel.bin
-rm -rf  bin/targets/x86/64/*rootfs.tar.gz
-rm -rf  bin/targets/x86/64/*x86-64-generic-squashfs-rootfs.img.gz
-rm -rf  bin/targets/x86/64/*x86-64-generic-rootfs.tar.gz
-rm -rf  bin/targets/x86/64/*x86-64-generic.manifest
-rm -rf  bin/targets/x86/64/*.vmdk
-rm -rf  bin/targets/x86/64/sha256sums
-rm -rf  bin/targets/x86/64/version.buildinfo
-rm -rf bin/targets/x86/64/*x86-64-generic-ext4-rootfs.img.gz
-rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined-efi.img.gz
-rm -rf bin/targets/x86/64/*x86-64-generic-ext4-combined.img.gz
-rm -rf bin/targets/x86/64/profiles.json
-rm -rf bin/targets/x86/64/*kernel.bin
-sleep 2
 r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
 VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
-sleep 2 
+ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
+# gzip bin/targets/*/*/*.img | true
+
+pushd bin/targets/*/*/
+rm -rf   config.buildinfo
+rm -rf   feeds.buildinfo
+rm -rf   *.manifest
+rm -rf   *rootfs.tar.gz
+rm -rf   *generic-squashfs-rootfs.img*
+rm -rf   *generic-rootfs*
+rm -rf  *generic.manifest
+rm -rf  sha256sums
+rm -rf version.buildinfo
+rm -rf *generic-ext4-rootfs.img*
+rm -rf  *generic-ext4-combined-efi.img*
+rm -rf  *generic-ext4-combined.img*
+rm -rf  profiles.json
+rm -rf  *kernel.bin
+# BINDIR=`pwd`
+sleep 2
 if [ "$VER1" = "5.4" ]; then
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined-efi.img.gz
-md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver54}-x86-64-combined-efi.img.gz
+mv  *generic-squashfs-combined.img.gz       EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-combined.img.gz   
+mv  *generic-squashfs-combined-efi.img.gz   EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-combined-efi.img.gz
+md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-combined.img.gz   
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-combined-efi.img.gz
 elif [ "$VER1" = "5.15" ]; then
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined-efi.img.gz
-md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver515}-x86-64-combined-efi.img.gz
+mv  *generic-squashfs-combined.img.gz       EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-combined.img.gz   
+mv  *generic-squashfs-combined-efi.img.gz   EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-combined-efi.img.gz
+md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-combined.img.gz   
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-combined-efi.img.gz
 elif [ "$VER1" = "6.1" ]; then
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined.img.gz   
-mv  bin/targets/x86/64/*-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined-efi.img.gz
-md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined.img.gz   
-md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver61}-x86-64-combined-efi.img.gz
+mv  *generic-squashfs-combined.img.gz       EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-combined.img.gz   
+mv  *generic-squashfs-combined-efi.img.gz   EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-combined-efi.img.gz
+md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-combined.img.gz   
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-combined-efi.img.gz
+elif [ "$VER1" = "6.6" ]; then
+mv  *generic-squashfs-combined.img.gz       EzOpenWrt-${r_version}_${VER1}.${ver66}-${TARGET_DEVICE}-combined.img.gz   
+mv  *generic-squashfs-combined-efi.img.gz   EzOpenWrt-${r_version}_${VER1}.${ver66}-${TARGET_DEVICE}-combined-efi.img.gz
+md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver66}-x86-64-combined.img.gz   
+md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver66}-x86-64-combined-efi.img.gz
 fi
-
 #md5
-cd bin/targets/x86/64
-
 md5sum ${md5_EzOpWrt} > EzOpWrt_combined.md5  || true
 md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_combined-efi.md5 || true
+popd
+
+EOF
+else
+
+cat>buildmd5.sh<<-\EOF
+#!/bin/bash
+
+r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
+ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
+ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
+ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
+ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
+# gzip bin/targets/*/*/*.img | true
+VER1="$(grep "KERNEL_PATCHVER:=" ./target/linux/rockchip/Makefile | cut -d = -f 2)"
+pushd bin/targets/*/*/
+rm -rf   config.buildinfo
+rm -rf   feeds.buildinfo
+rm -rf   *.manifest
+rm -rf   *rootfs.tar.gz
+rm -rf   *generic-squashfs-rootfs.img*
+rm -rf   *generic-rootfs*
+rm -rf  *generic.manifest
+rm -rf  sha256sums
+rm -rf version.buildinfo
+rm -rf *generic-ext4-rootfs.img*
+rm -rf  *generic-ext4-combined-efi.img*
+rm -rf  *generic-ext4-combined.img*
+rm -rf  profiles.json
+rm -rf  *kernel.bin
+# BINDIR=`pwd`
+sleep 2
+
+if [ "$VER1" = "5.4" ]; then
+mv   *squashfs-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+mv  *ext4-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver54}-${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+md5_EzOpWrt=*squashfs-sysupgrade.img.gz  
+md5_EzOpWrt_uefi=*ext4-sysupgrade.img.gz
+elif [ "$VER1" = "5.15" ]; then
+mv   *squashfs-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+mv   *ext4-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver515}-${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+md5_EzOpWrt=*squashfs-sysupgrade.img.gz  
+md5_EzOpWrt_uefi=*ext4-sysupgrade.img.gz
+elif [ "$VER1" = "6.1" ]; then
+mv *squashfs-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+mv *ext4-sysupgrade.img.gz EzOpenWrt-${r_version}_${VER1}.${ver61}-${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+md5_EzOpWrt=*squashfs-sysupgrade.img.gz  
+md5_EzOpWrt_uefi=*ext4-sysupgrade.img.gz
+fi
+#md5
+md5sum ${md5_EzOpWrt} > EzOpWrt_squashfs-sysupgrade.md5  || true
+md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_ext4-sysupgrade.md5 || true
+popd
+
 exit 0
 EOF
-
+fi
+#复制驱动和docker文件
 cat>bakkmod.sh<<-\EOF
 #!/bin/bash
 kmoddirdrv=./files/etc/kmod.d/drv
 kmoddirdocker=./files/etc/kmod.d/docker
-bakkmodfile=./patch/kmod.source
+bakkmodfile=./package/other/patch/kmod.source
 nowkmodfile=./files/etc/kmod.now
 mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
-cp -rf ./patch/list.txt $bakkmodfile
+#cp -rf ./package/other/patch/list.txt $bakkmodfile
 while IFS= read -r file; do
     a=`find ./bin/ -name "$file" `
     echo $a
@@ -548,37 +607,72 @@ while IFS= read -r file; do
     fi
 done < $bakkmodfile
 find ./bin/ -name "*dockerman*.ipk" | xargs -i cp -f {} $kmoddirdocker
+find ./bin/ -name "*dockerd*.ipk" | xargs -i cp -f {} $kmoddirdocker
 EOF
+
+# 生成安装文件VIP和普通版到固件中
+if  is_vip ; then
+#修改默认IP地址
+sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 
 cat>./package/base-files/files/etc/kmodreg<<-\EOF
 #!/bin/bash
 # EzOpenWrt By Sirpdboy
 IPK=$1
 nowkmoddir=/etc/kmod.d/$IPK
-[ ! -d $nowkmoddir ]  || return
-
+[ -d $nowkmoddir ]  || exit
+is_docker() {
+    [ -s "/usr/lib/lua/luci/controller/dockerman.lua" ] && return 0  || return 1
+}
+rede() { echo -e "\033[31m\033[01m[WARNING] $1\033[0m"; }
+green() { echo -e "\033[32m\033[01m[INFO] $1\033[0m"; }
 run_drv() {
 opkg update
+green "正在安装全部驱动（包括有线和无线）,请耐心等待...大约需要1-5分钟 \n"
 for file in `ls $nowkmoddir/*.ipk`;do
     opkg install "$file"  --force-depends
 done
-
+green "所有驱动已经安装完成！请重启系统生效！ \n"
 }
 run_docker() {
-opkg update
-opkg install $nowkmoddir/luci-app-dockerman*.ipk --force-depends
-opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends
-	uci -q get dockerd.globals 2>/dev/null && {
+if is_docker; then
+	rede " Docker服务已经存在！无须安装！\n"
+else
+	opkg update
+	green "正在安装Docker及相关服务...请耐心等待...大约需要1-5分钟 \n"
+	opkg install $nowkmoddir/dockerd*.ipk --force-depends >/dev/null 2>&1
+	opkg install $nowkmoddir/luci-app-dockerman*.ipk --force-depends  >/dev/null 2>&1
+	opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends  >/dev/null 2>&1
+	if is_docker; then
+		green "本地成功安装Docker及相关服务！\n"
+	else
+   		rede "本地安装失败！\n"
+   		green "在线重新安装Docker及相关服务...请耐心等待...大约需要1-5分钟\n"
+   		opkg install dockerd --force-depends >/dev/null 2>&1
+    		opkg install luci-app-dockerman >/dev/null 2>&1
+    		opkg install luci-i18n-dockerman-zh-cn >/dev/null 2>&1
+    		if is_docker; then 
+    		    green "在线成功安装Docker及相关服务！\n" 
+    		fi
+
+	fi
+fi
+if is_docker; then
+      		green "设置Docker服务自动启动成功！\n"
+      		rede "Docker菜单注销重新登陆才能看到！\n"
+		uci -q get dockerd.globals 2>/dev/null && {
 		uci -q set dockerd.globals.data_root='/opt/docker/'
 		uci -q set dockerd.globals.auto_start='1'
 		uci commit dockerd
   		/etc/init.d/dockerd enabled
 		rm -rf /tmp/luci*
-		/etc/init.d/dockerd restart
 		 /etc/init.d/avahi-daemon enabled
 		 /etc/init.d/avahi-daemon start
-
-	}
+		/etc/init.d/dockerd restart
+		}
+    else
+      rede "Docker失败！请检查网络和系统环境设置等！或者联系TG群：sirpdboy！\n"
+    fi
 }
 case "$IPK" in
 	"drv")
@@ -590,6 +684,34 @@ case "$IPK" in
 esac
 EOF
 
+else
+
+#修改默认IP地址
+sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
+cat>./package/base-files/files/etc/kmodreg<<-\EOF
+#!/bin/bash
+# EzOpenWrt By Sirpdboy
+IPK=$1
+nowkmoddir=/etc/kmod.d/$IPK
+[ -d $nowkmoddir ]  || exit
+rede() { echo -e "\033[31m\033[01m[WARNING] $1\033[0m"; }
+run_drv() {
+rede "目前此功能仅限VIP版本提供！ \n"
+}
+run_docker() {
+rede "目前此功能仅限VIP版本提供！ \n"
+}
+case "$IPK" in
+	"drv")
+		run_drv
+	;;
+	"docker")
+		run_docker
+	;;
+esac
+EOF
+
+fi
 ./scripts/feeds update -i
 ./scripts/feeds install -i
 cat  ./x86_64/${CONFIG_S}  > .config
