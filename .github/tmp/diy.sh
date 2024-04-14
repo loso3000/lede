@@ -589,6 +589,7 @@ nowkmodfile=./files/etc/kmod.now
 mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
 while IFS= read -r file; do
+    find ./bin/ -name "$file*.ipk" | xargs -i cp -f {}  $kmoddirdrv
     a=`find ./bin/ -name "$file" `
     echo $a
     if [ -z "$a" ]; then
