@@ -228,7 +228,7 @@ rm -rf ./feeds/packages/net/xray-plugin
 
 rm -rf ./feeds/packages/net/sing-box
 
-rm -rf ./feeds/packages/net/mosdns
+# rm -rf ./feeds/packages/net/mosdns
 rm -rf ./feeds/packages/net/trojan-plus
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
