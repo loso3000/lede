@@ -165,12 +165,14 @@ git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 git clone https://github.com/loso3000/other ./package/other
 
 rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
+rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
 # rm -rf ./package/ssr/luci-app-passwall
 # rm -rf ./package/ssr/luci-app-passwall2
 
-#rm -rf ./package/ssr/brook
+
+rm -rf ./package/ssr/brook
 #rm -rf ./package/ssr/chinadns-ng
 #rm -rf ./package/ssr/dns2socks
 #rm -rf ./package/ssr/dns2tcp
@@ -241,8 +243,6 @@ rm -rf ./feeds/packages/net/redsocks2
 rm -rf ./feeds/packages/net/shadow-tls
 
 rm -rf  ./feeds/luci/applications/luci-app-netdata
-# rm -rf ./feeds/packages/admin/netdata
-# git clone https://github.com/muink/openwrt-netdata-ssl ./package/diy/netdata-ssl
 mv -f ./package/other/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 mv -f ./package/other/up/tool ./package/
