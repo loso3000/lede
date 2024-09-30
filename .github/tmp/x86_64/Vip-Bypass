@@ -462,13 +462,13 @@ CONFIG_DOCKER_STO_EXT4=y
 CONFIG_PACKAGE_libnetwork=y
 CONFIG_PACKAGE_mount-utils=y
 CONFIG_PACKAGE_runc=y
-CONFIG_PACKAGE_tini=y
+# CONFIG_PACKAGE_tini=y
 CONFIG_PACKAGE_libuv=y
 CONFIG_PACKAGE_libwebsockets-full=y
 CONFIG_PACKAGE_luci-lib-docker=y
-CONFIG_PACKAGE_libnl-tiny=y
-CONFIG_PACKAGE_libnl-tiny1=y
-CONFIG_PACKAGE_libnl-tiny2022-05-17=y
+# CONFIG_PACKAGE_libnl-tiny=y
+# CONFIG_PACKAGE_libnl-tiny1=y
+# CONFIG_PACKAGE_libnl-tiny2022-05-17=y
 
 
 
