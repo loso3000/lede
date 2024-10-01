@@ -165,7 +165,7 @@ git clone https://github.com/sbwml/openwrt_helloworld  ./package/ssr
 git clone https://github.com/loso3000/other ./package/other
 
 rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
-rm -rf ./package/ssr/luci-app-homeproxy
+# rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
 # rm -rf ./package/ssr/luci-app-passwall
