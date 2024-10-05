@@ -597,9 +597,6 @@ while IFS= read -r file; do
     find ./bin/ -name "$file*.ipk" | xargs -i cp -f {}  $kmoddirdrv
     a=`find ./bin/ -name "$file" `
     echo $a
-    if [ -z "$a" ]; then
-        echo "no find: $file"
-    else
         cp -f $a $kmoddirdrv
 	echo $file >> $nowkmodfile
         if [ $? -eq 0 ]; then
@@ -607,7 +604,6 @@ while IFS= read -r file; do
         else
             echo "no cp:$file"
         fi
-    fi
 done < $bakkmodfile
 find ./bin/ -name "*dockerman*.ipk" | xargs -i cp -f {} $kmoddirdocker
 find ./bin/ -name "*dockerd*.ipk" | xargs -i cp -f {} $kmoddirdocker
