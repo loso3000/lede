@@ -595,15 +595,10 @@ mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
 while IFS= read -r file; do
     find ./bin/ -name "$file*.ipk" | xargs -i cp -f {}  $kmoddirdrv
-    a=`find ./bin/ -name "$file" `
-    echo $a
-        cp -f $a $kmoddirdrv
-	echo $file >> $nowkmodfile
-        if [ $? -eq 0 ]; then
-            echo "cp ok: $file"
-        else
-            echo "no cp:$file"
-        fi
+
+    cp -v $(find bin/ -type f -name "*${file}*") $kmoddirdrv
+    a=`find bin/ -name $file `
+    echo "   ===cp file:" $a
 done < $bakkmodfile
 find ./bin/ -name "*dockerman*.ipk" | xargs -i cp -f {} $kmoddirdocker
 find ./bin/ -name "*dockerd*.ipk" | xargs -i cp -f {} $kmoddirdocker
