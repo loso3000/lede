@@ -182,20 +182,6 @@ rm -rf ./package/ssr/luci-app-ssr-plus
 
 
 rm -rf ./package/ssr/brook
-#rm -rf ./package/ssr/chinadns-ng
-#rm -rf ./package/ssr/dns2socks
-#rm -rf ./package/ssr/dns2tcp
-#rm -rf ./package/ssr/pdnsd-alt
-#rm -rf ./package/ssr/ipt2socks
-#rm -rf ./package/ssr/microsocks
-#rm -rf ./package/ssr/lua-neturl
-#rm -rf ./package/ssr/naiveproxy
-# rm -rf ./package/ssr/redsocks2
-# rm -rf ./package/ssr/simple-obfs
-# rm -rf ./package/ssr/tcping
-# rm -rf ./package/ssr/trojan
-# rm -rf ./package/ssr/tuic-client
-
 rm -rf ./package/ssr/shadowsocks-libev
 rm -rf ./package/ssr/shadowsocks-rust
 
@@ -203,7 +189,7 @@ rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
 rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/xray-plugin
-rm -rf ./package/ssr/naiveproxy
+# rm -rf ./package/ssr/naiveproxy
 rm -rf ./package/ssr/v2ray-plugin
 rm -rf ./package/ssr/v2ray-core
 # rm -rf ./package/ssr/pdnsd
@@ -255,6 +241,8 @@ mv -f ./package/other/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 mv -f ./package/other/up/tool ./package/
 mv -f ./package/other/up/pass ./package/pass
+
+rm -rf ./package/other/up/pass/naiveproxy
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
 
 # kernel modules
