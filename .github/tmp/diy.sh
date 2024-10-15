@@ -174,7 +174,7 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 
 
 rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
-# rm -rf ./package/ssr/luci-app-homeproxy
+rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
 # rm -rf ./package/ssr/luci-app-passwall
