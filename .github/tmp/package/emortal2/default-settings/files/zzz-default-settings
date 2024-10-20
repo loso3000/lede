@@ -1,8 +1,10 @@
 #!/bin/sh
-touch /etc/config/base_config
-uci -q get base_config.@base[0] >/dev/null 2>&1 || uci add base_config base >/dev/null 2>&1
 ver=$(uci -q get base_config.@base[0].ver 2>/dev/null)
-test -n "$ver" || ver=0
+test -n "$ver" || {
+touch /etc/config/base_config
+uci add base_config base >/dev/null 2>&1
+ver=0
+}
 #argon
 sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argon/sysauth.htm
 uci -q set luci.main.lang='auto'
@@ -54,7 +56,7 @@ else
 fi
 # stop avahi cups
 # /etc/init.d/avahi-daemon disable  && /etc/init.d/avahi-daemon stop  
-debug=0
+debug=1
 setup_ssid()
 {
 COUNTRY='US'
@@ -449,14 +451,39 @@ else
 fi
 test $ver -lt 5 && {
 	ver=5
-	rm -f /etc/nginx/conf.d/_lan.crt  /etc/nginx/conf.d/_lan.key
-	test -e /etc/nginx/conf.d/_lan.conf && \
-	/usr/bin/nginx-util 'add_ssl' '_lan'
+	# rm -f /etc/nginx/conf.d/_lan.crt  /etc/nginx/conf.d/_lan.key
+	# test -e /etc/nginx/conf.d/_lan.conf && \
+	# /usr/bin/nginx-util 'add_ssl' '_lan'
+	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
+}
+test $ver -lt 6 && {
+	ver=6
+HOSTNAME="samsungTV"
+TAG="googleDNS"
+MAC=""
+IPADDR=""
+DNS1="8.8.4.4"
+DNS2="8.8.8.8"
+
+uci batch <<EOF
+  set dhcp.${HOSTNAME}="host"
+  set dhcp.${HOSTNAME}.name="${HOSTNAME}"
+  set dhcp.${HOSTNAME}.mac="${MAC}"
+  set dhcp.${HOSTNAME}.ip="${IPADDR}"
+  set dhcp.${HOSTNAME}.tag="${TAG}"
+  set dhcp.${TAG}="tag"
+  set dhcp.${TAG}.dhcp_option="6,${DNS1},${DNS2}"
+EOF
+
+uci commit && cd /etc/init.d && \
+./dnsmasq restart
 	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
 }
 uci -q set base_config.@base[0].ver=$ver
 uci commit base_config
 ntpd -n -q -p 1.lede.pool.ntp.org
+sed -i '/luciversion/d' /usr/lib/lua/luci/version.lua
+echo "luciversion ='21.02'" >> /usr/lib/lua/luci/version.lua
 sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 echo 'hsts=0' > /root/.wgetrc
