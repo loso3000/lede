@@ -635,6 +635,7 @@ else
 	opkg install $nowkmoddir/dockerd*.ipk --force-depends >/dev/null 2>&1
 	opkg install $nowkmoddir/luci-app-dockerman*.ipk --force-depends  >/dev/null 2>&1
 	opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends  >/dev/null 2>&1
+    	opkg install avahi-daemon >/dev/null 2>&1
 	if is_docker; then
 		echo "本地成功安装Docker及相关服务！"
 	else
@@ -643,6 +644,7 @@ else
    		opkg install dockerd --force-depends >/dev/null 2>&1
     		opkg install luci-app-dockerman >/dev/null 2>&1
     		opkg install luci-i18n-dockerman-zh-cn >/dev/null 2>&1
+    		opkg install avahi-daemon >/dev/null 2>&1
     		if is_docker; then 
     		    echo "在线成功安装Docker及相关服务！" 
     		fi
@@ -663,7 +665,7 @@ if is_docker; then
 		/etc/init.d/dockerd restart
 		}
     else
-      echo "Docker失败！请检查网络和系统环境设置等！或者联系TG群：sirpdboy！"
+      echo "安装Docker失败！请保证出国插件和网络正常！BUG请联系TG群：sirpdboy！"
     fi
 }
 case "$IPK" in
