@@ -665,7 +665,7 @@ if is_docker; then
 		/etc/init.d/dockerd restart
 		}
     else
-      echo "安装Docker失败！请保证出国插件和网络正常！BUG请联系TG群：sirpdboy！"
+      echo "安装Docker失败！请保证出国插件线路和网络正常！BUG请联系TG群：sirpdboy！"
     fi
 }
 case "$IPK" in
