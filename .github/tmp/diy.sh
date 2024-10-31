@@ -173,6 +173,12 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 
+rm -rf ./package/other/up/tool/autocore
+rm -rf ./package/other/up/tool/default-settings
+rm -rf ./package/other/up/tool/autosamba
+rm -rf ./package/other/up/tool/automount
+rm -rf ./package/other/up/tool/luci-theme-kucat
+
 rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
 rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
