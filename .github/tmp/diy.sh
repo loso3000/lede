@@ -10,6 +10,14 @@ config_generate=package/base-files/files/bin/config_generate
 [ ! -d files/root ] || mkdir -p files/root
 
 [[ -n $CONFIG_S ]] || CONFIG_S=Super
+rm -rf ./feeds/luci/themes/luci-app-filter
+rm -rf ./feeds/luci/themes/luci-app-oaf
+rm -rf ./feeds/luci/themes/luci-theme-argon
+rm -rf ./feeds/packages/net/mentohust
+rm -rf ./feeds/packages/net/open-app-filter
+rm -rf  ./feeds/luci/applications/luci-app-arpbind
+rm -rf  ./feeds/packages/net/oaf
+#rm -rf  ./feeds/packages/net/wget
 
 sed -i "s/ImmortalWrt/OpenWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
@@ -19,7 +27,45 @@ sed -i "s/ImmortalWrt/openwrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci
 # rm -rf feeds/packages/prometheus-node-exporter-lua
 #samrtdns
 rm -rf ./feeds/luci/applications/luci-app-smartdns
+rm -rf ./feeds/luci/applications/luci-app-lucky
+rm -rf ./feeds/luci/applications/luci-app-ddns-go
+rm -rf ./feeds/luci/applications/luci-app-filetransfer
+rm -rf ./feeds/luci/applications/luci-app-fileassistant
+rm -rf ./feeds/luci/applications/luci-app-msd_lite
+rm -rf ./feeds/luci/applications/luci-app-smartdns
+rm -rf ./feeds/luci/applications/luci-app-wolplus
+rm -rf ./feeds/luci/applications/luci-app-wrtbwmon
+
+rm -rf ./feeds/luci/applications/luci-app-udpxy
+rm -rf ./feeds/luci/applications/luci-app-adguardhome
+#rm -rf ./feeds/luci/applications/luci-app-mosdns
+rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2
+
+rm -rf  ./feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/packages/net/smartdns
+rm -rf  ./feeds/packages/net/lucky
+rm -rf  ./feeds/packages/net/ddns-go
+#istore
+rm -rf  ./feeds/jjm2473_apps/homebox
+rm -rf  ./feeds/jjm2473_apps/luci-app-homebox
+rm -rf  ./feeds/third_party/luci-app-LingTiGameAcc
+rm -rf  ./feeds/third_party/luci-app-arpbind
+rm -rf  ./feeds/third_party/luci-app-fileassistant
+rm -rf  ./feeds/third_party/luci-app-smartdns
+rm -rf  ./feeds/third_party/luci-app-socat
+rm -rf  ./feeds/third_party/smartdns
+rm -rf  ./feeds/third_party/luci-app-netdata
+rm -rf  ./feeds/third_party/luci-app-autotimeset
+rm -rf ./feeds/openwrt-third/luci-app-netdata
+rm -rf ./feeds/openwrt-third/smartdns
+rm -rf ./feeds/openwrt-third/luci-app-autotimeset
+rm -rf ./feeds/luci/applications/luci-app-autotimeset
+rm -rf ./feeds/third/luci-app-autotimeset
+rm -rf  ./feeds/packages/ariang
+rm -rf  ./feeds/packages/webui-aria2
+#error
+rm -rf  ./target/linux/ath79
 
 export github=github.com
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
@@ -152,6 +198,8 @@ rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
+rm -rf $(find ./package/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
+rm -rf $(find ./feeds/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
 
 # Passwall
 
@@ -203,7 +251,8 @@ rm -rf ./package/ssr/lua-neturl
 rm -rf ./package/ssr/redsocks2
 rm -rf ./package/ssr/shadow-tls
 
-
+#istoreos-files
+rm -rf ./package/istoreos-files
 
  rm -rf ./feeds/packages/net/brook
  rm -rf ./feeds/packages/net/chinadns-ng
@@ -245,11 +294,20 @@ rm -rf ./feeds/packages/net/shadow-tls
 rm -rf  ./feeds/luci/applications/luci-app-netdata
 mv -f ./package/other/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
-mv -f ./package/other/up/tool ./package/
-mv -f ./package/other/up/pass ./package/pass
 
 rm -rf ./package/other/up/pass/naiveproxy
 sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
+rm -rf ./package/other/up/pass/naiveproxy
+
+rm -rf ./package/other/up/tool/autocore
+rm -rf ./package/other/up/tool/automount
+rm -rf ./package/other/up/tool/autosamba
+rm -rf ./package/other/up/tool/default-settings/
+
+mv -f ./package/other/up/tool ./package/tool
+mv -f ./package/other/up/pass ./package/pass
+rm -rf ./package/js
+rm -rf ./package/js2
 
 # kernel modules
 # rm -rf  ./feeds/packages/network/utils/iptables
@@ -588,23 +646,27 @@ cp -rf ./patch/list.txt $bakkmodfile
 nowkmodfile=./files/etc/kmod.now
 mkdir -p $kmoddirdrv 2>/dev/null
 mkdir -p $kmoddirdocker 2>/dev/null
-while IFS= read -r file; do
-    a=`find ./bin/ -name "$file" `
+while IFS= read -r line; do  
+    cp -v $(find bin/ -type f -name "*${line}*") $kmoddirdrv
+    echo "$line"  
+        a=`find ./bin/ -name "$line" `
     echo $a
     if [ -z "$a" ]; then
-        echo "no find: $file"
+        echo "no find: $line"
     else
         cp -f $a $kmoddirdrv
-	echo $file >> $nowkmodfile
+	echo $line >> $nowkmodfile
         if [ $? -eq 0 ]; then
-            echo "cp ok: $file"
+            echo "cp ok: $line"
         else
-            echo "no cp:$file"
+            echo "no cp:$line"
         fi
     fi
-done < $bakkmodfile
-find ./bin/ -name "*dockerman*.ipk" | xargs -i cp -f {} $kmoddirdocker
-find ./bin/ -name "*dockerd*.ipk" | xargs -i cp -f {} $kmoddirdocker
+done < "$bakkmodfile"
+    # find ./bin/ -name  $file | xargs -i cp -f {}  $kmoddirdrv
+    # cp -v $(find bin/targets/ -type f -name "*${FIRMWARE_TYPE}*") ../firmware
+find ./bin/ -name "*dockerman*" | xargs -i cp -f {} $kmoddirdocker
+find ./bin/ -name "*dockerd*" | xargs -i cp -f {} $kmoddirdocker
 EOF
 
 if  is_vip ; then
@@ -649,7 +711,7 @@ else
    		echo "在线重新安装Docker及相关服务...请耐心等待...大约需要1-5分钟"
    		opkg install dockerd --force-depends >/dev/null 2>&1
     		opkg install luci-app-dockerman >/dev/null 2>&1
-    		opkg install luci-i18n-dockerman-zh-cn >/dev/null 2>&1
+    		opkg install luci-i18n-dockerman* >/dev/null 2>&1
     		opkg install avahi-daemon >/dev/null 2>&1
     		if is_docker; then 
     		    echo "在线成功安装Docker及相关服务！" 
