@@ -220,6 +220,11 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
+# rm -rf ./package/other/luci-app-mwan3 ./package/other/mwan3
+# rm -rf ./feeds/luci/applications/luci-app-mwan3
+rm -rf ./feeds/packages/net/mwan3
+mv ./package/other/up/tool/mwan3 ./feeds/packages/net/mwan3
+
 
 rm -rf ./package/other/up/tool/autocore
 rm -rf ./package/other/up/tool/default-settings
@@ -227,7 +232,7 @@ rm -rf ./package/other/up/tool/autosamba
 rm -rf ./package/other/up/tool/automount
 rm -rf ./package/other/up/tool/luci-theme-kucat
 
-rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
+# rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
 rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
 rm -rf ./package/ssr/luci-app-ssr-plus
