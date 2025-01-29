@@ -313,6 +313,7 @@ CONFIG_PACKAGE_luci-app-partexp=y
 CONFIG_PACKAGE_luci-app-arpbind=y
 CONFIG_PACKAGE_luci-app-ds-lite=y
 
+CONFIG_PACKAGE_luci-app-ota=y
 CONFIG_PACKAGE_luci-app-vhusbd=y
 
 CONFIG_PACKAGE_luci-base=y
