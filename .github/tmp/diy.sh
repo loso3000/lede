@@ -498,17 +498,27 @@ git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550
 # sed -i 's/KERNEL_PATCHVER:=6.1/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
 # sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
 
+# echo '默认开启 Irqbalance'
+if  [[ $TARGET_DEVICE == 'x86_64' ]] ;then
+VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
+CLASH="amd64"
+
+else
+VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f 2)"
+CLASH="arm64"
+fi
+
 # 预处理下载相关文件，保证打包固件不用单独下载
 for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/common/*.sh`;do
     source $sh_file amd64
 done
 
 if [[ $DATE_S == 'default' ]]; then
-   DATA=`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+   DATA=`TZ=UTC-8 date +%y%m%d%H%M -d +"12"hour`
+   # DATA=`TZ=UTC-8 date +%y%m%d%H%M`
 else 
    DATA=$DATE_S
 fi
-
 
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
@@ -583,8 +593,8 @@ md5_EzOpWrt=EzOpenWrt-${r_version}_${VER1}.${ver66}-x86-64-combined.img.gz
 md5_EzOpWrt_uefi=EzOpenWrt-${r_version}_${VER1}.${ver66}-x86-64-combined-efi.img.gz
 fi
 #md5
-md5sum ${md5_EzOpWrt} > EzOpWrt_combined.md5  || true
-md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_combined-efi.md5 || true
+[ -f ${md5_EzOpWrt}] && md5sum ${md5_EzOpWrt} > EzOpWrt_combined.md5  || true
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_combined-efi.md5 || true
 popd
 
 EOF
@@ -635,8 +645,8 @@ md5_EzOpWrt=*squashfs-sysupgrade.img.gz
 md5_EzOpWrt_uefi=*ext4-sysupgrade.img.gz
 fi
 #md5
-md5sum ${md5_EzOpWrt} > EzOpWrt_squashfs-sysupgrade.md5  || true
-md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_ext4-sysupgrade.md5 || true
+[ -f ${md5_EzOpWrt}] && md5sum ${md5_EzOpWrt} > EzOpWrt_squashfs-sysupgrade.md5  || true
+[ -f ${md5_EzOpWrt_uefi}] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_ext4-sysupgrade.md5 || true
 
 popd
 exit 0
