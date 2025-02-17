@@ -191,8 +191,10 @@ rm -rf  ./feeds/packages/webui-aria2
 mv -f ./package/add/up/tool/smartdns/smartdns  ./feeds/packages/net/smartdns
 mv -f ./package/add/up/tool/smartdns/luci-app-smartdns ./feeds/luci/applications/luci-app-smartdns
 
-mv -f ./package/add/up/tool/netspeedtest/*  ./package/add/
-mv -f ./package/add/up/tool/smartdns/*  ./package/add/
+rm -rf ./package/qbittorrent
+rm -rf ./package/emortal2
+rm -rf ./package/js
+rm -rf ./package/kucat
 
 # rm -rf ./package/add/luci-app-mwan3 ./package/add/mwan3
 # rm -rf ./feeds/luci/applications/luci-app-mwan3
