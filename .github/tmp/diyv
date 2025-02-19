@@ -191,11 +191,6 @@ rm -rf  ./feeds/packages/webui-aria2
 mv -f ./package/add/up/tool/smartdns/smartdns  ./feeds/packages/net/smartdns
 mv -f ./package/add/up/tool/smartdns/luci-app-smartdns ./feeds/luci/applications/luci-app-smartdns
 
-rm -rf ./package/qbittorrent
-rm -rf ./package/emortal2
-rm -rf ./package/js
-rm -rf ./package/kucat
-
 # rm -rf ./package/add/luci-app-mwan3 ./package/add/mwan3
 # rm -rf ./feeds/luci/applications/luci-app-mwan3
 rm -rf ./feeds/packages/net/mwan3
@@ -224,7 +219,7 @@ rm -rf  ./feeds/packages/net/msd_lite
 
 mkdir -p ./package/lean
 rm -rf ./package/lean/autocore ./package/emortal/autocore
-rm -rf mv ./package/add/up/tool/autocore ./package/lean/autocore 
+rm -rf ./package/add/up/tool/autocore
 # mv ./package/add/up/tool/autocore ./package/lean/autocore 
 #rm -rf ./package/lean/autocore/files/generic/inlink.htm
 # rm -rf ./package/add/up/tool/autocore/files/generic/inlink.htm
@@ -236,6 +231,7 @@ rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/automount
 rm -rf ./package/lean/automount
 
+rm -rf ./package/add/up/tool/default-settings
 rm -rf ./package/lean/default-settings
 rm -rf  package/emortal/default-settings
 
