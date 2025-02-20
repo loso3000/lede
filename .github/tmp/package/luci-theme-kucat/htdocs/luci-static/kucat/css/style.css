@@ -35,6 +35,7 @@
     --menu-hover-color: #fff;
     --menu-item-color: #5a636b;
     --menu-item-titlebg-color: rgba(var(--primary-rgbm),0.22);
+    --menu-barbgcolor: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
     --body-text-color: #3c4655;
     --body-color: #65656b;
     --inputbg-color: rgba(248,248,248,0.15);
@@ -55,12 +56,12 @@
     --menu-hover-color: #e9eff3;
     --menu-item-color: #b4c9e3;
     --menu-item-titlebg-color: rgba(var(--primary-rgbm),0.4);
+    --menu-barbgcolor: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
     --body-text-color: #8391a2;
     --body-color: #8b8e91;
     --inputbg-color: rgba(255,255,255,0.11);
     --inputtext-color: #bbb;
     --inputborder-color: rgba(255,255,255,0.2);
-    --menu-fontcolor: #bbb;
     --input-bgcolor: rgba(0,0,0,0.2);
     --input-boxcolor: rgba(255,255,255,0.15);
     --input-boxhovercolor: rgba(255, 255, 255, 0.22);
@@ -499,6 +500,7 @@ small {
 }
 .main > .loading {
 	position: fixed;
+	display: none;
 	top: 0;
 	opacity: 1;
 	visibility: visible;
@@ -519,11 +521,11 @@ small {
 .main .main-left .sidenav-header {
 	text-align: center;
 	height: 4.8rem; 
-	background-color: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
 	background-color: var(--menu-barbgcolor);
 	padding: 2rem;
+	margin: 0rem 1rem 0rem 1rem;
 	background-clip: padding-box;
-	border-bottom: 1px solid #ddd
+	border-bottom: 1px solid #ddd;
 }
 .main-right {
 	width: calc(100% - 17rem);
@@ -548,7 +550,7 @@ small {
 }
 
 header.pd-primary {
-	background-color: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
+	background-color: var(--menu-bgcolor);
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35); 
 	background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent) !important;
 
@@ -840,7 +842,7 @@ text-decoration: none!important;
 }
 .main .main-left .nav>li>a:hover a::after, .main .main-left>.nav>li>a.active a::after {
 	cursor: pointer;
-	color: var(--menu-fontcolor);
+	color: var(--menu-hover-color);
 	width: 100%
 }
 .main>.main-left .nav>.slide>a.active::before, .main .main-left .nav>li>a:hover::after, .main .main-left .nav>li>a.active::after {
@@ -955,16 +957,13 @@ text-decoration: none!important;
     font-family: var(--font-sans);
     font-weight: bold;
     font-size: 1.5rem;
-	padding-left: 0px;
-	text-decoration: none;
-	/*letter-spacing: 3px;*/
-	font-weight: bolder;
-	cursor: default;
-	vertical-align: text-bottom;
-	white-space: nowrap;
-	text-align: center;
-	align-items: center;
-	justify-content: center;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    cursor: default;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+    text-align: center;
 }
 
 ul {
@@ -1982,7 +1981,7 @@ select, input {
 	max-width: 800px;
 	min-height: 32px;
 	margin: 5em auto;
-	padding: 1em;
+	padding: 0.2rem;
 	border-radius:  var(--radius2)!important;
 	background-color: rgba(var(--primary-rgbbody), 1);
     box-shadow: 0 2px 10px 0px rgba(255, 255, 255, .16), 0 0 10px 0 rgba(255, 255, 255, .12);
@@ -2927,6 +2926,20 @@ body.lang_pl.node-main-login .cbi-value-title {
 	margin: 0;
 }
 
+.cbi-tab-disabled[data-errors]::after {
+  content: attr(data-errors);
+  background: #c43c35;
+  color: #fff;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 5px 0 0;
+  padding: 2px 2px 2px 2px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+}
 #cbi-firewall-redirect table *, #cbi-network-switch_vlan table *, #cbi-firewall-zone table * {
 	font-size: small;
 	white-space: nowrap;

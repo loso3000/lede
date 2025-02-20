@@ -197,14 +197,12 @@
 		--ufilter: <%=ufilter%>;
 		--bgqs-image: <%=bgqs_image%>;
 		--menu-bgcolor: rgba(var(--primary-rgbbody), var(--primary-rgbm-ts));
-		--menu-barbgcolor: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
-		
-	<% if mode == 'dark'  then %>
-		--menu-fontcolor: #bbb;
-	<% else %>
-		--menu-fontcolor: #4d4d5d;
-	<% end -%>
 		--menu-item-hover-bgcolor: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
+		<% if mode == 'dark'  then %>
+		--menu-fontcolor: #bbb;
+		<% else %>
+		--menu-fontcolor: #4d4d5d;
+		<% end -%>
 	}
 	<% else %>
 	:root {
@@ -219,16 +217,14 @@
 		--ufilter: <%=ufilter%>;
 		--bgqs-image: <%=bgqs_image%>;
 		--menu-bgcolor: rgba(var(--primary-rgbm), var(--primary-rgbm-ts));
-		--menu-barbgcolor: rgba(248,248,248, 0.2);
-	<% if mode == 'dark'  then %>
+		--menu-item-hover-bgcolor: rgba(255,255,255, 0.3);
+		<% if mode == 'dark'  then %>
 		--menu-fontcolor: #bbb;
-	<% else %>
+		<% else %>
 		--menu-fontcolor: #f5f5f5f5;
-	<% end -%>
-		--menu-item-hover-bgcolor: rgba(248,248,248, 0.2);
+		<% end -%>
 	}
 
-	
 	<% end -%>
 	<% if setbar == "1" then %>
 	header.bar-primary .container-bar-left {
