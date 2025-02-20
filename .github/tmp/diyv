@@ -224,6 +224,8 @@ rm -rf ./package/add/up/tool/autocore
 #rm -rf ./package/lean/autocore/files/generic/inlink.htm
 # rm -rf ./package/add/up/tool/autocore/files/generic/inlink.htm
 
+# binutils
+rm -rf  ./feeds/packages/devel/binutils
 # samba4
 rm -rf ./package/lean/autosamba
 rm -rf  package/emortal/autosamba
