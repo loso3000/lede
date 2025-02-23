@@ -123,7 +123,7 @@ rm -rf ./package/ssr/luci-app-passwall2
 
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
-rm -rf ./package/ssr/xray-core
+# rm -rf ./package/ssr/xray-core
 rm -rf ./package/ssr/xray-plugin
 # rm -rf ./package/ssr/naiveproxy
 rm -rf ./package/ssr/v2ray-plugin
@@ -144,8 +144,9 @@ rm -rf ./package/openwrt-passwall/naiveproxy
 git clone https://$github/loso3000/other ./package/add
 
 rm -rf ./package/add/up/pass/shadow-tls
-# rm -rf ./package/add/up/pass/xray-core
 rm -rf ./package/add/up/pass/naiveproxy
+
+rm -rf ./package/add/up/pass/xray-core
 
 #samrtdns
 rm -rf ./feeds/luci/applications/luci-app-smartdns
@@ -258,6 +259,8 @@ rm -rf ./feeds/packages/net/open-app-filter
 rm -rf ./feeds/packages/net/appfilter
 rm -rf ./feeds/luci/applications/luci-app-oaf
 rm -rf ./feeds/luci/applications/luci-app-appfilter
+rm -rf ./package/add/up/tool/OpenAppFilter
+
 # git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 
 
