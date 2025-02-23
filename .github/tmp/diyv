@@ -369,7 +369,23 @@ sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 #修改默认主机名
 sed -i "s/ImmortalWrt/EzOpWrt/" {./package/base-files/files/bin/config_generate,include/version.mk} || true
 sed -i "s/OpenWrt/EzOpWrt/" {./package/base-files/files/bin/config_generate,include/version.mk} || true
-sed -i "/^VERSION_NUMBER:=.*SNAPSHOT/s/SNAPSHOT/24.10-SNAPSHOT/" include/version.mk
+
+
+
+
+#修改默认IP地址
+# sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.10\.1/g" ./package/base-files/files/bin/config_generate
+# sed -i 's/192.168.1.1/192.168.10.1/g' ./package/base-files/files/bin/config_generate
+
+# 修改默认IP地址
+# sed -i 's/192.168.1.1/192.168.10.1/g' ./package/istoreos-files/Makefile
+# sed -i "s/192.168.1/192.168.10/" ./package/base-files/files/bin/config_generate
+# sed -i 's/192.168.1.1.1/192.168.10.1/g' ./package/base-files/files/bin/config_generate
+sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+sed -i "s/192.168.1.1.1/192.168.10.1/" {./package/base-files/files/bin/config_generate,include/version.mk} || true
+
+
+# sed -i "/^VERSION_NUMBER:=.*SNAPSHOT/s/SNAPSHOT/24.10-SNAPSHOT/" include/version.mk
 # TTYD设置
 sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
 sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
@@ -620,7 +636,7 @@ else
    DATA=$DATE_S
 fi
 # 预处理下载相关文件，保证打包固件不用单独下载
-for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/package/add/common/*.sh`;do
+for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/package/common/*.sh`;do
     source $sh_file $CLASH
 done
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
@@ -758,17 +774,6 @@ done < "$bakkmodfile"
 find ./bin/ -name "*dockerman*" | xargs -i cp -f {} $kmoddirdocker
 find ./bin/ -name "*dockerd*" | xargs -i cp -f {} $kmoddirdocker
 EOF
-
-#修改默认IP地址
-sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.10\.1/g" ./package/base-files/files/bin/config_generate
-# sed -i 's/192.168.1.1/192.168.10.1/g' ./package/base-files/files/bin/config_generate
-
-# 修改默认IP地址
-# sed -i 's/192.168.1.1/192.168.10.1/g' ./package/istoreos-files/Makefile
-# sed -i "s/192.168.1/192.168.10/" ./package/base-files/files/bin/config_generate
-sed -i 's/192\.168\.1\.1/192\.168\.10\.1/g' ./package/base-files/files/bin/config_generate
-# sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
-
 #sed -i 's/luci-theme-argon/luci-theme-kucat/g' package/istoreos-files/Makefile
 
 sed -i '/	refresh_config();/d' scripts/feeds
