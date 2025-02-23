@@ -170,6 +170,9 @@ rm -rf  ./feeds/packages/net/smartdns
 rm -rf  ./feeds/packages/net/lucky
 rm -rf  ./feeds/packages/net/ddns-go
 
+# binutils
+rm -rf  ./feeds/packages/devel/binutils
+rm -rf  ./feeds/packages/net/curl
 #istore
 rm -rf  ./feeds/jjm2473_apps/homebox
 rm -rf  ./feeds/jjm2473_apps/luci-app-homebox
@@ -225,8 +228,6 @@ rm -rf ./package/add/up/tool/autocore
 #rm -rf ./package/lean/autocore/files/generic/inlink.htm
 # rm -rf ./package/add/up/tool/autocore/files/generic/inlink.htm
 
-# binutils
-rm -rf  ./feeds/packages/devel/binutils
 # samba4
 rm -rf ./package/lean/autosamba
 rm -rf  package/emortal/autosamba
