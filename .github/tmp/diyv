@@ -108,8 +108,8 @@ rm -rf ./feeds/packages/net/naiveproxy
 # 清理
 # Add luci-app-passwall
 # git clone --depth=1 https://$github/xiaorouji/openwrt-passwall-packages  ./package/openwrt-passwall
-git clone --depth=1 https://$github/xiaorouji/openwrt-passwall2 ./package/passwall2
-git clone --depth=1 https://$github/xiaorouji/openwrt-passwall ./package/passwall
+# git clone --depth=1 https://$github/xiaorouji/openwrt-passwall2 ./package/passwall2
+# git clone --depth=1 https://$github/xiaorouji/openwrt-passwall ./package/passwall
 
 rm -rf ./package/passwall2/luci-app-passwall2/htdocs/luci-static/resources/
 
@@ -118,19 +118,19 @@ rm -rf ./package/passwall2/luci-app-passwall2/htdocs/luci-static/resources/
 
 git clone https://$github/sbwml/openwrt_helloworld ./package/ssr
 rm -rf ./package/ssr/luci-app-ssr-plus
-rm -rf ./package/ssr/luci-app-passwall
-rm -rf ./package/ssr/luci-app-passwall2
+# rm -rf ./package/ssr/luci-app-passwall
+# rm -rf ./package/ssr/luci-app-passwall2
 
 rm -rf ./package/ssr/mosdns
 rm -rf ./package/ssr/trojan-plus
 # rm -rf ./package/ssr/xray-core
-rm -rf ./package/ssr/xray-plugin
+# rm -rf ./package/ssr/xray-plugin
 # rm -rf ./package/ssr/naiveproxy
-rm -rf ./package/ssr/v2ray-plugin
-rm -rf ./package/ssr/v2ray-core
-rm -rf ./package/ssr/pdnsd
-rm -rf ./package/ssr/lua-neturl
-rm -rf ./package/ssr/redsocks2
+# rm -rf ./package/ssr/v2ray-plugin
+# rm -rf ./package/ssr/v2ray-core
+# rm -rf ./package/ssr/pdnsd
+# rm -rf ./package/ssr/lua-neturl
+# rm -rf ./package/ssr/redsocks2
 # rm -rf ./package/ssr/shadow-tls
 
 rm -rf ./feeds/packages/net/xray-core
@@ -142,11 +142,6 @@ rm -rf ./package/openwrt-passwall/mosdns
 rm -rf ./package/openwrt-passwall/naiveproxy
 
 git clone https://$github/loso3000/other ./package/add
-
-rm -rf ./package/add/up/pass/shadow-tls
-rm -rf ./package/add/up/pass/naiveproxy
-
-rm -rf ./package/add/up/pass/xray-core
 
 #samrtdns
 rm -rf ./feeds/luci/applications/luci-app-smartdns
