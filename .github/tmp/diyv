@@ -143,6 +143,11 @@ rm -rf ./package/openwrt-passwall/naiveproxy
 
 git clone https://$github/loso3000/other ./package/add
 
+# binutils
+# rm -rf ./feeds/packages/devel/binutils
+# rm -rf ./feeds/packages/net/curl
+rm -rf ./package/add/tool/curl
+
 #samrtdns
 rm -rf ./feeds/luci/applications/luci-app-smartdns
 rm -rf ./feeds/luci/applications/luci-app-lucky
@@ -165,9 +170,6 @@ rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/lucky
 rm -rf ./feeds/packages/net/ddns-go
 
-# binutils
-rm -rf ./feeds/packages/devel/binutils
-rm -rf ./feeds/packages/net/curl
 #istore
 rm -rf ./feeds/jjm2473_apps/homebox
 rm -rf ./feeds/jjm2473_apps/luci-app-homebox
