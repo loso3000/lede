@@ -145,8 +145,8 @@ git clone https://$github/loso3000/other ./package/add
 
 # binutils
 # rm -rf ./feeds/packages/devel/binutils
-# rm -rf ./feeds/packages/net/curl
-rm -rf ./package/add/tool/curl
+rm -rf ./feeds/packages/net/curl
+# rm -rf ./package/add/tool/curl
 
 #samrtdns
 rm -rf ./feeds/luci/applications/luci-app-smartdns
