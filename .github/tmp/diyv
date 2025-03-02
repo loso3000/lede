@@ -221,6 +221,7 @@ rm -rf ./feeds/packages/net/msd_lite
 
 mkdir -p ./package/lean
 rm -rf ./package/lean/autocore ./package/emortal/autocore
+rm -rf ./package/autocore
 mv ./package/add/up/tool/autocore ./package/lean/autocore 
 #rm -rf ./package/lean/autocore/files/generic/inlink.htm
 # rm -rf ./package/add/up/tool/autocore/files/generic/inlink.htm
