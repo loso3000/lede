@@ -351,8 +351,8 @@ rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
-rm -rf ./package/emortal2/autocore 
-# rm -rf ./package/add/up/tool/autocore
+# rm -rf ./package/emortal2/autocore 
+rm -rf ./package/add/up/tool/autocore
 
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
