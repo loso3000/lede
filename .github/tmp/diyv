@@ -514,8 +514,8 @@ sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root
 sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
 
 # linux-firmware
-rm -rf package/firmware/linux-firmware
-git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware/linux-firmware
+# rm -rf package/firmware/linux-firmware
+# git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware/linux-firmware
 
 
     # firewall4
