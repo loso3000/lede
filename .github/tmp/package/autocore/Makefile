@@ -11,7 +11,8 @@ PKG_RELEASE:=$(COMMITCOUNT)
 
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_TARGET_bcm27xx \
-	CONFIG_TARGET_bcm53xx
+	CONFIG_TARGET_bcm53xx \
+	CONFIG_TARGET_mvebu
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/target.mk
@@ -28,7 +29,7 @@ endef
 define Package/autocore-x86
   TITLE:=x86/x64 auto core loadbalance script.
   MAINTAINER:=Lean / CN_SZTL
-  DEPENDS:=@TARGET_x86 +lm-sensors +ethtool
+  DEPENDS:=@TARGET_x86 +lm-sensors +ethtool +lscpu
   VARIANT:=x86
 endef
 
@@ -93,6 +94,7 @@ HOST_LN="$(subst ${STAGING_DIR_HOST},$${STAGING_DIR_HOST},$(LN))"
 	rm -f "$${IPKG_INSTROOT}/sbin/jffs2reset"
 	$${HOST_LN} /sbin/firstboot "$${IPKG_INSTROOT}/sbin/jffs2reset"
 }
+true
 endef
 $(eval $(call BuildPackage,autocore-arm))
 $(eval $(call BuildPackage,autocore-x86))

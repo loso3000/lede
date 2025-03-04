@@ -1,5 +1,6 @@
 // Copyright 2022 Jo-Philipp Wich <jo@mein.io>
 // Licensed to the public under the Apache License 2.0.
+// console.error('ethlist sysinfo:', ethlist);
 
 'use strict';
 

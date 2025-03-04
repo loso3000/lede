@@ -1,11 +1,14 @@
 'use strict';
 'require baseclass';
+'require fs';
+'require ui';
+'require uci';
 'require rpc';
 
 var callLuciETHList = rpc.declare({
 	object: 'luci',
 	method: 'getETHList',
-	expect: { '': {} }
+	expect: { result: [] }
 });
 
 return baseclass.extend({
@@ -18,7 +21,9 @@ return baseclass.extend({
     },
 
     render: function(data) {
-		var ethlist = Array.isArray(data[0].ethlist) ? data[0].ethlist : [];
+		var list = Array.isArray(data[0].ethlist) ? data[0].ethlist : [];
+		
+		// console.error('eth:', list);
 		var table = E('table', { 'class': 'table' }, [
 			E('tr', { 'class': 'tr table-titles' }, [
 				E('th', { 'class': 'th' }, _('Ethernet Name')),
