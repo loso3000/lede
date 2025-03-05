@@ -106,15 +106,6 @@ rm -rf  ./target/linux/ath79
 export github=github.com
 export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
-# kernel - 5.4
-# curl -s https://$mirror/tags/kernel-5.4 > include/kernel-5.4
-
-# kenrel Vermagic
-# sed -ie 's/^\(.\).*vermagic$/\1cp $(TOPDIR)\/.vermagic $(LINUX_DIR)\/.vermagic/' include/kernel-defaults.mk
-# grep HASH include/kernel-5.4 | awk -F'HASH-' '{print $2}' | awk '{print $1}' | md5sum | awk '{print $1}' > .vermagic
-
-# sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/*/alist.po
-
 case "${CONFIG_S}" in
 
 Vip-Super)
@@ -182,8 +173,8 @@ rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
-rm -rf $(find ./package/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
-rm -rf $(find ./feeds/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
+# rm -rf $(find ./package/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
+# rm -rf $(find ./feeds/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
 
 # Passwall
 
@@ -295,16 +286,16 @@ rm -rf ./feeds/packages/net/shadow-tls
 # mv -f ./package/add/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 rm -rf ./package/add/up/pass/naiveproxy
-sed -i 's,default n,default y,g' ./package/pass/luci-app-bypass/Makefile
-rm -rf ./package/add/up/pass/naiveproxy
 
 rm -rf ./package/add/up/tool/OpenAppFilter
 rm -rf ./package/add/up/tool/automount
 rm -rf ./package/add/up/tool/autosamba
 rm -rf ./package/add/up/tool/default-settings/
 
-mv -f ./package/add/up/tool ./package/tool
-mv -f ./package/add/up/pass ./package/pass
+# mv -f ./package/add/up/tool ./package/tool
+# mv -f ./package/add/up/pass ./package/pass
+# sed -i 's,default n,default y,g' ./package/add/up/pass/luci-app-bypass/Makefile
+
 rm -rf ./package/js
 rm -rf ./package/js2
 
@@ -316,18 +307,6 @@ rm -rf  ./package/kucat/iptables
 # rm -f ./package/kernel/linux/modules/netfilter.mk
 # wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
 # wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/package/kernel/linux/modules/netfilter.mk
-
-#rm -rf package/kernel/linux
-#git checkout package/kernel/linux
-#pushd package/kernel/linux/modules
-    # rm -f [a-z]*.mk
-    #curl -Os https://$mirror/package/kernel/linux/modules/netfilter.mk
-#popd
-
-#dae
-#rm -rf  ./feeds/packages/net/daed
-#rm -rf  ./package/kernel/bpf-headers
-#rm -rf  ./feeds/luci/applications/luci-app-daed
 
 
 # Add luci-app-dockerman
@@ -361,7 +340,7 @@ sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/confi
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
 #  coremark
-sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
+# sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
 
 rm -rf ./feeds/packages/net/lucky
 rm -rf  ./feeds/luci/applications/luci-app-lucky
@@ -455,12 +434,12 @@ rm -rf ./feeds/luci/themes/luci-theme-design
 rm -rf ./feeds/luci/themes/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
 
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
+# sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
+# sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
 # sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
-echo "修改默认主题"
+# echo "修改默认主题"
 sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
 # sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 # sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
