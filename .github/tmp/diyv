@@ -4,6 +4,7 @@
 gitea=git.cooluc.com
 github="github.com"
 mirror=https://init.cooluc.com
+mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 #安装和更新软件包
 UPDATE_PACKAGE() {
 	local PKG_NAME=$1
@@ -103,8 +104,8 @@ rm -rf  ./feeds/packages/webui-aria2
 #error
 rm -rf  ./target/linux/ath79
 
-export github=github.com
-export mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
+
+# sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/*/alist.po
 
 case "${CONFIG_S}" in
 
@@ -299,23 +300,6 @@ rm -rf ./package/add/up/tool/default-settings/
 rm -rf ./package/js
 rm -rf ./package/js2
 
-
-# kernel modules
-# rm -rf  ./feeds/packages/network/utils/iptables
-rm -rf  ./package/kucat/iptables
-# mv -f  ./package/kucat/iptables  ./feeds/packages/network/utils/iptables
-# rm -f ./package/kernel/linux/modules/netfilter.mk
-# wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/kernel/linux/modules/netfilter.mk
-# wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/package/kernel/linux/modules/netfilter.mk
-
-
-# Add luci-app-dockerman
-# rm -rf ./feeds/luci/applications/luci-app-dockerman
-# rm -rf ./feeds/luci/collections/luci-lib-docker
-# git clone --depth=1 https://$github/lisaac/luci-lib-docker ./package/new/luci-lib-docker
-# git clone --depth=1 https://$github/lisaac/luci-app-dockerman ./package/new/dockerman
-# cat patch/dockerman.lua > ./feeds/luci/applications/luci-app-dockerman/luasrc/controller/dockerman.lua
-
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
@@ -326,7 +310,6 @@ mkdir -p files/etc/root
 mkdir -p ./package/emortal
 # rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
 rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
-# mv -rf ./package/emortal2/autocore  ./package/emortal/autocore 
 mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
 mv -rf  ./package/emortal2/automount   ./package/emortal/automount
 mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
@@ -352,7 +335,7 @@ git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
 # nlbwmon
 sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 # 可以设置汉字名字
-sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
+# sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
 
 git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
@@ -398,24 +381,14 @@ sed -i 's/监听端口/监听端口 用户名admin密码adminadmin/g' ./feeds/lu
 sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #共享问题
 sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
-sed -i 's/请输入用户名和密码。/管理登陆/g' ./feeds/luci/modules/luci-base/po/*/base.po   #用户名密码
 
 #cifs挂pan
 sed -i 's/mount -t cifs/busybox mount -t cifs/g' ./feeds/luci/applications/luci-app-cifs-mount/root/etc/init.d/cifs
 
-#cifs
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua   #dnsfilter
-sed -i 's/a.default = "0"/a.default = "1"/g' ./feeds/luci/applications/luci-app-cifsd/luasrc/controller/cifsd.lua   #挂问题
-echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRP穿透问题
-sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #共享问题
 sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 
 #断线不重拨
 sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
-
-#echo "其他修改"
-sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为1h
-# sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
 
 # echo '默认开启 Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
@@ -501,6 +474,9 @@ pushd feeds/luci
     curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0006-luci-app-firewall-enable-hardware-offload-only-on-de.patch | patch -p1
     curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0007-luci-app-firewall-add-fullcone6-option-for-nftables-.patch | patch -p1
 popd
+# luci-app-filemanager
+rm -rf feeds/luci/applications/luci-app-filemanager
+git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
 
 
 # curl - fix passwall `time_pretransfer` check
@@ -523,12 +499,6 @@ pushd feeds/packages
     curl -s $mirror/openwrt/patch/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
     curl -s $mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
 popd
-# opkg
-mkdir -p package/system/opkg/patches
-curl -s $mirror/openwrt/patch/opkg/900-opkg-download-disable-hsts.patch > package/system/opkg/patches/900-opkg-download-disable-hsts.patch
-
-curl -so files/root/.bash_profile $mirror/openwrt/files/root/.bash_profile
-curl -so files/root/.bashrc $mirror/openwrt/files/root/.bashrc
 
 # 取消主题默认设置
 find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
@@ -567,22 +537,22 @@ ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
 ver612=`grep "LINUX_VERSION-6.12 ="  include/kernel-6.12 | cut -d . -f 3`
-date1="${CONFIG_S}-${DATA}_by_Sirpdboy"
+date1="${CONFIG_S}-${DATA}_by Sirpdboy"
 if [ "$VER1" = "5.4" ]; then
-date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
-date1="${CONFIG_S}-${DATA}-${VER1}.${ver54}_by_Sirpdboy"
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver54}"
 elif [ "$VER1" = "5.15" ]; then
-date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver515}_by_Sirpdboy"
-date1="${CONFIG_S}-${DATA}-${VER1}.${ver515}_by_Sirpdboy"
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver515}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver515}"
 elif [ "$VER1" = "6.1" ]; then
-date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver61}_by_Sirpdboy"
-date1="${CONFIG_S}-${DATA}-${VER1}.${ver61}_by_Sirpdboy"
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver61}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver61}"
 elif [ "$VER1" = "6.6" ]; then
-date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver66}_by_Sirpdboy"
-date1="${CONFIG_S}-${DATA}-${VER1}.${ver66}_by_Sirpdboy"
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver66}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver66}"
 elif [ "$VER1" = "6.12" ]; then
-date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver612}_by_Sirpdboy"
-date1="${CONFIG_S}-${DATA}-${VER1}.${ver612}_by_Sirpdboy"
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver612}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver612}"
 fi
 echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
@@ -657,12 +627,14 @@ rm -rf  *kernel.bin
 # BINDIR=`pwd`
 sleep 2
 
-mv   *squashfs-sysupgrade.img.gz EzOpWrt-${r_version}-${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
-mv  *ext4-sysupgrade.img.gz EzOpWrt-${r_version}-${TARGET_DEVICE}-ext4-sysupgrade.img.gz
-md5_EzOpWrt=EzOpWrt-${r_version}-${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
-md5_EzOpWrt_uefi=EzOpWrt-${r_version}-${TARGET_DEVICE}-ext4-sysupgrade.img.gz
-[ -f ${md5_EzOpWrt} ] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5
-[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5
+mv   *squashfs-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+mv  *ext4-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+md5_EzOpWrt=EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+md5_EzOpWrt_uefi=EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+[ -f ${md5_EzOpWrt} ] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5 && echo "ip=$ip" >> EzOpWrt_dev.md5
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 && echo "ip=$ip" >> EzOpWrt_dev-efi.md5
+cp ../../../../ezotafooter  ./ota.footer
+cp ../../../../ezverlatest   ./ver.latest 
 popd
 exit 0
 EOF
@@ -880,8 +852,8 @@ sed -i "s/OpenWrt/EzOpWrt/g" package/base-files/files/bin/config_generate packag
 ./scripts/feeds update -i
 ./scripts/feeds install -i
 
-cat  ../.config  > .config
-cat  ./x86_64/${CONFIG_S}  >> .config
+#cat  ../.config  > .config
+cat  ./x86_64/${CONFIG_S}  > .config
 case "${CONFIG_S}" in
 Vip*)
 cat  ./x86_64/comm  >> .config
