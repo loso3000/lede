@@ -478,6 +478,7 @@ popd
 rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
 
+git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
 
 # curl - fix passwall `time_pretransfer` check
 rm -rf feeds/packages/net/curl
@@ -522,7 +523,7 @@ VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f
 CLASH="arm64"
 fi
 if [[ $DATE_S == 'default' ]]; then
-   DATA=`TZ=UTC-8 date +%y%m%d%H%M`
+   DATA=`TZ=UTC-8 date +%Y%m%d%H%M`
    # DATA=`TZ=UTC-8 date +%y%m%d%H%M`
 else 
    DATA=$DATE_S
@@ -558,7 +559,7 @@ echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
 echo "${date2}" >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 [ -f ./files/root/.zshrc ] || mv -f ./package/add/patch/z.zshrc ./files/root/.zshrc
-[ -f ./files/root/.zshrc ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/.zshrc > ./files/root/.zshrc
+[ -f ./files/root/.zshrc ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/z.zshrc > ./files/root/.zshrc
 [ -f ./files/etc/profiles ] || mv -f ./package/add/patch/profiles ./files/etc/profiles
 [ -f ./files/etc/profiles ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/profiles > ./files/etc/profiles
 
