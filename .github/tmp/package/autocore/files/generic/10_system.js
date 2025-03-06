@@ -30,7 +30,7 @@ var callCPUInfo = rpc.declare({
 
 var callPlatInfo = rpc.declare({
 	object: 'luci',
-    method: 'getPlatInfo'
+	method: 'getPlatInfo'
 });
 
 var callTempInfo = rpc.declare({
@@ -58,7 +58,7 @@ return baseclass.extend({
 		    systeminfo  = data[1],
 		    cpubench    = data[2],
 		    cpuinfo     = data[3],
-		    platinfo = data[4],
+            platinfo = data[4],
 		    tempinfo    = data[5],
 		    luciversion = data[6];
 
@@ -84,7 +84,7 @@ return baseclass.extend({
 			_('Model'),            boardinfo.model + cpubench.cpubench,
 			_('Architecture'),     cpuinfo.cpuinfo,
 			_('Target Platform'),  (L.isObject(boardinfo.release) ? boardinfo.release.target : '')  + ( ' - ' + platinfo.platinfo || ' '),
-			_('Firmware Version'), luciversion,
+			_('Firmware Version'), boardinfo.release.description,
 			_('Kernel Version'),   boardinfo.kernel,
 			_('Local Time'),       datestr,
 			_('Uptime'),           systeminfo.uptime ? '%t'.format(systeminfo.uptime) : null,
@@ -104,7 +104,7 @@ return baseclass.extend({
 
 		for (var i = 0; i < fields.length; i += 2) {
 			table.appendChild(E('tr', { 'class': 'tr' }, [
-				E('td', { 'class': 'td right', 'width': '33%' }, [ fields[i] ]),
+				E('td', { 'class': 'td left', 'width': '33%' }, [ fields[i] ]),
 				E('td', { 'class': 'td left' }, [ (fields[i + 1] != null) ? fields[i + 1] : '?' ])
 			]));
 		}

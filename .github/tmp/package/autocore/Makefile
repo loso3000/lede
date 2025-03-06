@@ -38,18 +38,16 @@ endef
 define Package/autocore/install/Default
 	$(INSTALL_DIR) $(1)/etc
 	$(CP) ./files/generic/10_system.js $(1)/etc/rpcd_10_system.js
+	$(CP) ./files/generic/21_ethinfo.js $(1)/etc/rpcd_21_ethinfo.js
 	$(CP) ./files/generic/19_cpu.js $(1)/etc/rpcd_19_cpu.js
 	$(CP) ./files/generic/29_ports.js $(1)/etc/rpcd_29_ports.js
 	$(CP) ./files/generic/luci $(1)/etc/rpcd_luci
 	$(CP) ./files/generic/sys.uc $(1)/etc/ucode_sys
-
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./files/generic/090-cover-index_files $(1)/etc/uci-defaults/
-
 	$(INSTALL_DIR) $(1)/sbin
-	$(INSTALL_BIN) ./files/generic/cpuinfo $(1)/sbin/
+	$(INSTALL_BIN) ./files/generic/sysinfo $(1)/sbin/
 	$(INSTALL_BIN) ./files/generic/ethinfo $(1)/sbin/
-	$(INSTALL_BIN) ./files/generic/tempinfo $(1)/sbin/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(CP) ./files/generic/luci-mod-status-autocore.json $(1)/usr/share/rpcd/acl.d/
 	$(CP) ./files/generic/luci-app-cpu-status.json $(1)/usr/share/rpcd/acl.d/
@@ -70,8 +68,7 @@ endef
 
 define Package/autocore-x86/install
 	$(call Package/autocore/install/Default,$(1))
-	$(INSTALL_DIR) $(1)/sbin
-	$(INSTALL_BIN) ./files/generic/tempinfo $(1)/sbin/
+
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/x86/autocore $(1)/etc/init.d/
 endef
@@ -100,6 +97,7 @@ HOST_LN="$(subst ${STAGING_DIR_HOST},$${STAGING_DIR_HOST},$(LN))"
 	$${HOST_LN} /sbin/firstboot "$${IPKG_INSTROOT}/sbin/jffs2reset"
 }
 true
+
 endef
 $(eval $(call BuildPackage,autocore-arm))
 $(eval $(call BuildPackage,autocore-x86))

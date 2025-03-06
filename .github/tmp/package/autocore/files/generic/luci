@@ -599,14 +599,12 @@ const methods = {
 
 	getCPUInfo: {
 		call: function() {
-			if (!access('/sbin/cpuinfo'))
+			if (!access('/sbin/sysinfo'))
 				return {};
 
-			const fd = popen('/sbin/cpuinfo');
+			const fd = popen('/sbin/sysinfo cpuinfo');
 			if (fd) {
 				let cpuinfo = fd.read('all');
-				if (!cpuinfo)
-					cpuinfo = '?';
 				fd.close();
 
 				return { cpuinfo: cpuinfo };
@@ -615,29 +613,32 @@ const methods = {
 			}
 		}
 	},
+	
 
-	getCPUUsage: {
+	getPlatInfo: {
 		call: function() {
-			const fd = popen('/bin/busybox top -n1 | awk \'/^CPU/ {printf("%d%", 100 - $8)}\'');
+			if (!access('/sbin/sysinfo'))
+				return {};
+
+			const fd = popen('/sbin/sysinfo platinfo');
 			if (fd) {
-				let cpuusage = fd.read('all');
-				if (!cpuusage)
-					cpuusage = '?';
+				let platinfo = fd.read('all');
+				if (!platinfo)
+					platinfo = 'BIOS';
 				fd.close();
 
-				return { cpuusage: cpuusage };
+				return { platinfo: platinfo };
 			} else {
-				return { cpuusage: error() };
+				return { platinfo: error() };
 			}
 		}
 	},
-
 	getTempInfo: {
 		call: function() {
-			if (!access('/sbin/tempinfo'))
+			if (!access('/sbin/sysinfo'))
 				return {};
 
-			const fd = popen('/sbin/tempinfo');
+			const fd = popen('/sbin/sysinfo tempinfo');
 			if (fd) {
 				let tempinfo = fd.read('all');
 				if (!tempinfo)
@@ -666,6 +667,26 @@ const methods = {
 				return { onlineusers: onlineusers };
 			} else {
 				return { onlineusers: error() };
+			}
+		}
+	},
+
+	getETHList:  {
+		call: function() {
+			if (!access('/sbin/sysinfo'))
+				return {};
+
+			const fd = popen('/sbin/sysinfo ethlist');
+			if (fd) {
+				let ethlist = fd.read('all');
+				if (!ethlist)
+					ethlist = '{}';
+				ethlist = json(ethlist);
+				fd.close();
+
+				return { result: ethlist };
+			} else {
+				return { result: error() };
 			}
 		}
 	},
