@@ -160,7 +160,7 @@ rm -rf  ./feeds/packages/net/oaf
 rm -rf ./feeds/luci/themes/luci-app-filter
 rm -rf ./feeds/luci/themes/luci-app-oaf
 rm -rf ./feeds/packages/net/open-app-filter
-git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
+# git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 
 
 rm -rf  ./feeds/luci/applications/luci-app-timecontrol
@@ -353,6 +353,11 @@ git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 
 
+# UPnP
+rm -rf ./package/add/up/luci-app-upnp
+rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
+git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
+git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
 rm -rf ./feeds/luci/applications/luci-app-upnp
 #设置upnpd
 #sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
