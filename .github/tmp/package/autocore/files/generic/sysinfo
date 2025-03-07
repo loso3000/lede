@@ -5,7 +5,7 @@ user() {
     wans=$(ip route 2>/dev/null |grep -c '^default') && arps=$(cat /proc/net/arp 2>/dev/null | grep -c '0x2') && echo "$((arps-wans))"
 }
 
-archinfo() {
+platinfo() {
 . /etc/openwrt_release
 case "$DISTRIB_TARGET" in
 "x86"/*)
@@ -21,6 +21,10 @@ free | grep Mem | awk '{a=$2/1000;b=(a>800)?a/1000:a;c=(a>800)?"G":"M"} {printf(
 
 cntime() {
     awk '{a=$1/86400;b=($1%86400)/3600;c=($1%3600)/60;d=($1%60)} {printf("%d 天 %d 小时 %d 分钟 %d 秒\n",a,b,c,d)}' /proc/uptime
+}
+
+time() {
+date "+%A [%W] | [%j] %Y/%m/%d-%X %Z"
 }
 cpuinfo() {
  
@@ -196,27 +200,30 @@ ethinfo() {
 }
 
 ethlist() {
-    [ ! -d /tmp/state ] && mkdir -p /tmp/state 2>/dev/null
-    sed -i '/_orig_ifname/d' /etc/config/network
-    {
-    echo -n "["
-    for i in $(ip address | awk -F ': ' '/eth[0-9]+/ {print $2}' | awk -F '@' {'print $1'} | awk '{ if ( length($0) <=7 ) print $0}' | xargs)
-    do
-	h=$(echo '{"name":' )
-	d=$(ethtool $i)
-	name=$(uci show network | grep "$i" | head -n1 |awk -F '.'  '{print $2}' | awk -F '_'  '{print $1}')
-	[ $name == '@device[0]' ] && name=$(uci get network.$name.name | awk -F '-' '{print $2}')
-	m=$(ifconfig | grep "$i" | head -n1 | awk -F 'HWaddr ' '{print $2}')
-	e=$(echo "$d" | grep "Link detected" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
-	f=$(echo "$d" |grep Speed | awk '{print $2/1000 " Gb/s"}' | sed 's/^[ \t]*//g' | tr -d "Unknown!")
-	[ -z "$f" -o "$f" = "0 Gb/s" ] && f="- Gb/s"
-	[ $i == "eth0" -a "$f" = "- Gb/s"  ]  && f="10 Gb/s"  
-	g=$(echo "$d" | grep "Duplex" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
-	echo -n "$h \"$name[$i]\", \"status\": \"$e\", \"duplex\": \"$g\", \"speed\": \"$f\", \"mac\": \"$m\"},"
-    done
-    echo -n "]" 
-    } > /tmp/state/ethlist
-    cat /tmp/state/ethlist
+sed -i '/_orig_ifname/d' /etc/config/network
+outputjson="["
+first=true
+for i in $(ip address | awk -F ': ' '/eth[0-9]+/ {print $2}' | awk -F '@' '{print $1}' | awk '{ if (length($0) <= 7) print $0}' | xargs); do
+    if ! $first; then
+        outputjson+=","
+    fi
+    first=false
+    d=$(ethtool "$i" 2>/dev/null)
+    if [ -z "$d" ]; then
+        continue 
+    fi
+    name=$(uci show network | grep "$i" | head -n 1 | awk -F '.' '{print $2}' | awk -F '_' '{print $1}')
+    [ "$name" == '@device[0]' ] && name=$(uci get network.$name.name | awk -F '-' '{print $2}')
+    m=$(ifconfig "$i" | grep "$i" | head -n 1 | awk -F 'HWaddr ' '{print $2}')
+    e=$(echo "$d" | grep "Link detected" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
+    f=$(echo "$d" | grep Speed | awk '{print $2/1000 " Gb/s"}' | sed 's/^[ \t]*//g' | tr -d "Unknown!")
+    [ -z "$f" -o "$f" = "0 Gb/s" ] && f="- Gb/s"
+    [ "$i" == "eth0" -a "$f" = "- Gb/s" ] && f="10 Gb/s"
+    g=$(echo "$d" | grep "Duplex" | awk -F: '{printf $2}' | sed 's/^[ \t]*//g')
+    outputjson+="{\"name\":\"$name[$i]\", \"status\": \"$e\", \"duplex\": \"$g\", \"speed\": \"$f\", \"mac\": \"$m\"}"
+done
+outputjson+="]"
+echo "$outputjson"
 }
 
 $*
