@@ -26,6 +26,7 @@ cntime() {
 time() {
 date "+%A [%W] | [%j] %Y/%m/%d-%X %Z"
 }
+
 cpuinfo() {
  
 . /etc/openwrt_release
@@ -225,5 +226,4 @@ done
 outputjson+="]"
 echo "$outputjson"
 }
-
 $*

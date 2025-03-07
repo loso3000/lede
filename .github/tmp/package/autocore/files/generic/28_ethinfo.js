@@ -5,10 +5,10 @@
 var callLuciETHList = rpc.declare({
 	object: 'luci',
 	method: 'getETHList',
-	expect: { result: [] }
+	expect: { '': {} }
 });
 
-return baseclass.extend({
+return L.Class.extend({
 	title: _('Ethernet Information'),
 
 	load: function() {
@@ -18,9 +18,7 @@ return baseclass.extend({
 	},
 
 	render: function(data) {
-        if (!data || data.length === 0) return;
-	//console.error(data);
-		var ethlist = Array.isArray(data[0]) ? data[0] : [];
+		var ethlist = Array.isArray(data[0].ethlist) ? data[0].ethlist : [];
 		var table = E('table', { 'class': 'table' }, [
 			E('tr', { 'class': 'tr table-titles' }, [
 				E('th', { 'class': 'th' }, _('Ethernet Name')),
@@ -49,7 +47,6 @@ return baseclass.extend({
 
 			if (info.name == "lan[eth0]"  &&  info.duplex == "Half")
 			       info.speed='10 G/s';
-
 			return [
 				info.name,
 				exp1,
