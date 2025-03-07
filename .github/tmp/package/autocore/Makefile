@@ -38,8 +38,8 @@ endef
 define Package/autocore/install/Default
 	$(INSTALL_DIR) $(1)/etc
 	$(CP) ./files/generic/10_system.js $(1)/etc/rpcd_10_system.js
-	$(CP) ./files/generic/21_ethinfo.js $(1)/etc/rpcd_21_ethinfo.js
 	$(CP) ./files/generic/19_cpu.js $(1)/etc/rpcd_19_cpu.js
+	$(CP) ./files/generic/28_ethinfo.js $(1)/etc/rpcd_28_ethinfo.js
 	$(CP) ./files/generic/29_ports.js $(1)/etc/rpcd_29_ports.js
 	$(CP) ./files/generic/luci $(1)/etc/rpcd_luci
 	$(CP) ./files/generic/sys.uc $(1)/etc/ucode_sys
@@ -56,7 +56,7 @@ define Package/autocore/install/Default
 	$(CP) ./files/generic/inlink.htm  $(1)/usr/lib/lua/luci/view/admin_status/index/
 	$(INSTALL_DIR) $(1)/www/luci-static/resources/view/status/include
 	$(INSTALL_DATA) ./files/generic/19_cpu.js $(1)/www/luci-static/resources/view/status/include/
-	$(INSTALL_DATA) ./files/generic/21_ethinfo.js $(1)/www/luci-static/resources/view/status/include/
+	$(INSTALL_DATA) ./files/generic/28_ethinfo.js $(1)/www/luci-static/resources/view/status/include/
 endef
 
 define Package/autocore-arm/install
