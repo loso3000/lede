@@ -137,6 +137,7 @@ rm -rf ./feeds/luci/themes/luci-app-oaf
 rm -rf ./feeds/packages/net/open-app-filter
 git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 
+rm -rf  ./feeds/packages/devel/binutils   #2410error
 
 rm -rf  ./feeds/luci/applications/luci-app-timecontrol
 rm -rf  ./feeds/luci/applications/luci-app-socat
