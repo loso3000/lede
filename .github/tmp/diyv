@@ -5,6 +5,7 @@ gitea=git.cooluc.com
 github="github.com"
 mirror=https://init.cooluc.com
 mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
+
 #安装和更新软件包
 UPDATE_PACKAGE() {
 	local PKG_NAME=$1
@@ -31,10 +32,10 @@ case "${CONFIG_S}" in
 esac
 }
 
-CFG_FILE="./package/base-files/files/bin/config_generate"
-config_generate=package/base-files/files/bin/config_generate
-[ ! -d files/root ] || mkdir -p files/root
-[ ! -d files/etc/opkg ] || mkdir -p files/etc/opkg
+mkdir -p files/root
+mkdir -p files/etc/opkg
+mkdir -p files/usr/share
+mkdir -p ./package/emortal
 
 [[ -n $TARGET_DEVICE ]] || TARGET_DEVICE="x86_64"
 [[ -n $CONFIG_S ]] || CONFIG_S=Vip-Super
@@ -54,9 +55,30 @@ rm -rf  ./feeds/packages/net/oaf
 rm -rf  ./feeds/packages/net/zsh
 rm -rf  ./feeds/packages/net/homebox
 rm -rf  ./feeds/packages/net/naiveproxy
-sed -i "s/ImmortalWrt/EzopWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+
+#修改默认时区
+sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
+# sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
+
+#修改默认主机名
+sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
+sed -i "s/ImmortalWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/OpenWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "s/iStoreOS/EzopWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "s/ImmortalWrt/EzopWrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
+
+#修改默认主题
+# sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+#添加编译日期标识
+# sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_CI-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+#修改默认WIFI名
+# sed -i "s/\.ssid=.*/\.ssid=$WRT_WIFI/g" $(find ./package/kernel/mac80211/ ./package/network/config/ -type f -name "mac80211.*")
+
+#修改默认主机名
+# sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $config_generate
+#修改默认时区
+# sed -i "s/timezone='.*'/timezone='Asia\/Shanghai'/g" $config_generate
+
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf package/feeds/packages/prometheus-node-exporter-lua
@@ -104,54 +126,7 @@ rm -rf  ./feeds/packages/webui-aria2
 #error
 rm -rf  ./target/linux/ath79
 
-
-# sed -i 's/网络存储/存储/g' ./package/alist/luci-app-alist/po/*/alist.po
-
-case "${CONFIG_S}" in
-
-Vip-Super)
-sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-;;
-Vip-Mini)
-sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-;;
-Vip-Bypass)
-sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
-sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua 
-sed -i 's/services/nas/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua 
-sed -i 's/services/vpn/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-;;
-Free-Super)
-sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-;;
-*)
-sed -i '/45)./d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua  #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua   #zerotier
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/luasrc/controller/samba4.lua
-sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-cifs-mount/luasrc/controller/cifs.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
-;;
-esac
-
 sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
-
 rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
@@ -160,7 +135,7 @@ rm -rf  ./feeds/packages/net/oaf
 rm -rf ./feeds/luci/themes/luci-app-filter
 rm -rf ./feeds/luci/themes/luci-app-oaf
 rm -rf ./feeds/packages/net/open-app-filter
-# git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
+git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 
 
 rm -rf  ./feeds/luci/applications/luci-app-timecontrol
@@ -187,10 +162,9 @@ git clone https://github.com/sbwml/openwrt_helloworld  -b v5 ./package/ssr
 
 git clone https://github.com/loso3000/other ./package/add
 
-
 # alist
-rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
-git clone https://$github/sbwml/openwrt-alist package/new/alist
+# rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
+# git clone https://$github/sbwml/openwrt-alist package/new/alist
 
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
@@ -289,36 +263,22 @@ rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-s
 rm -rf ./package/add/up/pass/naiveproxy
 
 rm -rf ./package/add/up/tool/OpenAppFilter
+
+# rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
+rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
+rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
+# rm -rf ./package/emortal2/autocore 
+rm -rf ./package/add/up/tool/autocore
+rm -rf ./package/add/other/up/tool/autocore
 # rm -rf ./package/add/up/tool/automount
 # rm -rf ./package/add/up/tool/autosamba
-# rm -rf ./package/add/up/tool/default-settings/
 
-# sed -i 's,default n,default y,g' ./package/add/up/pass/luci-app-bypass/Makefile
-
-rm -rf ./package/js
-rm -rf ./package/js2
+rm -rf ./package/add/up/tool/default-settings
 
 cat  patch/banner > ./package/base-files/files/etc/banner
 cat  patch/profile > ./package/base-files/files/etc/profile
 cat  patch/profiles > ./package/base-files/files/etc/profiles
 cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
-
-mkdir -p files/usr/share
-mkdir -p files/etc/root
-mkdir -p ./package/emortal
-# rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
-rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
-mv -rf  ./package/emortal2/default-settings   ./package/emortal/default-settings 
-mv -rf  ./package/emortal2/automount   ./package/emortal/automount
-mv -rf  ./package/emortal2/autosamba   ./package/emortal/autosamba
-# rm -rf ./package/emortal2/autocore 
-rm -rf ./package/add/up/tool/autocore
-
-#修改默认主机名
-sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
-#修改默认时区
-sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
-sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
 #  coremark
 # sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
@@ -331,7 +291,7 @@ rm -rf  ./feeds/luci/applications/luci-app-ddns-go
 git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
 
 # nlbwmon
-sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
+# sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
 # 可以设置汉字名字
 # sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
 # sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
@@ -350,6 +310,10 @@ git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 
+# TTYD设置
+sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
+sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
+sed -i 's|/bin/login|/bin/login -f root|' ./feeds/packages/utils/ttyd/files/ttyd.config
 
 # UPnP
 rm -rf ./package/add/up/luci-app-upnp
@@ -357,14 +321,8 @@ rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
 git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
 git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
 rm -rf ./feeds/luci/applications/luci-app-upnp
-#设置upnpd
-#sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
-#sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 
-sed -i "s/ImmortalWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
-sed -i "s/OpenWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
-sed -i 's/msgstr "Socat"/msgstr "端口转发"/g' ./feeds/luci/applications/luci-app-socat/po/*/socat.po
 
 sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
@@ -379,16 +337,10 @@ sed -i 's/家庭云//g'  `grep "家庭云" -rl ./`
 
 sed -i 's/msgstr "挂载 SMB 网络共享"/msgstr "挂载网络共享"/g'  `grep "挂载 SMB 网络共享" -rl ./`
 
-sed -i 's/监听端口/监听端口 用户名admin密码adminadmin/g' ./feeds/luci/applications/luci-app-qbittorrent/po/*/qbittorrent.po
-# echo  "        option tls_enable 'true'" >> ./feeds/luci/applications/luci-app-frpc/root/etc/config/frp   #FRP穿透问题
-sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #共享问题
-sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
 
 #cifs挂pan
-sed -i 's/mount -t cifs/busybox mount -t cifs/g' ./feeds/luci/applications/luci-app-cifs-mount/root/etc/init.d/cifs
-
-sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
+# sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 
 #断线不重拨
 sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
@@ -396,7 +348,7 @@ sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall
 # echo '默认开启 Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
 # nlbwmon - disable syslog
-sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
+# sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
 
 git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
 sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
@@ -410,8 +362,6 @@ rm -rf ./feeds/luci/themes/luci-theme-design
 rm -rf ./feeds/luci/themes/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
 
-# sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./package/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
-# sed -i 's,media .. \"\/b,resource .. \"\/b,g' ./feeds/luci/themes/luci-theme-argon/luasrc/view/themes/argon/sysauth.htm
 # 使用默认取消自动
 # sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
 # sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
@@ -419,17 +369,20 @@ git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-
 sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
 # sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 # sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-sed -i '/set luci.main.mediaurlbase/d' ./package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
-sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
-sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
-sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
-sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+# sed -i '/set luci.main.mediaurlbase/d' ./package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+# sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+# sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-argon/root/etc/uci-defaults/30_luci-theme-argon
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
+# sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
 
-# linux-firmware
-# rm -rf package/firmware/linux-firmware
-# git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware/linux-firmware
+# 取消主题默认设置
+# find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
+sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
+sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
+#Add x550
+git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
 
 
     # firewall4
@@ -477,12 +430,10 @@ pushd feeds/luci
     curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0006-luci-app-firewall-enable-hardware-offload-only-on-de.patch | patch -p1
     curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0007-luci-app-firewall-add-fullcone6-option-for-nftables-.patch | patch -p1
 popd
+
 # luci-app-filemanager
 rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
-
-git clone https://github.com/sirpdboy/netspeedtest ./package/netspeedtest
-
 # curl - fix passwall `time_pretransfer` check
 rm -rf feeds/packages/net/curl
 git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
@@ -504,13 +455,6 @@ pushd feeds/packages
     curl -s $mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
 popd
 
-# 取消主题默认设置
-find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
-sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
-sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
-#Add x550
-git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
-
 # 修改makefile
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
@@ -526,15 +470,17 @@ VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f
 CLASH="arm64"
 fi
 if [[ $DATE_S == 'default' ]]; then
-   DATA=`TZ=UTC-8 date +%Y%m%d%H%M`
+   DATA=`TZ=UTC-8 date +%y%m%d%H%M`
    # DATA=`TZ=UTC-8 date +%y%m%d%H%M`
 else 
    DATA=$DATE_S
 fi
-# 预处理下载相关文件，保证打包固件不用单独下载
-for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/package/common/*.sh`;do
+for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/package/add/common/*.sh`;do
     source $sh_file $CLASH
 done
+
+source common/clash.sh $CLASH
+source common/tools.sh $CLASH
 
 ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
 ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
@@ -592,14 +538,16 @@ rm -rf  *kernel.bin
 sleep 2
 
 ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`
+echo ip:----------------- $ip
 mv  *generic-squashfs-combined.img.gz       EzOpWrt-${r_version}-${TARGET_DEVICE}-dev.img.gz   
 mv  *generic-squashfs-combined-efi.img.gz   EzOpWrt-${r_version}-${TARGET_DEVICE}-dev-efi.img.gz
 md5_EzOpWrt=EzOpWrt-${r_version}-${TARGET_DEVICE}-dev.img.gz   
 md5_EzOpWrt_uefi=EzOpWrt-${r_version}-${TARGET_DEVICE}-dev-efi.img.gz
 
+ip=192.168.10.1
 #md5
-[ -f ${md5_EzOpWrt}] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5 &&echo "ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`" >> EzOpWrt_dev.md5
-[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 &&echo "ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`" >> EzOpWrt_dev-efi.md5
+[ -f ${md5_EzOpWrt}] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5 &&echo "ip=$ip" >> EzOpWrt_dev.md5
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 &&echo "ip=$ip" >> EzOpWrt_dev-efi.md5
 cp ../../../../ezotafooter  ./ota.footer
 cp ../../../../ezverlatest   ./ver.latest 
 popd
@@ -631,12 +579,15 @@ rm -rf  *kernel.bin
 # BINDIR=`pwd`
 sleep 2
 
+ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`
+echo ip:----------------- $ip
+ip=192.168.10.1
 mv   *squashfs-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
 mv  *ext4-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
 md5_EzOpWrt=EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
 md5_EzOpWrt_uefi=EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
-[ -f ${md5_EzOpWrt} ] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5 && echo "ip=$ip" >> EzOpWrt_dev.md5
-[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 && echo "ip=$ip" >> EzOpWrt_dev-efi.md5
+[ -f ${md5_EzOpWrt} ] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5  &&echo "ip=$ip" >> EzOpWrt_dev.md5
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 &&echo "ip=$ip" >> EzOpWrt_dev-efi.md5
 cp ../../../../ezotafooter  ./ota.footer
 cp ../../../../ezverlatest   ./ver.latest 
 popd
@@ -674,7 +625,6 @@ done < "$bakkmodfile"
 find ./bin/ -name "*dockerman*" | xargs -i cp -f {} $kmoddirdocker
 find ./bin/ -name "*dockerd*" | xargs -i cp -f {} $kmoddirdocker
 EOF
-
 case "${CONFIG_S}" in
      "Vip"*)  
 #修改默认IP地址
@@ -815,18 +765,6 @@ esac
 exit
 EOF
 
-
-#修改默认主题
-# sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
-#添加编译日期标识
-# sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_CI-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
-#修改默认WIFI名
-# sed -i "s/\.ssid=.*/\.ssid=$WRT_WIFI/g" $(find ./package/kernel/mac80211/ ./package/network/config/ -type f -name "mac80211.*")
-
-#修改默认主机名
-# sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $config_generate
-#修改默认时区
-# sed -i "s/timezone='.*'/timezone='Asia\/Shanghai'/g" $config_generate
 ;;
 esac
 
@@ -838,12 +776,6 @@ UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 UPDATE_PACKAGE "easytier" "lazyoop/networking-artifact" "main" "pkg"
 UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
 
-sed -i '/	refresh_config();/d' scripts/feeds
-        package/base-files/files/lib/upgrade/keep.d/base-files-essential
-sed -i -e '/^\/etc\/profile/d' \
-        -e '/^\/etc\/shinit/d' \
-        package/base-files/Makefile
-# sed -i "s/192.168.1/192.168.10/" package/base-files/files/bin/config_generate
 sed -i "s/^.*vermagic$/\techo '1' > \$(LINUX_DIR)\/.vermagic/" include/kernel-defaults.mk
 
 sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
@@ -851,7 +783,6 @@ sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-st
 
 sed -i "s/tty\(0\|1\)::askfirst/tty\1::respawn/g" target/linux/*/base-files/etc/inittab
 sed -i 's/max_requests 3/max_requests 20/g' package/network/services/uhttpd/files/uhttpd.config
-sed -i "s/OpenWrt/EzOpWrt/g" package/base-files/files/bin/config_generate package/base-files/image-config.in package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc config/Config-images.in Config.in include/u-boot.mk include/version.mk || true
 
 ./scripts/feeds update -i
 ./scripts/feeds install -i
