@@ -289,12 +289,10 @@ rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-s
 rm -rf ./package/add/up/pass/naiveproxy
 
 rm -rf ./package/add/up/tool/OpenAppFilter
-rm -rf ./package/add/up/tool/automount
-rm -rf ./package/add/up/tool/autosamba
-rm -rf ./package/add/up/tool/default-settings/
+# rm -rf ./package/add/up/tool/automount
+# rm -rf ./package/add/up/tool/autosamba
+# rm -rf ./package/add/up/tool/default-settings/
 
-# mv -f ./package/add/up/tool ./package/tool
-# mv -f ./package/add/up/pass ./package/pass
 # sed -i 's,default n,default y,g' ./package/add/up/pass/luci-app-bypass/Makefile
 
 rm -rf ./package/js
