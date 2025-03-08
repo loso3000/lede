@@ -616,6 +616,26 @@ const methods = {
 		}
 	},
 	
+	getDescription: {
+		call: function() {
+			if (!access('/sbin/sysinfo'))
+				return {};
+
+			const fd = popen('/sbin/sysinfo description');
+
+			if (fd) {
+				let description = fd.read('all');
+				if (!description)
+					description = '-';
+				fd.close();
+
+				return { description: description };
+			} else {
+				return { description: error() };
+			}
+		}
+	},
+	
 
 	getPlatInfo: {
 		call: function() {

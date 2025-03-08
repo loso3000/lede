@@ -3,9 +3,9 @@
 'require fs';
 'require rpc';
 
-var callLuciVersion = rpc.declare({
+var callLuciDescription = rpc.declare({
 	object: 'luci',
-	method: 'getVersion'
+	method: 'getDescription'
 });
 
 var callSystemBoard = rpc.declare({
@@ -49,7 +49,7 @@ return baseclass.extend({
 			L.resolveDefault(callCPUInfo(), {}),
 			L.resolveDefault(callPlatInfo(), {}),
 			L.resolveDefault(callTempInfo(), {}),
-			L.resolveDefault(callLuciVersion(), { revision: _('unknown version'), branch: 'LuCI' })
+			L.resolveDefault(callLuciDescription(), {})
 		]);
 	},
 
@@ -58,12 +58,9 @@ return baseclass.extend({
 		    systeminfo  = data[1],
 		    cpubench    = data[2],
 		    cpuinfo     = data[3],
-            platinfo = data[4],
+		    platinfo = data[4],
 		    tempinfo    = data[5],
 		    luciversion = data[6];
-
-		luciversion = luciversion.branch + ' ' + luciversion.revision;
-
 		var datestr = null;
 
 		if (systeminfo.localtime) {
@@ -84,7 +81,7 @@ return baseclass.extend({
 			_('Model'),            boardinfo.model + cpubench.cpubench,
 			_('Architecture'),     cpuinfo.cpuinfo,
 			_('Target Platform'),  (L.isObject(boardinfo.release) ? boardinfo.release.target : '')  + ( ' - ' + platinfo.platinfo || ' '),
-			_('Firmware Version'), boardinfo.release.description,
+			_('Firmware Version'), boardinfo.release.description + ' / ' + (luciversion.description ),
 			_('Kernel Version'),   boardinfo.kernel,
 			_('Local Time'),       datestr,
 			_('Uptime'),           systeminfo.uptime ? '%t'.format(systeminfo.uptime) : null,
@@ -94,7 +91,6 @@ return baseclass.extend({
 				systeminfo.load[2] / 65535.0
 			) : null,
 		];
-
 		if (tempinfo.tempinfo) {
 			fields.splice(6, 0, _('Temperature'));
 			fields.splice(7, 0, tempinfo.tempinfo);

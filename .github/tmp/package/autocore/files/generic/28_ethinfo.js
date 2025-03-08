@@ -1,65 +1,68 @@
 'use strict';
 'require baseclass';
 'require rpc';
+'require ui';
 
 var callLuciETHList = rpc.declare({
-	object: 'luci',
-	method: 'getETHList',
-	expect: { result: [] }
+    object: 'luci',
+    method: 'getETHList',
+    expect: { '': {} }
 });
 
 return baseclass.extend({
-	title: _('Ethernet Information'),
+    title: _('Ethernet Information'),
 
-	load: function() {
-		return Promise.all([
-			L.resolveDefault(callLuciETHList(), {})
-		]);
-	},
+    load: function() {
+        return Promise.all([
+            L.resolveDefault(callLuciETHList(), {})
+        ]);
+    },
 
-	render: function(data) {
-        if (!data || data.length === 0) return;
-		var ethlist = Array.isArray(data[0]) ? data[0] : [];
-		var table = E('table', { 'class': 'table' }, [
-			E('tr', { 'class': 'tr table-titles' }, [
-				E('th', { 'class': 'th' }, _('Ethernet Name')),
-				E('th', { 'class': 'th' }, _('Link Status')),
-				E('th', { 'class': 'th' }, _('Speed')),
-				E('th', { 'class': 'th' }, _('Duplex')),
-				E('th', { 'class': 'th' }, _('MAC Address'))
-			])
-		]);
+    render: function(data) {
+        var ethlist = Array.isArray(data[0].ethlist) ? data[0].ethlist : [];
+        var table = E('table', { 'class': 'table' }, [
+            E('tr', { 'class': 'tr table-titles' }, [
+                E('th', { 'class': 'th' }, _('Ethernet Name')),
+                E('th', { 'class': 'th' }, _('Link Status')),
+                E('th', { 'class': 'th' }, _('Speed')),
+                E('th', { 'class': 'th' }, _('Duplex')),
+                E('th', { 'class': 'th' }, _('MAC Address'))
+            ])
+        ]);
 
-		cbi_update_table(table, ethlist.map(function(info) {
-			var exp1;
-			var exp2;
+        ethlist.forEach(function(info) {
+            var exp1 = _('-');
+            var exp2 = _('-'); 
 
-			if (info.status == "yes")
-				exp1 = _('Link Up');
-			else if (info.status == "no")
-				exp1 = _('Link Down');
+            if (info.status === "yes") {
+                exp1 = _('Link Up');
+            } else if (info.status === "no") {
+                exp1 = _('Link Down');
+            }
 
-			if (info.duplex == "Full")
-				exp2 = _('Full Duplex');
-			else if (info.duplex == "Half")
-				exp2 = _('Half Duplex');
-			else
-				exp2 = _('-');
+            if (info.duplex === "Full") {
+                exp2 = _('Full Duplex');
+            } else if (info.duplex === "Half") {
+                exp2 = _('Half Duplex');
+            }
 
-			if (info.name == "lan[eth0]"  &&  info.duplex == "Half")
-			       info.speed='10 G/s';
+            var speed = info.speed;
+            if (info.name === "LAN[eth0]" && info.duplex === "Half") {
+                speed = '10 G/s';
+            }
 
-			return [
-				info.name,
-				exp1,
-				info.speed,
-				exp2,
-				info.mac
-			];
-		}));
+            var row = E('tr', { 'class': 'tr' }, [
+                E('td', { 'class': 'td' }, info.name),
+                E('td', { 'class': 'td' }, exp1),
+                E('td', { 'class': 'td' }, speed),
+                E('td', { 'class': 'td' }, exp2),
+                E('td', { 'class': 'td' }, info.mac)
+            ]);
+            table.appendChild(row);
+        });
 
-		return E([
-			table
-		]);
-	}
+        return E([
+            table
+        ]);
+    }
 });

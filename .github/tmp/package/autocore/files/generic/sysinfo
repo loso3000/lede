@@ -26,6 +26,13 @@ cntime() {
 time() {
 date "+%A [%W] | [%j] %Y/%m/%d-%X %Z"
 }
+
+description() {
+
+. /etc/openwrt_release
+echo -n ${DISTRIB_DESCRIPTION}
+}
+
 cpuinfo() {
  
 . /etc/openwrt_release
