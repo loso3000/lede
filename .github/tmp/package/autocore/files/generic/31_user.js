@@ -11,7 +11,7 @@ var callOnlineUsers = rpc.declare({
 var callOnlineUserlist = rpc.declare({
     object: 'luci',
     method: 'getOnlineUserlist',
-    expect: { result: [] }
+    expect: { userlist: [] }
 });
 
 function getlanip(networks) {

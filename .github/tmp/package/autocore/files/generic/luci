@@ -704,9 +704,9 @@ const methods = {
 				userlist = json(userlist);
 				fd.close();
 
-				return { result: userlist };
+				return { userlist: userlist };
 			} else {
-				return { result: error() };
+				return { userlist: error() };
 			}
 		}
 	},
@@ -724,9 +724,9 @@ const methods = {
 				ethlist = json(ethlist);
 				fd.close();
 
-				return { result: ethlist };
+				return { ethlist: ethlist };
 			} else {
-				return { result: error() };
+				return { ethlist: error() };
 			}
 		}
 	},
@@ -744,9 +744,9 @@ const methods = {
 				ethinfo = json(ethinfo);
 				fd.close();
 
-				return { result: ethinfo };
+				return { ethinfo: ethinfo };
 			} else {
-				return { result: error() };
+				return { ethinfo: error() };
 			}
 		}
 	}
