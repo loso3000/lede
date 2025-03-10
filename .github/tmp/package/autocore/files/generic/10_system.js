@@ -9,39 +9,32 @@ var callLuciDescription = rpc.declare({
 });
 
 var callSystemBoard = rpc.declare({
-	object: 'system',
-	method: 'board'
+    object: 'system',
+    method: 'board'
 });
-
 var callSystemInfo = rpc.declare({
-	object: 'system',
-	method: 'info'
+    object: 'system',
+    method: 'info'
 });
-
 var callCPUBench = rpc.declare({
-	object: 'luci',
-	method: 'getCPUBench'
+    object: 'luci',
+    method: 'getCPUBench'
 });
-
 var callCPUInfo = rpc.declare({
-	object: 'luci',
-	method: 'getCPUInfo'
+    object: 'luci',
+    method: 'getCPUInfo'
 });
-
 var callPlatInfo = rpc.declare({
-	object: 'luci',
-	method: 'getPlatInfo'
+    object: 'luci',
+    method: 'getPlatInfo'
 });
-
 var callTempInfo = rpc.declare({
-	object: 'luci',
-	method: 'getTempInfo'
+    object: 'luci',
+    method: 'getTempInfo'
 });
-
 return baseclass.extend({
-	title: _('System'),
-
-	load: function() {
+    title: _('System'),
+    load: function() {
 		return Promise.all([
 			L.resolveDefault(callSystemBoard(), {}),
 			L.resolveDefault(callSystemInfo(), {}),
@@ -51,30 +44,20 @@ return baseclass.extend({
 			L.resolveDefault(callTempInfo(), {}),
 			L.resolveDefault(callLuciDescription(), {})
 		]);
-	},
-
-	render: function(data) {
-		var boardinfo   = data[0],
-		    systeminfo  = data[1],
-		    cpubench    = data[2],
-		    cpuinfo     = data[3],
-		    platinfo = data[4],
-		    tempinfo    = data[5],
-		    luciversion = data[6];
-		var datestr = null;
-
-		if (systeminfo.localtime) {
-			var date = new Date(systeminfo.localtime * 1000);
-
-			datestr = '%04d-%02d-%02d %02d:%02d:%02d'.format(
-				date.getUTCFullYear(),
-				date.getUTCMonth() + 1,
-				date.getUTCDate(),
-				date.getUTCHours(),
-				date.getUTCMinutes(),
-				date.getUTCSeconds()
-			);
-		}
+    },
+    render: function(data) {
+        var boardinfo = data[0],
+            systeminfo = data[1],
+            cpubench = data[2],
+            cpuinfo = data[3],
+            platinfo = data[4],
+            tempinfo = data[5],
+            luciversion = data[6];
+        var datestr = null;
+        if (systeminfo.localtime) {
+            var date = new Date(systeminfo.localtime * 1000);
+            datestr = '%04d-%02d-%02d %02d:%02d:%02d'.format(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        }
 
 		var fields = [
 			_('Hostname'),         boardinfo.hostname,
@@ -91,20 +74,23 @@ return baseclass.extend({
 				systeminfo.load[2] / 65535.0
 			) : null,
 		];
-		if (tempinfo.tempinfo) {
-			fields.splice(6, 0, _('Temperature'));
-			fields.splice(7, 0, tempinfo.tempinfo);
-		}
-
-		var table = E('table', { 'class': 'table' });
-
-		for (var i = 0; i < fields.length; i += 2) {
-			table.appendChild(E('tr', { 'class': 'tr' }, [
-				E('td', { 'class': 'td right', 'width': '33%' }, [ fields[i] ]),
-				E('td', { 'class': 'td left' }, [ (fields[i + 1] != null) ? fields[i + 1] : '?' ])
-			]));
-		}
-
-		return table;
-	}
+        if (tempinfo.tempinfo) {
+            fields.splice(6, 0, _('Temperature'));
+            fields.splice(7, 0, tempinfo.tempinfo);
+        }
+        var table = E('table', {
+            'class': 'table'
+        });
+        for (var i = 0; i < fields.length; i += 2) {
+            table.appendChild(E('tr', {
+                'class': 'tr'
+            }, [E('td', {
+                'class': 'td right',
+                'width': '33%'
+            }, [fields[i]]), E('td', {
+                'class': 'td left'
+            }, [(fields[i + 1] != null) ? fields[i + 1] : '?'])]));
+        }
+        return table;
+    }
 });

@@ -3,33 +3,33 @@
 'require rpc';
 
 var callLuciETHList = rpc.declare({
-    object: 'luci',
-    method: 'getETHList',
+	object: 'luci',
+	method: 'getETHList',
 	expect: { ethlist: [] }
 });
 
 return baseclass.extend({
-    title: _('Ethernet Information'),
+	title: _('Ethernet Information'),
 
-    load: function() {
-        return Promise.all([
-            L.resolveDefault(callLuciETHList(), {})
-        ]);
-    },
+	load: function() {
+		return Promise.all([
+			L.resolveDefault(callLuciETHList(), {})
+		]);
+	},
 
-    render: function(data) {
+	render: function(data) {
         if (!data || data.length === 0) return;
 	//console.error(data);
 		var ethlist = Array.isArray(data[0]) ? data[0] : [];
-        var table = E('table', { 'class': 'table' }, [
-            E('tr', { 'class': 'tr table-titles' }, [
-                E('th', { 'class': 'th' }, _('Ethernet Name')),
-                E('th', { 'class': 'th' }, _('Link Status')),
-                E('th', { 'class': 'th' }, _('Speed')),
-                E('th', { 'class': 'th' }, _('Duplex')),
-                E('th', { 'class': 'th' }, _('MAC Address'))
-            ])
-        ]);
+		var table = E('table', { 'class': 'table' }, [
+			E('tr', { 'class': 'tr table-titles' }, [
+				E('th', { 'class': 'th' }, _('Ethernet Name')),
+				E('th', { 'class': 'th' }, _('Link Status')),
+				E('th', { 'class': 'th' }, _('Speed')),
+				E('th', { 'class': 'th' }, _('Duplex')),
+				E('th', { 'class': 'th' }, _('MAC Address'))
+			])
+		]);
 
 		cbi_update_table(table, ethlist.map(function(info) {
 			var exp1;
@@ -59,8 +59,8 @@ return baseclass.extend({
 			];
 		}));
 
-		return E([
+        return E([
             table
         ]);
-    }
+	}
 });

@@ -1,7 +1,6 @@
 'use strict';
 'require baseclass';
 'require rpc';
-'require network';
 
 var callOnlineUsers = rpc.declare({
     object: 'luci',
@@ -14,35 +13,20 @@ var callOnlineUserlist = rpc.declare({
     expect: { userlist: [] }
 });
 
-function getlanip(networks) {
-    for (var i = 0; i < networks.length; i++) {
-        var networkName = networks[i].getName();
-        if (networkName === 'lan') {
-            var l3dev = networks[i].getDevice();
-            if (l3dev) {
-                var ipadd = l3dev.getIPAddrs()[0];
-                return ipadd;
-            }
-        }
-    }
-    return null;
-}
 
 return baseclass.extend({
     title: _('Online Users'),
     load: function() {
 		return Promise.all([
 			L.resolveDefault(callOnlineUserlist(), {}),
-			L.resolveDefault(callOnlineUsers(), {}),
-			network.getNetworks()
+			L.resolveDefault(callOnlineUsers(), {})
         ]);
     },
 
     render: function(data) {
         var onlineuserlist = Array.isArray(data[0]) ? data[0] : [],
-         fields = [_('Online Users'), data[1].onlineusers || '0'],
-         networks = data[2];
-        var lanIP = getlanip(networks);
+         fields = [_('Online Users'), data[1].onlineusers || '0'];
+
         var usestatus = E('table', { 'class': 'table' });
         if (fields[0] == _('Online Users')) {
             usestatus.appendChild(E('tr', { 'class': 'tr' }, [
@@ -62,15 +46,11 @@ return baseclass.extend({
             ])
         ]);
 
-        var filteredUsers = onlineuserlist.filter(function(info) {
-            return info.ipaddr !== lanIP;
-        });
-
-        filteredUsers.sort(function(a, b) {
+        onlineuserlist.sort(function(a, b) {
             return L.naturalCompare(a.ipaddr, b.ipaddr);
         });
 
-        filteredUsers.forEach(function(info) {
+        onlineuserlist.forEach(function(info) {
             var row = E('tr', { 'class': 'tr' }, [
                 E('td', { 'class': 'td left' }, info.hostname),
                 E('td', { 'class': 'td left' }, info.ipaddr),
