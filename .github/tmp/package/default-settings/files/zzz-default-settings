@@ -10,8 +10,6 @@ sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argo
 uci -q set luci.main.lang='auto'
 uci -q set luci.main.mediaurlbase='/luci-static/kucat'
 
-DISTRIB_FREE=$(cat /etc/openwrt_release | grep "Vip" | cut -d " " -f 2 | cut -d "-" -f 1)
-
 is_x86_64() {
     DISTRIB_ARCH=$(cat /etc/openwrt_release | grep "DISTRIB_ARCH" | cut -d "'" -f 2)
     if [ "$DISTRIB_ARCH" = "x86_64" ]; then
@@ -22,7 +20,7 @@ is_x86_64() {
 }
 
 is_vip() {
-     DISTRIB_FREE=$(cat /etc/openwrt_release | grep "Vip" | cut -d " " -f 2 | cut -d "-" -f 1)
+     DISTRIB_FREE=$(cat /etc/ezopenwrt_version | grep "Vip" | cut -d " " -f 2 | cut -d "-" -f 1)
     if [ "$DISTRIB_FREE" = "Vip" ]; then
         return 0
     else
@@ -33,7 +31,6 @@ is_vip() {
  if is_x86_64; then
 	if is_vip; then
 	        	echo "src/gz is_store https://istore.linkease.com/repo/all/store" >/etc/opkg/customfeeds.conf
-	        	echo "src/gz dllkids https://op.dllkids.xyz/packages/x86_64" >>/etc/opkg/customfeeds.conf
 	fi
 else
 	if is_vip; then
@@ -341,61 +338,26 @@ rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
 [ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$?;echo $ver
 }
 
-
-#update /etc/hosts
-#grep -q services.googleapis.cn /etc/hosts || echo 142.250.204.35 services.googleapis.cn >>/etc/hosts
-#grep -q google.cn /etc/hosts || echo 142.250.66.131 google.cn >>/etc/hosts
-
 test $ver -lt 4 && {
 	ver=4
 	uci -q set ucitrack.@fstab[0].exec='/sbin/block mount'
 	uci commit ucitrack
 	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
 }
-
-# echo 'iptables -I zone_lan_forward -t filter -m conntrack --ctstate DNAT -j ACCEPT' >> /etc/firewall.user
 sed -i '/coremark/d' /etc/crontabs/root
-
-[ ! -f  /etc/opkg/distfeeds.conf.bak ] || mv -f  /etc/opkg/distfeeds.conf.bak /etc/opkg/distfeeds.conf 
 ln -sf /sbin/ip /usr/bin/ip
 # Disable opkg signature check
 sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
 new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
-if [ ` cat /etc/config/luci | grep immortalwrt` ] ;then 
-	[ -f /etc/ezopenwrt_version ]  && { 
-  	  sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-  	  sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
- 	   echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
-	}
-    sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
-    # opkg mirror
-    sed -i 's#downloads.openwrt.org#mirrors.cloud.tencent.com/lede#g' /etc/opkg/distfeeds.conf
-    sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
-else
-	sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
-	sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-	# echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
-	sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-	echo '' >/etc/openwrt_version
-	[ -f /etc/ezopenwrt_version ]  && { 
-   	   #echo "DISTRIB_REVISION=' "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
- 	   echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
-	}
-	#sed -i 's,downloads.openwrt.org,mirror.sjtu.edu.cn/openwrt,g' /etc/opkg/distfeeds.conf
-	sed -i 's#downloads.openwrt.org#mirrors.cloud.tencent.com/lede#g' /etc/opkg/distfeeds.conf
-	# sed -i 's,downloads.immortalwrt.org,mirrors.vsean.net/openwrt,g' /etc/opkg/distfeeds.conf
-	sed -i "s/# //g" /etc/opkg/distfeeds.conf
-	sed -i '/openwrt_luci/ { s/snapshots/releases\/18.06.9/g; }'  /etc/opkg/distfeeds.conf
-fi
+sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
+sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
+echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
+sed -i '/OPENWRT_RELEASE/d' /etc/os-release
+echo "OPENWRT_RELEASE='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/os-release
+sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
+
 test $ver -lt 5 && {
-	ver=5
-	# rm -f /etc/nginx/conf.d/_lan.crt  /etc/nginx/conf.d/_lan.key
-	# test -e /etc/nginx/conf.d/_lan.conf && \
-	# /usr/bin/nginx-util 'add_ssl' '_lan'
-	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
-}
-test $ver -lt 6 && {
-	ver=6
+ver=5
 HOSTNAME="samsungTV"
 TAG="googleDNS"
 MAC=""
@@ -417,43 +379,9 @@ uci commit && cd /etc/init.d && \
 ./dnsmasq restart
 [ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
 }
-test $ver -lt 7 && {
-ver=7
-fw_iptv_id=$(uci show firewall | grep 'Allow-IPTV-Incoming' | grep -oE '\[.*?\]' | sed 's/[][]//g')
-#uci delete firewall.@rule["${fw_iptv_id}"]
-[ -z "${fw_iptv_id}" ] && {
-	uci add firewall rule
-	uci set firewall.@rule[-1].name='Allow-IPTV-Incoming'
-	uci set firewall.@rule[-1].target='ACCEPT'
-	uci set firewall.@rule[-1].src='wan'
-	uci set firewall.@rule[-1].family='ipv4'
-	uci set firewall.@rule[-1].proto='udp'
-	uci set firewall.@rule[-1].dest_ip='224.0.0.0/4'
-	uci commit firewall
-}
-
-fw_iptv_id=$(uci show firewall | grep 'Allow-IPTV-igmpproxy' | grep -oE '\[.*?\]' | sed 's/[][]//g')
-#uci delete firewall.@rule["${fw_iptv_id}"]
-[ -z "${fw_iptv_id}" ] && {
-	uci add firewall rule
-	uci set firewall.@rule[-1].name='Allow-IPTV-igmpproxy'
-	uci set firewall.@rule[-1].target='ACCEPT'
-	uci set firewall.@rule[-1].src='wan'
-	uci set firewall.@rule[-1].family='ipv4'
-	uci set firewall.@rule[-1].proto='udp'
-	uci set firewall.@rule[-1].dest='lan'
-	uci set firewall.@rule[-1].dest_ip='224.0.0.0/4'
-	uci commit firewall
-}
-# E1187: Failed to source defaults.vim
-touch /root/.vimrc
-[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
-}
 uci -q set base_config.@base[0].ver=$ver
 uci commit base_config
 ntpd -n -q -p 1.lede.pool.ntp.org
-# sed -i '/luciversion/d' /usr/lib/lua/luci/version.lua
-# echo "luciversion ='23.05'" >> /usr/lib/lua/luci/version.lua
 sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 echo 'hsts=0' > /root/.wgetrc
