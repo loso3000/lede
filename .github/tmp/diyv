@@ -131,12 +131,6 @@ rm -rf  feeds/packages/net/wrtbwmon
 rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
 
-rm -rf  ./feeds/packages/net/oaf
-rm -rf ./feeds/luci/themes/luci-app-filter
-rm -rf ./feeds/luci/themes/luci-app-oaf
-rm -rf ./feeds/packages/net/open-app-filter
-git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
-
 rm -rf  ./feeds/packages/devel/binutils   #2410error
 
 rm -rf  ./feeds/luci/applications/luci-app-timecontrol
@@ -166,6 +160,13 @@ git clone https://github.com/loso3000/other ./package/add
 # alist
 # rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
 # git clone https://$github/sbwml/openwrt-alist package/new/alist
+
+rm -rf  ./feeds/packages/net/oaf
+rm -rf ./feeds/luci/themes/luci-app-filter
+rm -rf ./feeds/luci/themes/luci-app-oaf
+rm -rf ./feeds/packages/net/open-app-filter
+rm -rf ./package/add/up/tool/OpenAppFilter
+# git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
@@ -264,7 +265,6 @@ rm -rf ./package/add/up/pass/naiveproxy
 
 rm -rf ./package/add/up/pass/xray-core
 
-rm -rf ./package/add/up/tool/OpenAppFilter
 
 # rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
 rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
