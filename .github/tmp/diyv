@@ -1,391 +1,752 @@
-#!/bin/sh
-ver=$(uci -q get base_config.@base[0].ver 2>/dev/null)
-test -n "$ver" || {
-touch /etc/config/base_config
-uci add base_config base >/dev/null 2>&1
-ver=0
-}
-#argon
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argon/sysauth.htm
-uci -q set luci.main.lang='auto'
-uci -q set luci.main.mediaurlbase='/luci-static/kucat'
+#!/bin/bash
 
-is_x86_64() {
-    DISTRIB_ARCH=$(cat /etc/openwrt_release | grep "DISTRIB_ARCH" | cut -d "'" -f 2)
-    if [ "$DISTRIB_ARCH" = "x86_64" ]; then
-        return 0
-    else
-        return 1
-    fi
-}
+# private gitea
+gitea=git.cooluc.com
+github="github.com"
+mirror=https://init.cooluc.com
+mirror=raw.githubusercontent.com/coolsnowwolf/lede/master
 
+#安装和更新软件包
+UPDATE_PACKAGE() {
+	local PKG_NAME=$1
+	local PKG_REPO=$2
+	local PKG_BRANCH=$3
+	local PKG_SPECIAL=$4
+	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
+
+	rm -rf $(find ../feeds/luci/ ../feeds/packages/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune)
+
+	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
+
+	if [[ $PKG_SPECIAL == "pkg" ]]; then
+		cp -rf $(find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune) ./
+		rm -rf ./$REPO_NAME/
+	elif [[ $PKG_SPECIAL == "name" ]]; then
+		mv -f $REPO_NAME $PKG_NAME
+	fi
+}
 is_vip() {
-     DISTRIB_FREE=$(cat /etc/ezopenwrt_version | grep "Vip" | cut -d " " -f 2 | cut -d "-" -f 1)
-    if [ "$DISTRIB_FREE" = "Vip" ]; then
-        return 0
-    else
-        return 1
-    fi
+case "${CONFIG_S}" in
+     "Vip"*) return 0 ;;
+     *) return 1 ;;
+esac
 }
 
- if is_x86_64; then
-	if is_vip; then
-	        	echo "src/gz is_store https://istore.linkease.com/repo/all/store" >/etc/opkg/customfeeds.conf
-	fi
+mkdir -p files/root
+mkdir -p files/etc/opkg
+mkdir -p files/usr/share
+mkdir -p ./package/emortal
+
+[[ -n $TARGET_DEVICE ]] || TARGET_DEVICE="x86_64"
+[[ -n $CONFIG_S ]] || CONFIG_S=Vip-Super
+
+rm -rf ./feeds/luci/themes/luci-app-filter
+rm -rf ./feeds/luci/themes/luci-app-oaf
+rm -rf ./feeds/luci/themes/luci-theme-argon
+rm -rf ./feeds/packages/net/mentohust
+rm -rf ./feeds/packages/net/open-app-filter
+rm -rf  ./feeds/luci/applications/luci-app-arpbind
+rm -rf  ./feeds/packages/net/oaf
+#rm -rf  ./feeds/packages/net/wget
+
+# rm -rf  ./feeds/packages/rust
+# rm -rf  ./feeds/packages/lang/rust
+
+rm -rf  ./feeds/packages/net/zsh
+rm -rf  ./feeds/packages/net/homebox
+rm -rf  ./feeds/packages/net/naiveproxy
+
+#修改默认时区
+sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
+# sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
+
+#修改默认主机名
+sed -i "s/hostname='.*'/hostname='EzOpWrt'/g" ./package/base-files/files/bin/config_generate
+sed -i "s/ImmortalWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/OpenWrt/EzOpWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/iStoreOS/EzopWrt/" {package/base-files/files/bin/config_generate,include/version.mk}
+sed -i "s/ImmortalWrt/EzopWrt/" ./feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js  #改登陆域名
+
+#修改默认主题
+# sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+#添加编译日期标识
+# sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_CI-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+#修改默认WIFI名
+# sed -i "s/\.ssid=.*/\.ssid=$WRT_WIFI/g" $(find ./package/kernel/mac80211/ ./package/network/config/ -type f -name "mac80211.*")
+
+#修改默认主机名
+# sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $config_generate
+#修改默认时区
+# sed -i "s/timezone='.*'/timezone='Asia\/Shanghai'/g" $config_generate
+
+#删除冲突插件
+# rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
+# rm -rf package/feeds/packages/prometheus-node-exporter-lua
+# rm -rf feeds/packages/prometheus-node-exporter-lua
+#samrtdns
+rm -rf ./feeds/luci/applications/luci-app-smartdns
+rm -rf ./feeds/luci/applications/luci-app-lucky
+rm -rf ./feeds/luci/applications/luci-app-ddns-go
+rm -rf ./feeds/luci/applications/luci-app-filetransfer
+rm -rf ./feeds/luci/applications/luci-app-fileassistant
+rm -rf ./feeds/luci/applications/luci-app-msd_lite
+rm -rf ./feeds/luci/applications/luci-app-smartdns
+rm -rf ./feeds/luci/applications/luci-app-wolplus
+rm -rf ./feeds/luci/applications/luci-app-wrtbwmon
+
+rm -rf ./feeds/luci/applications/luci-app-udpxy
+rm -rf ./feeds/luci/applications/luci-app-adguardhome
+rm -rf ./feeds/luci/applications/luci-app-mosdns
+rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2
+
+
+rm -rf  ./feeds/packages/net/wrtbwmon
+rm -rf  ./feeds/packages/net/smartdns
+rm -rf  ./feeds/packages/net/lucky
+rm -rf  ./feeds/packages/net/ddns-go
+#istore
+rm -rf  ./feeds/jjm2473_apps/homebox
+rm -rf  ./feeds/jjm2473_apps/luci-app-homebox
+rm -rf  ./feeds/third_party/luci-app-LingTiGameAcc
+rm -rf  ./feeds/third_party/luci-app-arpbind
+rm -rf  ./feeds/third_party/luci-app-fileassistant
+rm -rf  ./feeds/third_party/luci-app-smartdns
+rm -rf  ./feeds/third_party/luci-app-socat
+rm -rf  ./feeds/third_party/smartdns
+rm -rf  ./feeds/third_party/luci-app-netdata
+rm -rf  ./feeds/third_party/luci-app-autotimeset
+rm -rf ./feeds/openwrt-third/luci-app-netdata
+rm -rf ./feeds/openwrt-third/smartdns
+rm -rf ./feeds/openwrt-third/luci-app-autotimeset
+rm -rf ./feeds/luci/applications/luci-app-autotimeset
+rm -rf ./feeds/third/luci-app-autotimeset
+rm -rf  ./feeds/packages/ariang
+rm -rf  ./feeds/packages/webui-aria2
+#error
+rm -rf  ./target/linux/ath79
+
+sed -i 's/services/status/g' ./feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
+rm -rf  feeds/packages/net/wrtbwmon
+rm -rf  ./feeds/luci/applications/luci-app-wrtbwmon 
+rm -rf  ./feeds/luci/applications/luci-app-arpbind
+
+rm -rf  ./feeds/packages/devel/binutils   #2410error
+
+rm -rf  ./feeds/luci/applications/luci-app-timecontrol
+rm -rf  ./feeds/luci/applications/luci-app-socat
+rm -rf  ./feeds/luci/applications/luci-app-fileassistant
+rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
+
+# rm -rf  ./feeds/packages/net/wget
+# mv -rf ./package/wget  ./feeds/packages/net/wget
+#aria2
+rm -rf ./feeds/packages/net/aria2
+rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
+
+# rm -rf $(find ./package/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
+# rm -rf $(find ./feeds/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
+
+# Passwall
+
+rm -rf ./feeds/luci/applications/luci-app-ssr-plus  package/feeds/packages/luci-app-ssr-plus
+rm -rf ./feeds/luci/applications/luci-app-passwall  package/feeds/packages/luci-app-passwall
+rm -rf ./feeds/luci/applications/luci-app-passwall2  package/feeds/packages/luci-app-passwall2
+
+git clone https://github.com/sbwml/openwrt_helloworld  -b v5 ./package/ssr
+
+git clone https://github.com/loso3000/other ./package/add
+
+# alist
+# rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
+# git clone https://$github/sbwml/openwrt-alist package/new/alist
+
+rm -rf  ./feeds/packages/net/oaf
+rm -rf ./feeds/luci/themes/luci-app-filter
+rm -rf ./feeds/luci/themes/luci-app-oaf
+rm -rf ./feeds/packages/net/open-app-filter
+rm -rf ./package/add/up/tool/OpenAppFilter
+# git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
+
+
+mv -f ./package/add/up/tool/smartdns/luci-app-smartdns ./feeds/luci/applications/luci-app-smartdns
+mv -f ./package/add/up/tool/smartdns/smartdns  ./feeds/packages/net/smartdns 
+
+# rm -rf ./package/add/luci-app-mwan3 ./package/add/mwan3
+# rm -rf ./feeds/luci/applications/luci-app-mwan3
+rm -rf ./feeds/packages/net/mwan3
+mv ./package/add/up/tool/mwan3 ./feeds/packages/net/mwan3
+
+
+# rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
+# rm -rf ./package/ssr/luci-app-homeproxy
+#bypass
+rm -rf ./package/ssr/luci-app-ssr-plus
+# rm -rf ./package/ssr/luci-app-passwall
+# rm -rf ./package/ssr/luci-app-passwall2
+
+
+#rm -rf ./package/ssr/brook
+#rm -rf ./package/ssr/chinadns-ng
+#rm -rf ./package/ssr/dns2socks
+#rm -rf ./package/ssr/dns2tcp
+#rm -rf ./package/ssr/pdnsd-alt
+#rm -rf ./package/ssr/ipt2socks
+#rm -rf ./package/ssr/microsocks
+#rm -rf ./package/ssr/lua-neturl
+#rm -rf ./package/ssr/naiveproxy
+# rm -rf ./package/ssr/redsocks2
+# rm -rf ./package/ssr/simple-obfs
+# rm -rf ./package/ssr/tcping
+# rm -rf ./package/ssr/trojan
+# rm -rf ./package/ssr/tuic-client
+#rm -rf ./package/ssr/shadowsocks-libev
+#rm -rf ./package/ssr/shadowsocks-rust
+
+
+rm -rf ./package/ssr/mosdns
+rm -rf ./package/ssr/trojan-plus
+# rm -rf ./package/ssr/xray-core
+
+#rm -rf ./package/ssr/xray-plugin
+# rm -rf ./package/ssr/naiveproxy
+#rm -rf ./package/ssr/v2ray-plugin
+#rm -rf ./package/ssr/v2ray-core
+# rm -rf ./package/ssr/pdnsd
+#rm -rf ./package/ssr/lua-neturl
+#rm -rf ./package/ssr/redsocks2
+#rm -rf ./package/ssr/shadow-tls
+
+#istoreos-files
+rm -rf ./package/istoreos-files
+
+ rm -rf ./feeds/packages/net/brook
+ rm -rf ./feeds/packages/net/chinadns-ng
+ rm -rf ./feeds/packages/net/dns2socks
+ rm -rf ./feeds/packages/net/dns2tcp
+ rm -rf ./feeds/packages/net/pdnsd-alt
+ rm -rf ./feeds/packages/net/hysteria
+ rm -rf ./feeds/packages/net/gn
+ rm -rf ./feeds/packages/net/ipt2socks
+ rm -rf ./feeds/packages/net/microsocks
+ rm -rf ./feeds/packages/net/lua-neturl
+ rm -rf ./feeds/packages/net/naiveproxy
+ rm -rf ./feeds/packages/net/pdnsd
+ rm -rf ./feeds/packages/net/redsocks2
+ rm -rf ./feeds/packages/net/simple-obfs
+ rm -rf ./feeds/packages/net/tcping
+ rm -rf ./feeds/packages/net/trojan
+ rm -rf ./feeds/packages/net/tuic-client
+ rm -rf ./feeds/packages/net/v2ray-geodata
+
+#rm -rf ./feeds/packages/net/shadowsocks-libev
+#rm -rf ./feeds/packages/net/shadowsocks-rust
+rm -rf ./feeds/packages/net/xray-core
+rm -rf ./feeds/packages/net/sing-box
+rm -rf ./feeds/packages/net/trojan-plus
+rm -rf ./feeds/packages/net/xray-plugin
+rm -rf ./feeds/packages/net/naiveproxy
+rm -rf ./feeds/packages/net/v2ray-plugin
+rm -rf ./feeds/packages/net/v2ray-core
+rm -rf ./feeds/packages/net/pdnsd
+rm -rf ./feeds/packages/net/lua-neturl
+rm -rf ./feeds/packages/net/redsocks2
+rm -rf ./feeds/packages/net/shadow-tls
+
+# rm -rf  ./feeds/luci/applications/luci-app-netdata
+# mv -f ./package/add/up/netdata ./package/
+rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
+rm -rf ./package/add/up/pass/naiveproxy
+rm -rf ./package/add/up/pass/xray-core
+
+rm -rf ./package/add/up/tool/OpenAppFilter
+
+# rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
+rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
+rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
+# rm -rf ./package/emortal2/autocore 
+rm -rf ./package/add/up/tool/autocore
+rm -rf ./package/add/other/up/tool/autocore
+# rm -rf ./package/add/up/tool/automount
+# rm -rf ./package/add/up/tool/autosamba
+
+rm -rf ./package/add/up/pass/xray-core
+
+rm -rf ./package/add/up/tool/default-settings
+
+cat  patch/banner > ./package/base-files/files/etc/banner
+cat  patch/profile > ./package/base-files/files/etc/profile
+cat  patch/profiles > ./package/base-files/files/etc/profiles
+cat  patch/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
+
+#  coremark
+# sed -i '/echo/d' ./feeds/packages/utils/coremark/coremark
+
+rm -rf ./feeds/packages/net/lucky
+rm -rf  ./feeds/luci/applications/luci-app-lucky
+git clone https://github.com/sirpdboy/luci-app-lucky ./package/lucky
+rm -rf ./feeds/packages/net/ddns-go
+rm -rf  ./feeds/luci/applications/luci-app-ddns-go
+git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
+
+# nlbwmon
+# sed -i 's/524288/16777216/g' feeds/packages/net/nlbwmon/files/nlbwmon.config
+# 可以设置汉字名字
+# sed -i '/o.datatype = "hostname"/d' feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_system/system.lua
+# sed -i '/= "hostname"/d' /usr/lib/lua/luci/model/cbi/admin_system/system.lua
+
+git clone  https://github.com/linkease/nas-packages-luci ./package/nas-packages-luci
+git clone  https://github.com/linkease/nas-packages ./package/nas-packages
+git clone  https://github.com/linkease/istore ./package/istore
+sed -i 's/1/0/g' ./package/nas-packages/network/services/linkease/files/linkease.config
+sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
+
+rm -rf ./feeds/packages/net/mosdns
+# rm -rf  ./feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/packages/net/v2ray-geodata
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+# git clone https://github.com/sbwml/luci-app-mosdns -b v5-lua package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
+
+# TTYD设置
+sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
+sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' ./feeds/packages/utils/ttyd/files/ttyd.init
+sed -i 's|/bin/login|/bin/login -f root|' ./feeds/packages/utils/ttyd/files/ttyd.config
+
+
+# UPnP
+# rm -rf ./package/add/up/luci-app-upnp
+# rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
+# git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
+# git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
+
+sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
+
+sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
+sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
+sed -i 's/"P910nd - 打印服务器"/"打印服务"/g' `grep "P910nd - 打印服务器" -rl ./`
+sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
+sed -i 's/实时流量监测/流量/g'  `grep "实时流量监测" -rl ./`
+sed -i 's/解锁网易云灰色歌曲/解锁灰色歌曲/g'  `grep "解锁网易云灰色歌曲" -rl ./`
+sed -i 's/解除网易云音乐播放限制/解锁灰色歌曲/g'  `grep "解除网易云音乐播放限制" -rl ./`
+sed -i 's/家庭云//g'  `grep "家庭云" -rl ./`
+
+sed -i 's/msgstr "挂载 SMB 网络共享"/msgstr "挂载网络共享"/g'  `grep "挂载 SMB 网络共享" -rl ./`
+
+sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
+
+#cifs挂pan
+# sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
+
+#断线不重拨
+sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
+
+# echo '默认开启 Irqbalance'
+sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
+# nlbwmon - disable syslog
+# sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
+
+git clone https://github.com/yaof2/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
+sed -i 's/, 1).d/, 11).d/g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
+# Add OpenClash
+rm -rf  ./feeds/luci/applications/luci-app-openclash
+git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
+sed -i 's/+libcap /+libcap +libcap-bin /' package/openclash/luci-app-openclash/Makefile
+
+rm -rf ./feeds/luci/themes/luci-theme-design
+ git clone -b js https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+rm -rf ./feeds/luci/themes/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-theme-argon.git  package/luci-theme-argon
+
+# 使用默认取消自动
+# sed -i "s/bootstrap/chuqitopd/g" feeds/luci/modules/luci-base/root/etc/config/luci
+# sed -i 's/bootstrap/chuqitopd/g' feeds/luci/collections/luci/Makefile
+# echo "修改默认主题"
+sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci/Makefile
+# sed -i "s/luci-theme-bootstrap/luci-theme-$OP_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+# sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+# sed -i '/set luci.main.mediaurlbase/d' ./package/luci-theme-arn/root/etc/uci-defaults/30_luci-theme-arn
+# sed -i '/set luci.main.mediaurlbase/d' feeds/luci/themes/luci-theme-arn/root/etc/uci-defaults/30_luci-theme-arn
+# sed -i '/set luci.main.mediaurlbase/d' package/luci-theme-arn/root/etc/uci-defaults/30_luci-theme-arn
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-material/root/etc/uci-defaults/30_luci-theme-material
+# sed -i '/set luci.main.mediaurlbase=/d' feeds/luci/themes/luci-theme-design/root/etc/uci-defaults/30_luci-luci-theme-design
+# sed -i '/set luci.main.mediaurlbase=/d' package/luci-theme-design/root/etc/uci-defaults/30_luci-theme-design
+
+# 取消主题默认设置
+# find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
+sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
+sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
+#Add x550
+git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
+
+
+# luci-app-filemanager
+rm -rf feeds/luci/applications/luci-app-filemanager
+git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
+# curl - fix passwall `time_pretransfer` check
+rm -rf feeds/packages/net/curl
+git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
+
+# 修改makefile
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/lang\/lang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/lang\/golang\-package\.mk/g' {}
+
+# sed -i 's/KERNEL_PATCHVER:=6.1/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
+# sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/*/Makefile
+# echo '默认开启 Irqbalance'
+if  [[ $TARGET_DEVICE == 'x86_64' ]] ;then
+VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
+CLASH="amd64"
 else
-	if is_vip; then
-                echo "src/gz is_store https://istore.linkease.com/repo/all/store" >/etc/opkg/customfeeds.conf
-                local total_lines=$(opkg print-architecture | wc -l)
-                local architecture=""
-                local source="https://op.dllkids.xyz/packages/"
-                if [ "$total_lines" -eq 4 ]; then
-                     architecture=$(opkg print-architecture | awk 'NR==4{print $2}')
-                     echo "No.4 architecture info===="${architecture}
-                     echo "src/gz custom_dllkids "${source}${architecture} >>/etc/opkg/customfeeds.conf
-                elif [ "$total_lines" -eq 3 ]; then
-                     architecture=$(opkg print-architecture | awk 'NR==3{print $2}')
-                     echo "No.3 architecture info===="${architecture}
-                     echo "src/gz custom_dllkids "${source}${architecture} >>/etc/opkg/customfeeds.conf
-                else
-                      echo "未知的返回结果行数: $total_lines"
-                fi
-	fi
+VER1="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f 2)"
+CLASH="arm64"
 fi
-# stop avahi cups
-# /etc/init.d/avahi-daemon disable  && /etc/init.d/avahi-daemon stop  
-debug=0
-setup_ssid()
-{
-COUNTRY='US'
-CH50=149
-CH24=11
-HWMODE50='11a'
-HWMODE24='11b'
-HTMODE50='VHT80'
-HTMODE24='HT20'
-# lan zone
-NETWORKID=lan
-local r="$1"
-uci -q delete wireless.default_${r}
- if ! uci show wireless.${r} >/dev/null 2>&1; then
-        return
- fi
-    SUBFIX=`echo -n $MACADDR | sed 's/://g' | tr a-z A-Z | tail -c4`
-    SSID=${DISTRIB_ID}_${SUBFIX}
-    # local s="wlan$1"
-    #local mac=`ifconfig ${s} | grep "HWaddr" | awk '{print $5}'`
-    #local wifimac=`echo ${mac}|awk -F ":" '{print $4""$5""$6 }'|tr A-Z a-z|cut -c4-`
-    uci -q set wireless.${r}.disabled=0
-    uci -q set wireless.${r}.country=${COUNTRY}
-    uci -q set wireless.${r}.legacy_rates='1'
-    uci -q set wireless.${r}.mu_beamformer='1'
-    uci -q set wireless.${r}.bursting='1'
-    uci -q set wireless.${r}.ff='1'
-    uci -q set wireless.${r}.compression='1'
-    uci -q set wireless.${r}.noscan='0'
-    uci -q set wireless.${r}.txpower='20'
-    if [ `uci -q get wireless.${r}.channel` -lt 14 ]; then
-        uci -q set wireless.${r}.channel=${CH24}
-        uci -q set wireless.${r}.htmode=${HTMODE24}
-        uci -q set wireless.${r}.hwmode=${HWMODE24}
-        uci -q set wireless.${NETWORKID}_${r}.ssid="${SSID}"
-        logger "default-wifi: set $1 -- ssid:${SSID} -- password:${SSID_PASSWD}"
-    else
-        uci -q set wireless.${r}.channel=${CH50}
-        uci -q set wireless.${r}.htmode=${HTMODE50}
-        uci -q set wireless.${r}.hwmode=${HWMODE50}
-        uci -q set wireless.${NETWORKID}_${r}.ssid="${SSID}"_5G
-        logger "default-wifi: set $1 -- ssid:${SSID}_5G -- password:${SSID_PASSWD}"
-    fi
-    uci -q set wireless.${NETWORKID}_${r}=wifi-iface
-    uci -q set wireless.${NETWORKID}_${r}.device=${r}
-    uci -q set wireless.${NETWORKID}_${r}.network=${NETWORKID}
-    uci -q set wireless.${NETWORKID}_${r}.mode='ap'
-    uci -q set wireless.${NETWORKID}_${r}.disassoc_low_ack='0'
-    uci -q set wireless.${NETWORKID}_${r}.encryption='psk2+ccmp'
-    uci -q set wireless.${NETWORKID}_${r}.wps_pushbutton='0'
-    uci -q set wireless.${NETWORKID}_${r}.isolate='0'
-    uci -q set wireless.${NETWORKID}_${r}.key="${SSID_PASSWD}"
-    uci commit wireless
-}
-setup_network()
-{
-     wan_interface=`uci -q get network.wan.$ifname` 
-     a=$(ip address | awk -F ': ' '/eth[0-9]+/ {print $2}' )
-     b=$(echo "$a" | wc -l)
-     lannet=""
-     [[ ${b} -gt 1 ]] && {
-	  for i in $(seq 1 $b) ; do [ "${wan_interface}" = "$(echo "$a" | sed -n ${i}p)" ] || lannet="${lannet} $(echo "$a" | sed -n ${i}p)" ;done
-	  lannet=$(echo "$lannet" | sed 's/^ *//')
- 	  [ "x$ifname" = "xdevice" ] &&  uci -q set network.@$ifname[0].ports="${lannet}"  || uci -q set network.lan.$ifname="${lannet}"
- 	  uci -q set network.@$ifname[0].ports="${lannet}"
- 	  [ `uci -q get network.wan6` ] && uci -q set network.wan6.$ifname="@wan"
-     }
-}
+if [[ $DATE_S == 'default' ]]; then
+   DATA=`TZ=UTC-8 date +%y%m%d%H%M`
+   # DATA=`TZ=UTC-8 date +%y%m%d%H%M`
+else 
+   DATA=$DATE_S
+fi
+for sh_file in `ls ${GITHUB_WORKSPACE}/openwrt/package/add/common/*.sh`;do
+    source $sh_file $CLASH
+done
 
-. /etc/openwrt_release
-test -n "${DISTRIB_ID}" || DISTRIB_ID=EzOpWrt
-DISTRIB_ID=$(echo -n $DISTRIB_ID | tr a-z A-Z)
-uci -q set fstab.@global[0].check_fs=1
-MACADDR=""
-test -e /usr/share/natcapd/board_mac.lua && MACADDR=$(lua /usr/share/natcapd/board_mac.lua)
-test -n "$MACADDR" || MACADDR=$(. /lib/functions/system.sh; get_mac_label | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /etc/board.json | jsonfilter -e "$['network']['wan']['macaddr']" | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /etc/board.json | jsonfilter -e "$['network']['lan']['macaddr']" | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /sys/class/net/eth0/address | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /sys/class/net/eth1/address | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(head -c6 /dev/urandom | hexdump -e '/1 "%02X:"' | head -c17)
-test -n "$MACADDR" || MACADDR=$(head -c6 /dev/random | hexdump -e '/1 "%02X:"' | head -c17)
-SSID_PASSWD=88888888
-sed -i '/option disabled/d' /etc/config/wireless  >/dev/null 2>&1
-sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh   >/dev/null 2>&1
-wifi up
+source common/clash.sh $CLASH
+source common/tools.sh $CLASH
 
-test $ver -lt 1 && {
-    ver=1
-    if [ `find /sys/class/net/ -name wlan* | wc -l` -gt 0 ]; then
-      for i in radio0 radio1 radio2 radio3 wifi0 wifi1 wifi2 wifi3; do
-            setup_ssid ${i}
-        done
-    fi
-    sed -i '/option disabled/d' /etc/config/wireless  >/dev/null 2>&1
-    sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh   >/dev/null 2>&1
+ver54=`grep "LINUX_VERSION-5.4 ="  include/kernel-5.4 | cut -d . -f 3`
+ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
+ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
+ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
+ver612=`grep "LINUX_VERSION-6.12 ="  include/kernel-6.12 | cut -d . -f 3`
+date1="${CONFIG_S}-${DATA}_by Sirpdboy"
+if [ "$VER1" = "5.4" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver54}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver54}"
+elif [ "$VER1" = "5.15" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver515}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver515}"
+elif [ "$VER1" = "6.1" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver61}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver61}"
+elif [ "$VER1" = "6.6" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver66}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver66}"
+elif [ "$VER1" = "6.12" ]; then
+date2="EzOpWrt ${CONFIG_S}-${DATA}-${VER1}.${ver612}_by Sirpdboy"
+date1="${CONFIG_S}-${DATA}-${VER1}.${ver612}"
+fi
+echo "${date1}" > ./package/base-files/files/etc/ezopenwrt_version
+echo "${date2}" >> ./package/base-files/files/etc/banner
+echo '---------------------------------' >> ./package/base-files/files/etc/banner
+[ -f ./files/root/.zshrc ] || mv -f ./package/add/patch/z.zshrc ./files/root/.zshrc
+[ -f ./files/root/.zshrc ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/z.zshrc > ./files/root/.zshrc
+[ -f ./files/etc/profiles ] || mv -f ./package/add/patch/profiles ./files/etc/profiles
+[ -f ./files/etc/profiles ] || curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/profiles > ./files/etc/profiles
 
-    ifname="device"
-    uci -q set network.@device[0].ports="eth0"
-    uci -q set network.wan.device="eth1"
-    uci -q set network.wan6.device="eth1"
-    uci commit network
-    setup_network
-    sed -i '/lcp-echo/d' /etc/ppp/options
-    echo "lcp-echo-failure 10" >>  /etc/ppp/options 
-    echo "lcp-echo-interval 200" >>  /etc/ppp/options
-	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$?;echo $ver
-}
-test $ver -lt 2 && {
-frmware=`cat /etc/ezopenwrt_version | awk -F '-' '{printf $2}'`
+if [ ${TARGET_DEVICE} = "x86_64" ] ; then
 
-    ver=2
-	[ "$(uci -q get dropbear.@dropbear[0] 2>/dev/null)" = "dropbear" ] && {
-		uci -q set dropbear.@dropbear[0].PasswordAuth='on'
-		uci -q set dropbear.@dropbear[0].RootPasswordAuth='on'
-		uci -q set dropbear.@dropbear[0].Port='22'
-		uci -q set dropbear.@dropbear[0].Interface='lan'
-		uci commit dropbear
-		touch /etc/dropbear/authorized_keys && chmod 600 /etc/dropbear/authorized_keys
-	}
- uci -q set system.@system[0].hostname='EzOpWrt'
- uci commit system
-  #sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow
-  sed -i 's/root.*/root::0:0:99999:7:::/g' /etc/shadow
-
-uci -q batch <<-EOF
-set system.@system[0].timezone=CST-8
-set system.@system[0].zonename=Asia/Shanghai
-set system.@system[0].ttylogin='1'
-delete system.ntp.server
-add_list system.ntp.server='time1.cloud.tencent.com'
-add_list system.ntp.server='ntp1.aliyun.com'
-add_list system.ntp.server='ntp.ntsc.ac.cn'
-add_list system.ntp.server='cn.ntp.org.cn'
-set dhcp.@dnsmasq[0].min_ttl='3600'
-set dhcp.@dnsmasq[0].filter_aaaa='0'
-set dhcp.@dnsmasq[0].localservice='0'
-set dhcp.@dnsmasq[0].nonwildcard='0'
-set dhcp.@dnsmasq[0].port='53'
-set fstab.@global[0].anon_mount=1
-set fstab.@global[0].check_fs=1
-set vsftpd.@listen[0].enable4='0'
-set upnpd.config.enabled='0'
-set upnpd.config.igdv1='1'
-set mwan3.wan.enabled='0'
+mkdir -p files/etc/opkg
+pushd files/etc/opkg
+cat <<-EOF > "distfeeds.conf"
+src/gz ezopwrt_core https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/targets/x86/64/packages
+src/gz ezopwrt_base https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/base
+src/gz ezopwrt_luci https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/luci
+src/gz ezopwrt_packages https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/packages
+src/gz ezopwrt_routing https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/routing
+src/gz ezopwrt_telephony https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/telephony
 EOF
+cp distfeeds.conf distfeeds.conf.bak
+popd
 
-if [ $frmware = Plus ] ;then
-uci -q batch <<-EOF
-set dhcp.lan.ndp=''
-set dhcp.lan.ra='hybrid'
-set dhcp.lan.dhcpv6='hybrid'
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.wan.mtu=1420
-set network.wan.metric='41'
-set network.wan.delegate='0'
-set network.wan.ipv6='auto'
-set turboacc.config.fullcone_nat='1'
-set turboacc.config.bbr_cca='0'
-set turboacc.config.sfe_flow='0'
-set turboacc.config.hw_flow='0'
-set turboacc.config.sw_flow='0'
+cat>buildmd5.sh<<-\EOF
+#!/bin/bash
+
+r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
+# gzip bin/targets/*/*/*.img | true
+
+pushd bin/targets/*/*/
+rm -rf   config.buildinfo
+rm -rf   feeds.buildinfo
+rm -rf   *.manifest
+rm -rf   *rootfs.tar.gz
+rm -rf   *generic-squashfs-rootfs.img*
+rm -rf   *generic-rootfs*
+rm -rf  *generic.manifest
+rm -rf  sha256sums
+rm -rf version.buildinfo
+rm -rf *generic-ext4-rootfs.img*
+rm -rf  *generic-ext4-combined-efi.img*
+rm -rf  *generic-ext4-combined.img*
+rm -rf  profiles.json
+rm -rf  *kernel.bin
+# BINDIR=`pwd`
+sleep 2
+
+ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`
+echo ip:----------------- $ip
+mv  *generic-squashfs-combined.img.gz       EzOpWrt-${r_version}-${TARGET_DEVICE}-dev.img.gz   
+mv  *generic-squashfs-combined-efi.img.gz   EzOpWrt-${r_version}-${TARGET_DEVICE}-dev-efi.img.gz
+md5_EzOpWrt=EzOpWrt-${r_version}-${TARGET_DEVICE}-dev.img.gz   
+md5_EzOpWrt_uefi=EzOpWrt-${r_version}-${TARGET_DEVICE}-dev-efi.img.gz
+
+ip=192.168.10.1
+#md5
+[ -f ${md5_EzOpWrt}] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5 &&echo "ip=$ip" >> EzOpWrt_dev.md5
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 &&echo "ip=$ip" >> EzOpWrt_dev-efi.md5
+
+if [ ${CONFIG_S} = "Vip-Super" ] ; then
+cp ../../../../ezotafooter  ./ota.footer
+cp ../../../../ezverlatest   ./ver.latest 
+fi
+popd
 
 EOF
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/aria2.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/hd_idle.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/minidlna.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/transmission.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/mjpg-streamer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/p910nd.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/usb_printer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/xunlei.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/services/vpn/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
-
-elif  [ $frmware = Bypass ] ;then
-uci -q batch <<-EOF
-set dhcp.lan.ra=''
-set dhcp.lan.ndp=''
-set dhcp.lan.dhcpv6=''
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.wan.mtu=1420
-set network.wan.metric='40'
-set network.wan.delegate='0'
-set network.wan.ipv6='0'
-delete network.wan6
-set turboacc.config.sw_flow='0'
-EOF
-
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/aria2.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/hd_idle.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/minidlna.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/transmission.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/mjpg-streamer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/p910nd.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/usb_printer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/xunlei.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/services/vpn/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
 else
 
-uci -q batch <<-EOF
-set dhcp.lan.ra='hybrid'
-set dhcp.lan.dhcpv6='hybrid'
-set dhcp.lan.ndp=''
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.wan.mtu=1420
-set network.wan.metric='41'
-set network.wan.delegate='0'
-set network.wan.ipv6='auto'
-set turboacc.config.sw_flow='0'
-EOF
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/admin_info.htm
+
+cat>buildmd5.sh<<-\EOF
+#!/bin/bash
+
+r_version=`cat ./package/base-files/files/etc/ezopenwrt_version`
+# gzip bin/targets/*/*/*.img | true
+
+VER1="$(grep "KERNEL_PATCHVER:=" ./target/linux/rockchip/Makefile | cut -d = -f 2)"
+pushd bin/targets/*/*/
+rm -rf   config.buildinfo
+rm -rf   feeds.buildinfo
+rm -rf   *.manifest
+rm -rf   *rootfs.tar.gz
+rm -rf   *generic-squashfs-rootfs.img*
+rm -rf   *generic-rootfs*
+rm -rf  *generic.manifest
+rm -rf  sha256sums
+rm -rf version.buildinfo
+rm -rf *generic-ext4-rootfs.img*
+rm -rf  *generic-ext4-combined-efi.img*
+rm -rf  *generic-ext4-combined.img*
+rm -rf  profiles.json
+rm -rf  *kernel.bin
+# BINDIR=`pwd`
+sleep 2
+
+ip=` cat  package/base-files/files/bin/config_generate | grep "n) ipad" |awk -F '\"' '{print $2}'`
+echo ip:----------------- $ip
+ip=192.168.10.1
+mv   *squashfs-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+mv  *ext4-sysupgrade.img.gz EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+md5_EzOpWrt=EzOpWrt-${r_version}_${TARGET_DEVICE}-squashfs-sysupgrade.img.gz 
+md5_EzOpWrt_uefi=EzOpWrt-${r_version}_${TARGET_DEVICE}-ext4-sysupgrade.img.gz
+[ -f ${md5_EzOpWrt} ] && md5sum ${md5_EzOpWrt} > EzOpWrt_dev.md5  &&echo "ip=$ip" >> EzOpWrt_dev.md5
+[ -f ${md5_EzOpWrt_uefi} ] && md5sum ${md5_EzOpWrt_uefi} > EzOpWrt_dev-efi.md5 &&echo "ip=$ip" >> EzOpWrt_dev-efi.md5
+
+if [ ${CONFIG_S} = "Vip-Super" ] ; then
+cp ../../../../ezotafooter  ./ota.footer
+cp ../../../../ezverlatest   ./ver.latest 
 fi
-uci commit dropbear
-uci commit vsftpd
-uci commit luci
-uci commit fstab
-uci commit upnpd
-uci commit dhcp
-uci commit fstab
-uci commit turboacc
-uci commit network
-uci commit system
-uci commit firewall
-uci commit mwan3
-/etc/init.d/miniupnpd restart
-/etc/init.d/turboacc restart
-/etc/init.d/ttyd restart
-/etc/init.d/mwan3 restart
-
-rm -f /usr/lib/lua/luci/view/admin_status/index/ddns.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/minidlna.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/mwan.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
-[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$?;echo $ver
-}
-
-test $ver -lt 4 && {
-	ver=4
-	uci -q set ucitrack.@fstab[0].exec='/sbin/block mount'
-	uci commit ucitrack
-	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
-}
-sed -i '/coremark/d' /etc/crontabs/root
-ln -sf /sbin/ip /usr/bin/ip
-# Disable opkg signature check
-sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
-new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
-sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
-sed -i '/OPENWRT_RELEASE/d' /etc/os-release
-echo "OPENWRT_RELEASE='EzOpWrt "${new_DISTRIB_REVISION}"'" >> /etc/os-release
-sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
-
-test $ver -lt 5 && {
-ver=5
-HOSTNAME="samsungTV"
-TAG="googleDNS"
-MAC=""
-IPADDR=""
-DNS1="8.8.4.4"
-DNS2="8.8.8.8"
-
-uci batch <<EOF
-  set dhcp.${HOSTNAME}="host"
-  set dhcp.${HOSTNAME}.name="${HOSTNAME}"
-  set dhcp.${HOSTNAME}.mac="${MAC}"
-  set dhcp.${HOSTNAME}.ip="${IPADDR}"
-  set dhcp.${HOSTNAME}.tag="${TAG}"
-  set dhcp.${TAG}="tag"
-  set dhcp.${TAG}.dhcp_option="6,${DNS1},${DNS2}"
-EOF
-
-uci commit && cd /etc/init.d && \
-./dnsmasq restart
-[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
-}
-uci -q set base_config.@base[0].ver=$ver
-uci commit base_config
-ntpd -n -q -p 1.lede.pool.ntp.org
-sed -i '/log-facility/d' /etc/dnsmasq.conf
-echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
-echo 'hsts=0' > /root/.wgetrc
-rm -rf /tmp/luci-*
-
+popd
 exit 0
+EOF
+fi
+cat>bakkmod.sh<<-\EOF
+#!/bin/bash
+kmoddirdrv=./files/etc/kmod.d/drv
+kmoddirdocker=./files/etc/kmod.d/docker
+bakkmodfile=./kmod.source
+cp -rf ./patch/list.txt $bakkmodfile
+nowkmodfile=./files/etc/kmod.now
+mkdir -p $kmoddirdrv 2>/dev/null
+mkdir -p $kmoddirdocker 2>/dev/null
+while IFS= read -r line; do  
+    cp -v $(find bin/ -type f -name "*${line}*") $kmoddirdrv
+    echo "$line"  
+        a=`find ./bin/ -name "$line" `
+    echo $a
+    if [ -z "$a" ]; then
+        echo "no find: $line"
+    else
+        cp -f $a $kmoddirdrv
+	echo $line >> $nowkmodfile
+        if [ $? -eq 0 ]; then
+            echo "cp ok: $line"
+        else
+            echo "no cp:$line"
+        fi
+    fi
+done < "$bakkmodfile"
+    # find ./bin/ -name  $file | xargs -i cp -f {}  $kmoddirdrv
+    # cp -v $(find bin/targets/ -type f -name "*${FIRMWARE_TYPE}*") ../firmware
+find ./bin/ -name "*dockerman*" | xargs -i cp -f {} $kmoddirdocker
+find ./bin/ -name "*dockerd*" | xargs -i cp -f {} $kmoddirdocker
+EOF
+case "${CONFIG_S}" in
+     "Vip"*)  
+#修改默认IP地址
+# sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
+#修改immortalwrt.lan关联IP
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#修改默认IP地址
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" package/base-files/files/bin/config_generate    #config_generate
+
+#修改默认IP地址
+sed -i 's/192\.168\.1\.1/192\.168\.10\.1/g' package/base-files/files/bin/config_generate
+
+#sed -i 's/192.168.100.1/192.168.10.1/g' package/istoreos-files/Makefile
+#sed -i 's/luci-theme-argon/luci-theme-kucat/g' package/istoreos-files/Makefile
+
+#修改immortalwrt.lan关联IP
+sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.10\.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#修改默认IP地址
+# sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.10\.1/g" package/base-files/files/bin/config_generate
+
+cat>./package/base-files/files/etc/kmodreg<<-\EOF
+#!/bin/bash
+# EzOpWrt By Sirpdboy
+IPK=$1
+nowkmoddir=/etc/kmod.d/$IPK
+[ -d $nowkmoddir ]  || exit
+is_docker() {
+    [ -s "/usr/lib/lua/luci/controller/dockerman.lua" ] && return 0  || return 1
+}
+
+run_drv() {
+opkg update
+echo "正在安装全部驱动（包括有线和无线）,请耐心等待...大约需要1-5分钟 "
+for file in `ls $nowkmoddir/*.ipk`;do
+    opkg install "$file"  --force-depends
+done
+echo "所有驱动已经安装完成！请重启系统生效！ "
+}
+
+run_docker() {
+if is_docker; then
+	echo " Docker服务已经存在！无须安装！"
+else
+
+    local opkg_conf="/etc/opkg.conf"
+    sed -i '/option check_signature/d' "$opkg_conf"
+	opkg update
+	echo "正在安装Docker及相关服务...请耐心等待...大约需要1-5分钟 "
+	opkg install $nowkmoddir/dockerd*.ipk --force-depends >/dev/null 2>&1
+	opkg install $nowkmoddir/luci-app-dockerman*.ipk --force-depends  >/dev/null 2>&1
+	opkg install $nowkmoddir/luci-i18n-dockerman*.ipk --force-depends  >/dev/null 2>&1
+    	opkg install avahi-daemon >/dev/null 2>&1
+	if is_docker; then
+		echo "本地成功安装Docker及相关服务！"
+	else
+   		echo "本地安装失败！"
+   		echo "在线重新安装Docker及相关服务...请耐心等待...大约需要1-5分钟"
+   		opkg install dockerd --force-depends >/dev/null 2>&1
+    		opkg install luci-app-dockerman >/dev/null 2>&1
+    		opkg install luci-i18n-dockerman* >/dev/null 2>&1
+    		opkg install avahi-daemon >/dev/null 2>&1
+    		if is_docker; then 
+    		    echo "在线成功安装Docker及相关服务！" 
+    		fi
+
+	fi
+fi
+if is_docker; then
+      		echo "设置Docker服务自动启动成功！"
+      		echo "Docker菜单注销重新登陆才能看到！"
+		uci -q get dockerd.globals 2>/dev/null && {
+		uci -q set dockerd.globals.data_root='/opt/docker/'
+		uci -q set dockerd.globals.auto_start='1'
+		uci commit dockerd
+  		/etc/init.d/dockerd enabled
+		rm -rf /tmp/luci*
+		 /etc/init.d/avahi-daemon enabled
+		 /etc/init.d/avahi-daemon start
+		/etc/init.d/dockerd restart
+		}
+    else
+      echo "安装Docker失败！请保证出国插件线路和网络正常！BUG请联系TG群：sirpdboy！"
+    fi
+}
+case "$IPK" in
+	"drv")
+		run_drv
+	;;
+	"docker")
+		run_docker
+	;;
+esac
+
+EOF
+;;
+"Free"*) 
+
+#修改默认IP地址
+# sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
+
+#修改immortalwrt.lan关联IP
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.8.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#修改默认IP地址
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.8.1/g" package/base-files/files/bin/config_generate
+
+#修改默认IP地址
+sed -i 's/192\.168\.1\.1/192\.168\.8\.1/g' package/base-files/files/bin/config_generate
+
+#sed -i 's/luci-theme-argon/luci-theme-kucat/g' package/istoreos-files/Makefile
+#sed -i 's/192.168.100.1/192.168.8.1/g' package/istoreos-files/Makefile
+#修改immortalwrt.lan关联IP
+sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.8\.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#修改默认IP地址
+sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.8\.1/g" package/base-files/files/bin/config_generate
+
+cat>./package/base-files/files/etc/kmodreg<<-\EOF
+#!/bin/bash
+# EzOpWrt By Sirpdboy
+IPK=$1
+nowkmoddir=/etc/kmod.d/$IPK
+[ -d $nowkmoddir ]  || exit
+run_drv() {
+echo "目前此功能仅限VIP版本提供！ "
+exit
+}
+run_docker() {
+echo "目前此功能仅限VIP版本提供！ "
+exit
+}
+case "$IPK" in
+	"drv")
+		run_drv
+	;;
+	"docker")
+		run_docker
+	;;
+esac
+exit
+EOF
+
+;;
+esac
+
+
+#UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
+UPDATE_PACKAGE "nekoclash" "Thaolga/luci-app-nekoclash" "main"
+UPDATE_PACKAGE "luci-app-gecoosac" "lwb1978/openwrt-gecoosac" "main"
+UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
+UPDATE_PACKAGE "easytier" "lazyoop/networking-artifact" "main" "pkg"
+UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
+
+./scripts/feeds update -i
+./scripts/feeds install -i
+
+#cat  ../.config  > .config
+cat  ./x86_64/${CONFIG_S}  > .config
+case "${CONFIG_S}" in
+Vip*)
+cat  ./x86_64/comm  >> .config
+;;
+*)
+echo 'no'
+;;
+esac
+exit
