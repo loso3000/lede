@@ -387,9 +387,7 @@ git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550
 # luci-app-filemanager
 rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
-# curl - fix passwall `time_pretransfer` check
-rm -rf feeds/packages/net/curl
-git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
+
 
 # 修改makefile
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
