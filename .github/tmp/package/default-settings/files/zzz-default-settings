@@ -1,440 +1,232 @@
-#!/bin/sh
-ver=$(uci -q get base_config.@base[0].ver 2>/dev/null)
-test -n "$ver" || {
-touch /etc/config/base_config
-uci add base_config base >/dev/null 2>&1
-ver=0
-}
-#argon
-sed -i 's,media .. \"\/b,resource .. \"\/b,g' /usr/lib/lua/luci/view/themes/argon/sysauth.htm
-uci -q set luci.main.lang='auto'
-uci -q set luci.main.mediaurlbase='/luci-static/kucat'
+msgid "Processor"
+msgstr "处理器"
 
-is_x86_64() {
-    DISTRIB_ARCH=$(cat /etc/openwrt_release | grep "DISTRIB_ARCH" | cut -d "'" -f 2)
-    if [ "$DISTRIB_ARCH" = "x86_64" ]; then
-        return 0
-    else
-        return 1
-    fi
-}
+msgid "Architecture"
+msgstr "架构"
 
-is_vip() {
-     DISTRIB_FREE=$(cat /etc/ezopenwrt_version | grep "Vip" | cut -d " " -f 2 | cut -d "-" -f 1)
-    if [ "$DISTRIB_FREE" = "Vip" ]; then
-        return 0
-    else
-        return 1
-    fi
-}
+msgid "Target Platform"
+msgstr "目标平台"
 
-# stop avahi cups
-# /etc/init.d/avahi-daemon disable  && /etc/init.d/avahi-daemon stop  
-debug=0
-setup_ssid()
-{
-COUNTRY='US'
-CH50=149
-CH24=11
-HWMODE50='11a'
-HWMODE24='11b'
-HTMODE50='VHT80'
-HTMODE24='HT20'
-NETWORKID=lan
-local r="$1"
-uci -q delete wireless.default_${r}
- if ! uci show wireless.${r} >/dev/null 2>&1; then
-        return
- fi
-    SUBFIX=`echo -n $MACADDR | sed 's/://g' | tr a-z A-Z | tail -c4`
-    SSID=${DISTRIB_ID}_${SUBFIX}
-    # local s="wlan$1"
-    #local mac=`ifconfig ${s} | grep "HWaddr" | awk '{print $5}'`
-    #local wifimac=`echo ${mac}|awk -F ":" '{print $4""$5""$6 }'|tr A-Z a-z|cut -c4-`
-    uci -q set wireless.${r}.disabled=0
-    uci -q set wireless.${r}.country=${COUNTRY}
-    uci -q set wireless.${r}.legacy_rates='1'
-    uci -q set wireless.${r}.mu_beamformer='1'
-    uci -q set wireless.${r}.bursting='1'
-    uci -q set wireless.${r}.ff='1'
-    uci -q set wireless.${r}.compression='1'
-    uci -q set wireless.${r}.noscan='0'
-    uci -q set wireless.${r}.txpower='20'
-    if [ `uci -q get wireless.${r}.channel` -lt 14 ]; then
-        uci -q set wireless.${r}.channel=${CH24}
-        uci -q set wireless.${r}.htmode=${HTMODE24}
-        uci -q set wireless.${r}.hwmode=${HWMODE24}
-        uci -q set wireless.${NETWORKID}_${r}.ssid="${SSID}"
-        logger "default-wifi: set $1 -- ssid:${SSID} -- password:${SSID_PASSWD}"
-    else
-        uci -q set wireless.${r}.channel=${CH50}
-        uci -q set wireless.${r}.htmode=${HTMODE50}
-        uci -q set wireless.${r}.hwmode=${HWMODE50}
-        uci -q set wireless.${NETWORKID}_${r}.ssid="${SSID}"_5G
-        logger "default-wifi: set $1 -- ssid:${SSID}_5G -- password:${SSID_PASSWD}"
-    fi
-    uci -q set wireless.${NETWORKID}_${r}=wifi-iface
-    uci -q set wireless.${NETWORKID}_${r}.device=${r}
-    uci -q set wireless.${NETWORKID}_${r}.network=${NETWORKID}
-    uci -q set wireless.${NETWORKID}_${r}.mode='ap'
-    uci -q set wireless.${NETWORKID}_${r}.disassoc_low_ack='0'
-    uci -q set wireless.${NETWORKID}_${r}.encryption='psk2+ccmp'
-    uci -q set wireless.${NETWORKID}_${r}.wps_pushbutton='0'
-    uci -q set wireless.${NETWORKID}_${r}.isolate='0'
-    uci -q set wireless.${NETWORKID}_${r}.key="${SSID_PASSWD}"
-    uci commit wireless
-}
-setup_network()
-{
-     ifname=$1
-     wan_interface=`uci -q get network.wan.$ifname` 
-     a=$(ip address | awk -F ': ' '/eth[0-9]+/ {print $2}' )
-     b=$(echo "$a" | wc -l)
-     lannet=""
-     [[ ${b} -gt 1 ]] && {
-	  for i in $(seq 1 $b) ; do [ "${wan_interface}" = "$(echo "$a" | sed -n ${i}p)" ] || lannet="${lannet} $(echo "$a" | sed -n ${i}p)" ;done
-	  lannet=$(echo "$lannet" | sed 's/^ *//')
- 	  [ "x$ifname" = "xdevice" ] &&  uci -q set network.@$ifname[0].ports="${lannet}"  || uci -q set network.lan.$ifname="${lannet}"
- 	  uci -q set network.@$ifname[0].ports="${lannet}"
- 	  [ `uci -q get network.wan6` ] && uci -q set network.wan6.$ifname="@wan"
-     }
-}
+msgid "NFtables Firewall"
+msgstr "NFtables 防火墙"
 
-. /etc/openwrt_release
-test -n "${DISTRIB_ID}" || DISTRIB_ID=EzOpWrt
-DISTRIB_ID=$(echo -n $DISTRIB_ID | tr a-z A-Z)
-uci -q set fstab.@global[0].check_fs=1
-MACADDR=""
-test -e /usr/share/natcapd/board_mac.lua && MACADDR=$(lua /usr/share/natcapd/board_mac.lua)
-test -n "$MACADDR" || MACADDR=$(. /lib/functions/system.sh; get_mac_label | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /etc/board.json | jsonfilter -e "$['network']['wan']['macaddr']" | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /etc/board.json | jsonfilter -e "$['network']['lan']['macaddr']" | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /sys/class/net/eth0/address | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(cat /sys/class/net/eth1/address | tr a-f A-F)
-test -n "$MACADDR" || MACADDR=$(head -c6 /dev/urandom | hexdump -e '/1 "%02X:"' | head -c17)
-test -n "$MACADDR" || MACADDR=$(head -c6 /dev/random | hexdump -e '/1 "%02X:"' | head -c17)
-SSID_PASSWD=88888888
-sed -i '/option disabled/d' /etc/config/wireless  >/dev/null 2>&1
-sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh   >/dev/null 2>&1
-wifi up
+msgid "IPtables Firewall"
+msgstr "IPtables 防火墙"
 
-#wifi net
-test $ver -lt 1 && {
-    ver=1
-    if [ `find /sys/class/net/ -name wlan* | wc -l` -gt 0 ]; then
-      for i in radio0 radio1 radio2 radio3 wifi0 wifi1 wifi2 wifi3; do
-            setup_ssid ${i}
-        done
-    fi
-    sed -i '/option disabled/d' /etc/config/wireless  >/dev/null 2>&1
-    sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh   >/dev/null 2>&1
+msgid "CPU Temperature"
+msgstr "CPU 温度"
 
-    ifname="device"
-    uci -q set network.@device[0].ports="eth0"
-    uci -q set network.wan.device="eth1"
-    uci -q set network.wan6.device="eth1"
-    uci -q set network.lan.proto='static'
-    uci -q set network.lan.ipaddr='192.168.10.1'
-    uci del dhcp.lan.ignore
-    uci del dhcp.lan.dynamicdhcp
-    uci -q set dhcp.lan.force='1'
-    uci -q set dhcp.@dnsmasq[0].authoritative='1'
-    uci del dhcp.lan.ra_slaac
-    uci del network.lan.delegate
-    uci commit network
-    setup_network $ifname
-    sed -i '/lcp-echo/d' /etc/ppp/options
-    echo "lcp-echo-failure 10" >>  /etc/ppp/options 
-    echo "lcp-echo-interval 200" >>  /etc/ppp/options
-    /etc/init.d/network restart
-	[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$?;echo $ver
-}
-#ssh link
-test $ver -lt 2 && {
-frmware=`cat /etc/ezopenwrt_version | awk -F '-' '{printf $2}'`
+msgid "CPU Info"
+msgstr "CPU 信息"
 
-    ver=2
-	[ "$(uci -q get dropbear.@dropbear[0] 2>/dev/null)" = "dropbear" ] && {
-		uci -q set dropbear.@dropbear[0].PasswordAuth='on'
-		uci -q set dropbear.@dropbear[0].RootPasswordAuth='on'
-		uci -q set dropbear.@dropbear[0].Port='22'
-		uci -q set dropbear.@dropbear[0].Interface='lan'
-		uci commit dropbear
-		touch /etc/dropbear/authorized_keys && chmod 600 /etc/dropbear/authorized_keys
-	}
- uci -q set system.@system[0].hostname='EzOpWrt'
- uci commit system
-  #sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow
-  sed -i 's/root.*/root::0:0:99999:7:::/g' /etc/shadow
+msgid "CPU Model"
+msgstr "处理器型号"
 
-uci -q batch <<-EOF
-set system.@system[0].timezone=CST-8
-set system.@system[0].zonename=Asia/Shanghai
-set system.@system[0].ttylogin='1'
-delete system.ntp.server
-add_list system.ntp.server='time1.cloud.tencent.com'
-add_list system.ntp.server='ntp1.aliyun.com'
-add_list system.ntp.server='ntp.ntsc.ac.cn'
-add_list system.ntp.server='cn.ntp.org.cn'
-set dhcp.@dnsmasq[0].min_ttl='3600'
-set dhcp.@dnsmasq[0].filter_aaaa='0'
-set dhcp.@dnsmasq[0].localservice='0'
-set dhcp.@dnsmasq[0].nonwildcard='0'
-set dhcp.@dnsmasq[0].port='53'
-set fstab.@global[0].anon_mount=1
-set fstab.@global[0].check_fs=1
-set vsftpd.@listen[0].enable4='0'
-set upnpd.config.enabled='0'
-set upnpd.config.igdv1='1'
-set mwan3.wan.enabled='0'
-EOF
+msgid "CPU frequency"
+msgstr "CPU 频率"
 
-if [ $frmware = Plus ] ;then
-uci -q batch <<-EOF
-set dhcp.lan.ndp=''
-set dhcp.lan.ra='hybrid'
-set dhcp.lan.dhcpv6='hybrid'
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.wan.mtu=1420
-set network.wan.metric='41'
-set network.wan.delegate='0'
-set network.wan.ipv6='auto'
-set turboacc.config.fullcone_nat='1'
-set turboacc.config.bbr_cca='0'
-set turboacc.config.sfe_flow='0'
-set turboacc.config.hw_flow='0'
-set turboacc.config.sw_flow='0'
+msgid "CPU usage"
+msgstr "CPU 负载"
 
-EOF
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/aria2.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/hd_idle.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/minidlna.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/transmission.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/mjpg-streamer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/p910nd.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/usb_printer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/xunlei.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/services/vpn/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
+msgid "CPU Load"
+msgstr "CPU 负载"
 
-elif  [ $frmware = Bypass ] ;then
-uci -q batch <<-EOF
-set dhcp.lan.ra=''
-set dhcp.lan.ndp=''
-set dhcp.lan.dhcpv6=''
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.lan.proto='static'
-del dhcp.lan.ignore
-del dhcp.lan.dynamicdhcp
-set dhcp.lan.force='1'
-delete network.wan
-delete network.wan6
-set turboacc.config.sw_flow='0'
-EOF
+msgid "Total usage"
+msgstr "CPU 总负载"
 
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/aria2.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/hd_idle.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/minidlna.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/transmission.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/mjpg-streamer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/p910nd.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/usb_printer.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/xunlei.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/services/vpn/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/services/vpn/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/services/nas/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/alist/admin_info.htm
-else
+msgid "RAM frequency"
+msgstr "RAM 频率"
 
-uci -q batch <<-EOF
-set dhcp.lan.ra='hybrid'
-set dhcp.lan.dhcpv6='hybrid'
-set dhcp.lan.ndp=''
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-set network.lan.delegate='0'
-set network.wan.mtu=1420
-set network.wan.metric='41'
-set network.wan.delegate='0'
-set network.wan.ipv6='auto'
-set turboacc.config.sw_flow='0'
-EOF
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/cifs.lua
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/zerotier.lua   #zerotier
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/zerotier/zerotier_status.htm   #zerotier
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-zerotier.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-samba4.json
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-gowebdav.json
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-qbittorrent.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/controller/alist.lua
-sed -i 's/nas/services/g' /usr/share/luci/menu.d/luci-app-alist.json
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/alist_status.htm
-sed -i 's/nas/services/g' /usr/lib/lua/luci/view/alist/admin_info.htm
-fi
-uci commit dropbear
-uci commit vsftpd
-uci commit luci
-uci commit fstab
-uci commit upnpd
-uci commit dhcp
-uci commit fstab
-uci commit turboacc
-uci commit network
-uci commit system
-uci commit firewall
-uci commit mwan3
-/etc/init.d/miniupnpd restart
-/etc/init.d/turboacc restart
-/etc/init.d/ttyd restart
-/etc/init.d/mwan3 restart
+msgid "RAM Size"
+msgstr "运行内存"
 
-rm -f /usr/lib/lua/luci/view/admin_status/index/ddns.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/minidlna.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/mwan.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
-[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$?;echo $ver
-}
+msgid "Flash Size"
+msgstr "闪存大小"
 
-sed -i '/coremark/d' /etc/crontabs/root
-ln -sf /sbin/ip /usr/bin/ip
-# Disable opkg signature check
-sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
-new_DISTRIB_REVISION=`cat  /etc/ezopenwrt_version`
-sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='"${new_DISTRIB_REVISION}"'" >> /etc/openwrt_release
-sed -i '/OPENWRT_RELEASE/d' /etc/os-release
-echo "OPENWRT_RELEASE='"${new_DISTRIB_REVISION}"'" >> /etc/os-release
-sed -i 's/immortalwrt/openwrt/g' /etc/config/luci
+msgid "Free Memory"
+msgstr "释放内存"
 
-#tv
-test $ver -lt 4 && {
-ver=4
-HOSTNAME="samsungTV"
-TAG="googleDNS"
-MAC=""
-IPADDR=""
-DNS1="8.8.4.4"
-DNS2="8.8.8.8"
+msgid "RUNNING"
+msgstr "运行中"
 
-uci batch <<EOF
-  set dhcp.${HOSTNAME}="host"
-  set dhcp.${HOSTNAME}.name="${HOSTNAME}"
-  set dhcp.${HOSTNAME}.mac="${MAC}"
-  set dhcp.${HOSTNAME}.ip="${IPADDR}"
-  set dhcp.${HOSTNAME}.tag="${TAG}"
-  set dhcp.${TAG}="tag"
-  set dhcp.${TAG}.dhcp_option="6,${DNS1},${DNS2}"
-EOF
+msgid "NOT RUNNING"
+msgstr "未运行"
 
-uci commit && cd /etc/init.d && \
-./dnsmasq restart
+msgid "ZRam Settings"
+msgstr "ZRam 设置"
 
-[ x$debug = x1 ] && uci -q set base_config.@base[0].base$ver=$? ; echo $ver
-}
+msgid "ZRam Compression Algorithm"
+msgstr "ZRAM压缩算法"
 
+msgid "ZRam Compression Streams"
+msgstr "ZRam 压缩数据流线程数"
 
-#distfeeds
-test $ver -lt 5 && { 
-ver=5
+msgid "ZRam Size"
+msgstr "ZRam 大小"
 
-echo "src/gz is_store https://istore.linkease.com/repo/all/store" >/etc/opkg/customfeeds.conf
-if is_x86_64; then
-cat <<-EOF > /etc/opkg/distfeeds.conf
-src/gz ezopwrt_core https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/targets/x86/64/packages
-src/gz ezopwrt_base https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/base
-src/gz ezopwrt_luci https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/luci
-src/gz ezopwrt_packages https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/packages
-src/gz ezopwrt_routing https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/routing
-src/gz ezopwrt_telephony https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/x86_64/telephony
-EOF
-else
-cat <<-EOF > /etc/opkg/distfeeds.conf
-src/gz ezopwrt_core https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/targets/rockchip/armv8/packages
-src/gz ezopwrt_base https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/aarch64_generic/base
-src/gz ezopwrt_luci https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/aarch64_generic/luci
-src/gz ezopwrt_packages https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/aarch64_generic/packages
-src/gz ezopwrt_routing https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/aarch64_generic/routing
-src/gz ezopwrt_telephony https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/packages/aarch64_generic/telephony
-EOF
+msgid "Size of the ZRam device in megabytes"
+msgstr "划分给 ZRam 分区的内存大小（MB），推荐留空由系统自动管理"
 
-fi
-}
-#tv
-test $ver -lt 6 && { 
-ver=6
+msgid "Number of parallel threads used for compression"
+msgstr "用于压缩内存数据的CPU并发线程数"
 
-uci add dhcp domain
-uci set "dhcp.@domain[-1].name=time.android.com"
-uci set "dhcp.@domain[-1].ip=203.107.6.88"
-uci commit dhcp
+msgid "Swap"
+msgstr "虚拟内存"
 
-uci delete ttyd.@ttyd[0].interface
+msgid "Base Setting"
+msgstr "基本设置"
 
-uci set dropbear.@dropbear[0].Interface=''
-uci commit
+msgid "Update suggestions"
+msgstr "更新建议"
 
-# docker mirror
-if [ -f /etc/config/dockerd ] && [ $(grep -c daocloud.io /etc/config/dockerd) -eq '0' ]; then
-    uci add_list dockerd.globals.registry_mirrors="https://docker.m.daocloud.io"
-    uci commit dockerd
-fi
+msgid "TG Chat group"
+msgstr "TG聊天群"
 
-if [ -f /etc/config/nginx ] ;then
-uci set nginx.global.uci_enable='true'
-uci del nginx._lan
-uci del nginx._redirect2ssl
-uci add nginx server
-uci rename nginx.@server[0]='_lan'
-uci set nginx._lan.server_name='_lan'
-uci add_list nginx._lan.listen='80 default_server'
-uci add_list nginx._lan.listen='[::]:80 default_server'
-#uci add_list nginx._lan.include='restrict_locally'
-uci add_list nginx._lan.include='conf.d/*.locations'
-uci set nginx._lan.access_log='off; # logd openwrt'
-uci commit nginx
-service nginx restart
-fi
-}
-uci -q set base_config.@base[0].ver=$ver
-uci commit base_config
-ntpd -n -q -p 1.lede.pool.ntp.org
-sed -i '/log-facility/d' /etc/dnsmasq.conf
-echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
-echo 'hsts=0' > /root/.wgetrc
-rm -rf /tmp/luci-*
+msgid "Log"
+msgstr "日志"
 
-exit 0
+msgid "Routing"
+msgstr "路由表"
+
+msgid "NAS"
+msgstr "存储"
+
+msgid "help"
+msgstr "帮助"
+
+msgid "About Firmware"
+msgstr "关于固件"
+
+msgid "Force 40MHz mode"
+msgstr "强制 40MHz 频宽"
+
+msgid ""
+"Always use 40MHz channels even if the secondary channel overlaps. Using this "
+"option does not comply with IEEE 802.11n-2009!"
+msgstr "强制启用 40MHz 频宽并忽略辅助信道重叠。此选项可能不兼容某些无线硬件导致无法启用!"
+
+msgid "Disassociate On Low Acknowledgement"
+msgstr "弱信号剔除"
+
+msgid "(no interfaces attached)"
+msgstr "（未连接到接口）"
+
+msgid "Collisions seen"
+msgstr "检测到冲突"
+
+msgid "Ethernet Information"
+msgstr "网口信息"
+
+msgid "Ethernet Name"
+msgstr "网口名"
+
+msgid "Link Status"
+msgstr "连接状态"
+
+msgid "Speed"
+msgstr "速率"
+
+msgid "Duplex"
+msgstr "双工模式"
+
+msgid "Link Up"
+msgstr "已连接"
+
+msgid "Link Down"
+msgstr "已断开"
+
+msgid "Full Duplex"
+msgstr "全双工"
+
+msgid "Half Duplex"
+msgstr "半双工"
+
+msgid "MAC Address"
+msgstr "MAC地址"
+
+msgid "Allow AP mode to disconnect STAs based on low ACK condition"
+msgstr "允许 AP 模式基于低 ACK 条件判断剔除弱信号的客户端"
+
+msgid "Running Status"
+msgstr "运行状况"
+
+msgid "Online Users"
+msgstr "在线用户数"
+
+msgid "DNS Redirect"
+msgstr "DNS 重定向"
+
+msgid "Redirect client DNS to dnsmasq"
+msgstr "重定向客户端DNS到dnsmasq"
+
+msgid "Enable 256-QAM"
+msgstr "启用 256-QAM"
+
+msgid "802.11n 2.4Ghz Only"
+msgstr "只适合 802.11n 2.4Ghz"
+
+msgid "Enables The 802.11k standard provides information to discover the best available access point"
+msgstr "启用 802.11k 自动寻找发现最佳可用接入点的信息"
+
+msgid "Enable neighbor report via radio measurements"
+msgstr "启用无线电测量邻居报告"
+
+msgid "Enable beacon report via radio measurements"
+msgstr "启用无线电测量信标报告"
+
+msgid "Enables 802.11v allows client devices to exchange information about the network topology,tating overall improvement of the wireless network."
+msgstr "启用 802.11v 将允许客户端设备交换有关网络拓扑的信息，从而全面改善无线网络漫游"
+
+msgid "extended sleep mode for stations"
+msgstr "扩展无线休眠节能模式"
+
+msgid "BSS Transition Management"
+msgstr "BSS 传输管理"
+
+msgid "UTC time at which the TSF timer is 0"
+msgstr "TSF计时器为0的UTC时间"
+
+msgid "Time advertisement"
+msgstr "广播同步时间"
+
+msgid "time zone"
+msgstr "时区"
+
+msgid "Local time zone as specified in 8.3 of IEEE Std 1003.1-2004"
+msgstr "本地时区采用 IEEE Std 1003.1-2004 的 8.3 格式（例如 UTC8）"
+
+msgid "Custom Redirect Domain"
+msgstr "自定义挟持域名"
+
+msgid "Define a custom domain name and the corresponding PTR record"
+msgstr "自定义域名对应的IP地址（需要客户端DNS指向本路由）"
+
+msgid "Domain Name"
+msgstr "域名（不带 HTTP(S)://）"
+
+msgid "Comments"
+msgstr "备注"
+
+msgid "Retain the current packages"
+msgstr "保留已安装软件包"
+
+msgid "Packet Steering"
+msgstr "数据包引导"
+
+msgid "Enable packet steering across all CPUs. May help or hinder network speed."
+msgstr "启用所有CPU的数据包控制。 可能有助于或阻碍网络速度。"
+
+msgid "Disable IPv6 DNS forwards"
+msgstr "禁止解析 IPv6 DNS 记录"
+
+msgid "Filter IPv6(AAAA) DNS Query Name Resolve"
+msgstr "过滤掉 IPv6(AAAA) ，只返回 IPv4 DNS 域名记录"
+
+msgid "Minimum TTL to send to clients"
+msgstr "客户端缓存的最小 DNS TTL"
+
+msgid "Modify DNS entries minimum TTL (max is 86400, 0 is no modify)"
+msgstr "修改发送到客户端的域名记录的 TTL 时间 (最大 86400, 0 表示不修改)"
+
+msgid "Temperature"
+msgstr "温度"
