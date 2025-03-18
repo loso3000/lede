@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2020 Lean <coolsnowwolf@gmail.com>
 # Copyright (C) 2021 ImmortalWrt.org
+# Copyright (C) 2025 sirpdboy
 
 include $(TOPDIR)/rules.mk
 

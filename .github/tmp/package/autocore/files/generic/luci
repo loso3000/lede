@@ -744,9 +744,9 @@ const methods = {
 				ethinfo = json(ethinfo);
 				fd.close();
 
-				return { ethinfo: ethinfo };
+				return { result: ethinfo };
 			} else {
-				return { ethinfo: error() };
+				return { result: error() };
 			}
 		}
 	}
