@@ -314,6 +314,7 @@ rm -rf ./package/add/up/pass/xray-core
 rm -rf ./package/add/up/tool/OpenAppFilter
 
 
+git clone  https://github.com/EasyTier/luci-app-easytier ./package/luci-app-easytier
 #net eth0
 rm -rf ./target/linux/x86/base-files/etc/board.d/99-default_network
 rm -rf ./target/linux/x86/base-files/etc/board.d/99-virtualbox_network
