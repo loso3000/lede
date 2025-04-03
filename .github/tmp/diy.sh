@@ -342,6 +342,16 @@ git clone https://github.com/sirpdboy/luci-app-ddns-go ./package/ddns-go
 
 wget -N https://raw.githubusercontent.com/openwrt/packages/master/lang/golang/golang/Makefile -P feeds/packages/lang/golang/golang/
 
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/kernel/linux/modules/video.mk -P package/kernel/linux/modules/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch -P package/network/utils/nftables/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/network/utils/nftables/patches/001-drop-useless-file.patch -P package/network/utils/nftables/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/libs/libnftnl/patches/001-libnftnl-add-fullcone-expression-support.patch -P package/libs/libnftnl/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/firmware/wireless-regdb/patches/600-custom-change-txpower-and-dfs.patch -P package/firmware/wireless-regdb/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/master/config/Config-kernel.in -P config/
+
+rm -rf package/libs/openssl package/network/services/ppp
+git_clone_path openwrt-24.10 https://github.com/immortalwrt/immortalwrt package/libs/openssl package/network/services/ppp
+
 
 git_clone_path master https://github.com/coolsnowwolf/lede mv target/linux/generic/hack-6.6
 
@@ -380,18 +390,6 @@ sed -i '3 a\\t\t"order": 50,' feeds/luci/applications/luci-app-ttyd/root/usr/sha
 sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' feeds/packages/utils/ttyd/files/ttyd.init
 sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/utils/ttyd/files/ttyd.init
 sed -i 's|/bin/login|/bin/login -f root|' ./feeds/packages/utils/ttyd/files/ttyd.config
-
-sed -i '$a  \
-  CONFIG_CPU_FREQ_GOV_POWERSAVE=y \
-  CONFIG_CPU_FREQ_GOV_USERSPACE=y \
-  CONFIG_CPU_FREQ_GOV_ONDEMAND=y \
-  CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y \
-  CONFIG_CRYPTO_CHACHA20_NEON=y \
-  CONFIG_CRYPTO_CHACHA20POLY1305=y \
-  CONFIG_FAT_DEFAULT_IOCHARSET="utf8" \
-  ' `find target/linux -path "target/linux/*/config-*"`
-  
-cp -rf ipq40xx/. ./
 
 # luci
 pushd feeds/luci
@@ -747,7 +745,19 @@ EOF
 ;;
 esac
 
+cp -rf ipq40xx/diy/. ./.
+find "./ipq40xx/patches/" -maxdepth 1 -type f -name '*.patch' ! -name '*.revert.patch' ! -name '*.bin.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -B --merge -p1 --forward"
 
+sed -i '$a  \
+  CONFIG_CPU_FREQ_GOV_POWERSAVE=y \
+  CONFIG_CPU_FREQ_GOV_USERSPACE=y \
+  CONFIG_CPU_FREQ_GOV_ONDEMAND=y \
+  CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y \
+  CONFIG_CRYPTO_CHACHA20_NEON=y \
+  CONFIG_CRYPTO_CHACHA20POLY1305=y \
+  CONFIG_FAT_DEFAULT_IOCHARSET="utf8" \
+  ' `find target/linux -path "target/linux/*/config-*"`
+  
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "nekoclash" "Thaolga/luci-app-nekoclash" "main"
 UPDATE_PACKAGE "luci-app-gecoosac" "lwb1978/openwrt-gecoosac" "main"
@@ -758,8 +768,7 @@ UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
 ./scripts/feeds update -i
 ./scripts/feeds install -i
 
-# cat  ../.config  > .config
-cat  ./x86_64/${CONFIG_S}  > .config
+cat  ./ipq40xx/ipq40 > .config
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
