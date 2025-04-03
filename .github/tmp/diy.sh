@@ -769,14 +769,7 @@ UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
 
 # cat  ../.config  > .config
 cat  ./x86_64/${CONFIG_S}  > .config
-case "${CONFIG_S}" in
-Vip*)
-cat  ./x86_64/comm  >> .config
-;;
-*)
-echo 'no'
-;;
-esac
+
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 exit
