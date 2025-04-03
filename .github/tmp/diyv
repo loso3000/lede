@@ -40,16 +40,12 @@ mkdir -p ./package/emortal
 [[ -n $TARGET_DEVICE ]] || TARGET_DEVICE="x86_64"
 [[ -n $CONFIG_S ]] || CONFIG_S=Vip-Super
 
-
-rm -rf ./feeds/luci/luci-app-appfilter
-rm -rf ./feeds/luci/luci-app-filter
-rm -rf ./feeds/luci/luci-app-oaf
 rm -rf ./feeds/luci/themes/luci-theme-argon
 rm -rf ./feeds/packages/net/mentohust
-rm -rf ./feeds/packages/net/open-app-filter
 rm -rf  ./feeds/luci/applications/luci-app-arpbind
-rm -rf  ./feeds/packages/net/oaf
 #rm -rf  ./feeds/packages/net/wget
+
+rm -rf  ./feeds/packages/net/ddns-scripts
 
 # rm -rf  ./feeds/packages/rust
 # rm -rf  ./feeds/packages/lang/rust
@@ -88,7 +84,8 @@ sed -i '/CONFIG_BUILDBOT/d' include/feeds.mk
 sed -i 's/;)\s*\\/; \\/' include/feeds.mk
 
 # make olddefconfig
-# wget -qO - https://github.com/openwrt/openwrt/commit/c21a3570.patch | patch -p1
+wget -qO - https://github.com/openwrt/openwrt/commit/c21a3570.patch | patch -p1
+
 
 # 更换为 ImmortalWrt Uboot 以及 Target
 git clone --depth=1 -b openwrt-24.10 https://github.com/immortalwrt/immortalwrt immortalwrt_24
@@ -112,8 +109,6 @@ sed -i 's/noinitrd/noinitrd mitigations=off/g' target/linux/x86/image/grub-efi.c
 # sed -i 's,@CMDLINE@ noinitrd,noinitrd mitigations=off,g' target/linux/x86/image/grub-iso.cfg
 # sed -i 's,@CMDLINE@ noinitrd,noinitrd mitigations=off,g' target/linux/x86/image/grub-pc.cfg
 
-# fstool
-# wget -qO - https://github.com/coolsnowwolf/lede/commit/8a4db76.patch | patch -p1
 
 # Realtek 网卡 - R8168 & R8125 & R8126 & R8152 & R8101
 rm -rf package/kernel/r8168 package/kernel/r8101 package/kernel/r8125 package/kernel/r8126
@@ -122,13 +117,6 @@ git clone https://git.kejizero.online/zhao/package_kernel_r8152 package/kernel/r
 git clone https://git.kejizero.online/zhao/package_kernel_r8101 package/kernel/r8101
 git clone https://git.kejizero.online/zhao/package_kernel_r8125 package/kernel/r8125
 git clone https://git.kejizero.online/zhao/package_kernel_r8126 package/kernel/r8126
-
-# Docker
-rm -rf feeds/luci/applications/luci-app-dockerman
-rm -rf feeds/luci/collections/luci-lib-docker
-git clone https://github.com/lisaac/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
-git clone https://github.com/lisaac/luci-lib-docker feeds/luci/collections/luci-lib-docker
-
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
 # rm -rf package/feeds/packages/prometheus-node-exporter-lua
@@ -187,6 +175,7 @@ rm -rf  ./feeds/luci/applications/luci-app-timecontrol
 rm -rf  ./feeds/luci/applications/luci-app-socat
 rm -rf  ./feeds/luci/applications/luci-app-fileassistant
 rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
+rm -rf  ./feeds/luci/applications/luci-app-syncdial
 
 # rm -rf  ./feeds/packages/net/wget
 # mv -rf ./package/wget  ./feeds/packages/net/wget
@@ -194,8 +183,6 @@ rm -rf  ./feeds/luci/applications/luci-app-control-speedlimit
 rm -rf ./feeds/packages/net/aria2
 rm -rf ./feeds/luci/applications/luci-app-aria2  package/feeds/packages/luci-app-aria2
 
-# rm -rf $(find ./package/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
-# rm -rf $(find ./feeds/ -type d -regex ".*\(luci-app-autotimeset\luci-app-autotimeset).*")
 
 # Passwall
 
@@ -211,11 +198,13 @@ git clone https://github.com/loso3000/other ./package/add
 # rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
 # git clone https://$github/sbwml/openwrt-alist package/new/alist
 
-rm -rf  ./feeds/packages/net/oaf
-rm -rf ./feeds/luci/themes/luci-app-filter
-rm -rf ./feeds/luci/themes/luci-app-oaf
+#oaf 
+rm -rf ./feeds/luci/applications/luci-app-appfilter
+rm -rf ./feeds/luci/applications/luci-app-filter
+rm -rf ./feeds/luci/applications/luci-app-oaf
 rm -rf ./feeds/packages/net/open-app-filter
-rm -rf ./package/add/up/tool/OpenAppFilter
+rm -rf  ./feeds/packages/net/oaf
+# rm -rf ./package/add/up/tool/OpenAppFilter
 # git clone https://github.com/destan19/OpenAppFilter.git ./package/OpenAppFilter
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
@@ -257,7 +246,7 @@ rm -rf ./package/ssr/luci-app-ssr-plus
 
 
 rm -rf ./package/ssr/mosdns
-rm -rf ./package/ssr/trojan-plus
+# rm -rf ./package/ssr/trojan-plus
 # rm -rf ./package/ssr/xray-core
 
 #rm -rf ./package/ssr/xray-plugin
@@ -269,8 +258,6 @@ rm -rf ./package/ssr/trojan-plus
 #rm -rf ./package/ssr/redsocks2
 #rm -rf ./package/ssr/shadow-tls
 
-#istoreos-files
-rm -rf ./package/istoreos-files
 
  rm -rf ./feeds/packages/net/brook
  rm -rf ./feeds/packages/net/chinadns-ng
@@ -310,9 +297,13 @@ rm -rf ./feeds/packages/net/shadow-tls
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 rm -rf ./package/add/up/pass/naiveproxy
 rm -rf ./package/add/up/pass/xray-core
+rm -rf ./package/add/up/pass/trojan-plus
 
-rm -rf ./package/add/up/tool/OpenAppFilter
-
+# 全能推送
+rm -rf ./feeds/luci/applications/luci-app-pushbot
+git clone https://github.com/zzsj0928/luci-app-pushbot package/luci-app-pushbot
+rm -rf ./feeds/luci/applications/luci-app-wechatpush 
+git clone https://$github/tty228/luci-app-wechatpush ./feeds/luci/applications/luci-app-wechatpush
 
 git clone  https://github.com/EasyTier/luci-app-easytier ./package/luci-app-easytier
 #net eth0
@@ -320,7 +311,6 @@ rm -rf ./target/linux/x86/base-files/etc/board.d/99-default_network
 rm -rf ./target/linux/x86/base-files/etc/board.d/99-virtualbox_network
 curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/board.d/99-default_network > ./target/linux/x86/base-files/etc/board.d/99-default_network
 curl -fsSL  https://raw.githubusercontent.com/loso3000/other/master/patch/board.d/02_network > ./target/linux/x86/base-files/etc/board.d/02_network
-
 # rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
 rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
 rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
@@ -330,12 +320,41 @@ rm -rf ./package/add/up/tool/autocore
 # rm -rf ./package/add/up/tool/autosamba
 # rm -rf ./package/add/up/tool/default-settings
 
-
 rm -rf ./package/add/up/pass/xray-core
 
 
-#istoreos
-rm -rf ./package/diy/luci-app-ota
+# Add luci-app-dockerman
+rm -rf ./feeds/luci/applications/luci-app-dockerman
+# rm -rf ./feeds/luci/applications/luci-app-docker
+# rm -rf ./feeds/luci/collections/luci-lib-docker
+# mv ./package/add/add/up/docker/docker ./feeds/packages/utils/docker
+# mv ./package/add/add/up/docker/dockerd  ./feeds/packages/utils/dockerd 
+# mv ./package/add/add/up/docker/docker-compose ./feeds/packages/utils/docker-compose
+# sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
+# sed -i 's,# CONFIG_BLK_CGROUP_IOCOST is not set,CONFIG_BLK_CGROUP_IOCOST=y,g' target/linux/generic/config-5.10
+# sed -i 's,# CONFIG_BLK_CGROUP_IOCOST is not set,CONFIG_BLK_CGROUP_IOCOST=y,g' target/linux/generic/config-5.15
+# sed -i 's/+dockerd/+dockerd +cgroupfs-mount/' ./package/new/luci-app-dockerman/Makefile
+# sed -i '$i /etc/init.d/dockerd restart &' ./package/new/luci-app-dockerman/root/etc/uci-defaults/*
+# Docker
+rm -rf feeds/luci/applications/luci-app-dockerman
+git clone https://git.kejizero.online/zhao/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
+rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
+git clone https://git.kejizero.online/zhao/packages_utils_docker feeds/packages/utils/docker
+git clone https://git.kejizero.online/zhao/packages_utils_dockerd feeds/packages/utils/dockerd
+git clone https://git.kejizero.online/zhao/packages_utils_containerd feeds/packages/utils/containerd
+git clone https://git.kejizero.online/zhao/packages_utils_runc feeds/packages/utils/runc
+sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
+pushd feeds/packages
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
+    curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
+popd
+
+rm -rf ./package/add/up/docke
+
+
+#istoreos-files
+rm -rf ./package/diy
 rm -rf ./package/istoreos-files
 
 cat  patch/banner > ./package/base-files/files/etc/banner
@@ -373,6 +392,9 @@ git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone https://github.com/sbwml/v2ray-geodata feeds/packages/net/v2ray-geodata
 
+# luci-compat - fix translation
+sed -i 's/<%:Up%>/<%:Move up%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
+sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
 # TTYD
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 sed -i '3 a\\t\t"order": 50,' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
@@ -395,10 +417,10 @@ sed -i 's/processes = 3/processes = 4/g' feeds/packages/net/uwsgi/files-luci-sup
 sed -i 's/cheaper = 1/cheaper = 2/g' feeds/packages/net/uwsgi/files-luci-support/luci-webui.ini
 
 # UPnP
-# rm -rf ./package/add/up/luci-app-upnp
-# rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
-# git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
-# git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
+rm -rf ./package/add/up/luci-app-upnp
+rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
+git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
+git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
 
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
 
@@ -415,13 +437,12 @@ sed -i 's/家庭云//g'  `grep "家庭云" -rl ./`
 
 sed -i 's/msgstr "挂载 SMB 网络共享"/msgstr "挂载网络共享"/g'  `grep "挂载 SMB 网络共享" -rl ./`
 
-sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
 
 #cifs挂pan
 # sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 
 #断线不重拨
-sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
+# sed -i 's/q reload/q restart/g' ./package/network/config/firewall/files/firewall.hotplug
 
 # echo '默认开启 Irqbalance'
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
@@ -459,11 +480,6 @@ sed -i 's/+luci-theme-bootstrap/+luci-theme-kucat/g' feeds/luci/collections/luci
 # find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
 sed -i '/check_signature/d' ./package/system/opkg/Makefile   # 删除IPK安装签名
 
-# ddns - fix boot
-sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
-
-
-sed -i 's/START=95/START=99/' `find package/ -follow -type f -path */ddns-scripts/files/ddns.init`
 #Add x550
 git clone https://github.com/shenlijun/openwrt-x550-nbase-t package/openwrt-x550-nbase-t
 
@@ -473,6 +489,9 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 # luci-app-filemanager
 rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
+# curl - fix passwall `time_pretransfer` check
+rm -rf feeds/packages/net/curl
+git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
 
 # 修改makefile
 # find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
@@ -608,11 +627,19 @@ find ./bin/ -name "*dockerd*" | xargs -i cp -f {} $kmoddirdocker
 EOF
 case "${CONFIG_S}" in
      "Vip"*)  
+#修改默认IP地址
+sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
+#修改immortalwrt.lan关联IP
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#修改默认IP地址
+#sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.10.1/g" package/base-files/files/bin/config_generate    #config_generate
 
 #修改默认IP地址
 sed -i 's/192\.168\.1\.1/192\.168\.10\.1/g' package/base-files/files/bin/config_generate
+
 #sed -i 's/192.168.100.1/192.168.10.1/g' package/istoreos-files/Makefile
 #sed -i 's/luci-theme-argon/luci-theme-kucat/g' package/istoreos-files/Makefile
+
 #修改immortalwrt.lan关联IP
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/192\.168\.10\.1/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 #修改默认IP地址
@@ -740,6 +767,7 @@ UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
 ./scripts/feeds update -i
 ./scripts/feeds install -i
 
+# cat  ../.config  > .config
 cat  ./x86_64/${CONFIG_S}  > .config
 case "${CONFIG_S}" in
 Vip*)
@@ -749,4 +777,6 @@ cat  ./x86_64/comm  >> .config
 echo 'no'
 ;;
 esac
+./scripts/feeds update -a
+./scripts/feeds install -a
 exit
