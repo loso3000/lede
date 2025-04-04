@@ -1,6 +1,9 @@
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_filogic=y
 CONFIG_TARGET_mediatek_filogic_DEVICE_cudy_tr3000-v1=y
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_mediatek_mt7981=y
+CONFIG_TARGET_DEVICE_mediatek_mt7981_DEVICE_cudy_tr3000-v1=y
 
 # 压缩
 CONFIG_TARGET_IMAGES_GZIP=y
