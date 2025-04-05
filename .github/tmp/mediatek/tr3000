@@ -2,6 +2,7 @@ CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_filogic=y
 CONFIG_TARGET_mediatek_filogic_DEVICE_cudy_tr3000-v1=y
 CONFIG_TARGET_mediatek_filogic_DEVICE_cudy_tr3000-v1-ubootmod=y
+
 #ipv6
 CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
@@ -9,15 +10,8 @@ CONFIG_PACKAGE_6in4=y
 CONFIG_PACKAGE_6rd=y
 CONFIG_PACKAGE_6to4=y
 
-# Wireless 驱动程序(开源)
-# CONFIG_PACKAGE_kmod-mt7603=y
-# CONFIG_PACKAGE_kmod-mt7615e=y
-# Wireless 驱动程序(闭源)
-# CONFIG_PACKAGE_kmod-mt7603e=y
-# CONFIG_PACKAGE_kmod-mt7615d=y
-# CONFIG_PACKAGE_luci-app-mtwifi=y
-# CONFIG_PACKAGE_mt_wifi=y
-CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_ipv6helper=y
+CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 
 # uhttpd
 CONFIG_PACKAGE_uhttpd=y
@@ -44,9 +38,9 @@ CONFIG_PACKAGE_dnsmasq-full=y
 CONFIG_PACKAGE_dnsmasq_full_ipset=y
 # CONFIG_PACKAGE_dnsmasq_full_broken_rtc is not set
 
-CONFIG_PACKAGE_autocore=y
-# CONFIG_PACKAGE_autocore-x86=y
+CONFIG_PACKAGE_autocore-x86=y
 CONFIG_PACKAGE_autocore-arm=y
+CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_default-settings=y
 CONFIG_PACKAGE_default-settings-chn=y
 # CONFIG_PACKAGE_automount=y
@@ -103,7 +97,7 @@ CONFIG_PACKAGE_luci-proto-wireguard=y
 
 #主题
 CONFIG_LUCI_LANG_en=y
-CONFIG_LUCI_LANG_zh-cn=y
+# CONFIG_LUCI_LANG_zh-cn=y
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_PACKAGE_luci-theme-kucat=y
 CONFIG_PACKAGE_luci-theme-design=y
@@ -129,6 +123,7 @@ CONFIG_PACKAGE_miniupnpd=y                   # UPnP 服务（自动端口映射�
 CONFIG_PACKAGE_luci-app-upnp=y               # UPnP 图形界面
 CONFIG_PACKAGE_tcpdump=y                     # 网络抓包工具（调试用）
 
+
 # CONFIG_PACKAGE_luci-app-wol is not set
 CONFIG_PACKAGE_luci-app-wolplus=y
 
@@ -145,11 +140,10 @@ CONFIG_PACKAGE_luci-app-advancedplus=y
 # CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
 # CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
 
-CONFIG_PACKAGE_luci-app-homeproxy=n
-# CONFIG_PACKAGE_luci-app-nikki=n
+# CONFIG_PACKAGE_luci-app-nikki=y
 
 CONFIG_PACKAGE_luci-app-passwall=y
-CONFIG_PACKAGE_luci-app-passwall2=n
+CONFIG_PACKAGE_luci-app-passwall2=y
 CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy=y
 CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Hysteria=y
 CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client=y
@@ -207,11 +201,12 @@ CONFIG_PACKAGE_luci-app-ddns-go=y
 CONFIG_PACKAGE_luci-app-partexp=y
 CONFIG_PACKAGE_luci-app-oaf=y
 CONFIG_PACKAGE_luci-app-appfilter=y
-CONFIG_PACKAGE_luci-app-nft-qos=n
 CONFIG_PACKAGE_luci-app-poweroffdevice=n
 CONFIG_PACKAGE_luci-app-nft-timecontrol=n
 CONFIG_PACKAGE_luci-app-eqosplus=y
 CONFIG_PACKAGE_luci-app-ota=n
+CONFIG_PACKAGE_luci-app-homeproxy=n
+CONFIG_PACKAGE_luci-app-nikki=n
 CONFIG_PACKAGE_luci-app-tailscale=n
 
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set
@@ -223,31 +218,6 @@ CONFIG_PACKAGE_luci-app-mwan3=n
 # CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set
 # CONFIG_PACKAGE_luci-app-uugamebooster is not set
 # CONFIG_PACKAGE_luci-app-qbittorrent is not set
-
-#add
-CONFIG_PACKAGE_luci-app-eqos-mtk=y
-CONFIG_PACKAGE_luci-app-mtwifi-cfg=y
-CONFIG_PACKAGE_luci-app-turboacc-mtk=y
-CONFIG_PACKAGE_luci-app-upnp-mtk-adjust=y
-
-CONFIG_PACKAGE_kmod-mediatek_hnat=y
-CONFIG_PACKAGE_kmod-mt_wifi=y
-CONFIG_PACKAGE_lua-cjson=y
-CONFIG_PACKAGE_wifi-scripts=y
-CONFIG_PACKAGE_kmod-zram=y
-CONFIG_PACKAGE_zram-swap=y
-CONFIG_PACKAGE_kmod-mediatek_hnat=y
-CONFIG_PACKAGE_kmod-mt_wifi=y
-CONFIG_PACKAGE_kmod-nls-base=y
-CONFIG_PACKAGE_kmod-nls-cp437=y
-CONFIG_PACKAGE_kmod-nls-iso8859-1=y
-CONFIG_PACKAGE_kmod-nls-utf8=y
-# CONFIG_PACKAGE_swconfig is not set
-CONFIG_PACKAGE_switch=y
-CONFIG_PACKAGE_wifi-dats=y
-CONFIG_PACKAGE_mtwifi-cfg=y
-CONFIG_PACKAGE_wireless-regdb=y
-CONFIG_PACKAGE_wireless-tools=y
 
 #wan proto
 CONFIG_PACKAGE_luci-proto-3g=y
@@ -288,18 +258,21 @@ CONFIG_PACKAGE_xz-utils=y
 CONFIG_PACKAGE_openssh-sftp-client=y
 CONFIG_PACKAGE_openssh-sftp-server=y
 
-
 # ==================== 无线驱动与固件 ====================
-CONFIG_PACKAGE_kmod-mt7981-firmware=y        # MT7981B 专用无线固件
-CONFIG_PACKAGE_kmod-mt7916e=y                # MT7916 WiFi 6 驱动（支持 160MHz）
-CONFIG_MTK_WED_SUPPORT=y                     # 无线硬件加速 (OFDMA/MU-MIMO)
-CONFIG_MTK_MT_PHY=y                          # 物理层优化（启用 HE160）
-CONFIG_PACKAGE_MTK_WIRELESS_SPEED_UP=y       # MTK 无线性能增强模块
+# CONFIG_PACKAGE_kmod-mt7916e is not set
+# 启用正确驱动
+CONFIG_PACKAGE_kmod-mt7915e=y
+CONFIG_PACKAGE_mt7915-firmware=y
+CONFIG_MTK_WED_SUPPORT=y          # 硬件加速（MU-MIMO/OFDMA）
 
 # ==================== 硬件 NAT 加速 ====================
 CONFIG_PACKAGE_kmod-mtk-hwnat=y              # 启用 MTK 硬件转发
 CONFIG_PACKAGE_kmod-mtkhnat=y                # HWNAT 用户态控制
 CONFIG_NETFILTER_NETLINK_GLUE_CT=y           # 连接跟踪优化（提升并发性能）
+CONFIG_PACKAGE_shortcut-fe=y      # 软件加速补充（高连接数场景）
+CONFIG_MTK_MT_PHY=y                # 物理层优化
+CONFIG_MTK_WIRELESS_SPEED_UP=y     # MTK 私有优化
+CONFIG_PACKAGE_irqbalance=y      # 中断负载均衡（多核优化）
 
 # ==================== 网络基础优化 ====================
 CONFIG_PACKAGE_iptables-mod-conntrack-extra=y # 扩展连接跟踪
@@ -317,13 +290,10 @@ CONFIG_PACKAGE_kmod-usb-storage=y            # USB 存储设备支持
 
 # ==================== 核心依赖库 ====================
 CONFIG_PACKAGE_libopenssl=y                  # OpenSSL 加密库（必需）
-# CONFIG_PACKAGE_libmbedtls=y                  # mbedTLS（轻量加密）
+CONFIG_PACKAGE_libmbedtls=y                  # mbedTLS（轻量加密）
 CONFIG_PACKAGE_libcap-bin=y                  # 权限管理工具
 
-# ==================== 加密与安全 ====================
+# # 启用内核防护
 CONFIG_PACKAGE_kmod-crypto-aead=y            # 内核级加密算法支持
 CONFIG_PACKAGE_kmod-crypto-sha256=y          # SHA256 哈希算法（VPN 必需）
 
-# 禁用并行文件操作（mt7622 设备专用）
-# CONFIG_BUILD_LOG="y"          # 启用详细日志
-CONFIG_USE_SINGLE_JOB="y"    # 强制单任务编译
