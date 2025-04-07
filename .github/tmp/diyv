@@ -266,10 +266,13 @@ git clone https://$github/tty228/luci-app-wechatpush ./feeds/luci/applications/l
 
 git clone  https://github.com/EasyTier/luci-app-easytier ./package/luci-app-easytier
 
-rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
-rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
-
+# rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
+# rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
 rm -rf ./package/add/up/tool/autocore
+rm -rf ./package/add/up/tool/autosamba
+rm -rf ./package/add/up/tool/default-settings
+rm -rf ./package/autocore
+
 rm -rf ./package/add/up/pass/xray-core
 
 # Add luci-app-dockerman
