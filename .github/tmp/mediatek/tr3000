@@ -208,6 +208,20 @@ CONFIG_PACKAGE_luci-app-mwan3=n
 
 CONFIG_PACKAGE_luci-app-modeminfo=y
 
+#add  https://github.com/padavanonly/immortalwrt-mt798x-24.10
+CONFIG_PACKAGE_luci-app-eqos-mtk=y
+CONFIG_PACKAGE_luci-app-mtwifi-cfg=y
+CONFIG_PACKAGE_luci-app-turboacc-mtk=y
+CONFIG_PACKAGE_luci-app-upnp-mtk-adjust=y
+CONFIG_PACKAGE_terminfo=y
+CONFIG_PACKAGE_wifi-dats=y
+CONFIG_PACKAGE_mtwifi-cfg=y
+CONFIG_PACKAGE_wireless-regdb=y
+CONFIG_PACKAGE_wireless-tools=y
+CONFIG_PACKAGE_mtk-smp=y
+CONFIG_PACKAGE_kmod-mediatek_hnat=y
+CONFIG_PACKAGE_kmod-mt_wifi=y
+
 #wan proto
 CONFIG_PACKAGE_luci-proto-3g=y
 #CONFIG_PACKAGE_luci-proto-bonding=y
