@@ -14,6 +14,31 @@ CONFIG_GRUB_EFI_IMAGES=y
 
 CONFIG_GRUB_TIMEOUT="0"
 CONFIG_GRUB_TITLE="EzOpWrt"
+#ipv6
+
+CONFIG_PACKAGE_ipv6helper=y
+CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
+CONFIG_PACKAGE_6in4=y
+CONFIG_PACKAGE_6rd=y
+CONFIG_PACKAGE_6to4=y
+
+CONFIG_PACKAGE_dnsmasq-full=y
+CONFIG_PACKAGE_dnsmasq_full_ipset=y
+# CONFIG_PACKAGE_dnsmasq_full_broken_rtc is not set
+
+CONFIG_PACKAGE_bind-host=y
+
+### Firewall
+CONFIG_PACKAGE_nat6=y
+CONFIG_PACKAGE_ip6tables-nft=y
+CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
+CONFIG_PACKAGE_iptables-mod-iprange=y
+CONFIG_PACKAGE_iptables-mod-nat-extra=y
+CONFIG_PACKAGE_iptables-mod-socket=y
+CONFIG_PACKAGE_iptables-mod-tproxy=y
+CONFIG_PACKAGE_iptables-nft=y
+CONFIG_PACKAGE_xtables-nft=y
+# CONFIG_PACKAGE_iptables-legacy is not set
 
 CONFIG_PACKAGE_iommu-conf=y
 CONFIG_PACKAGE_grub-conf=y
@@ -109,8 +134,8 @@ CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Server=y
 CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs=y
 CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox=y
 CONFIG_PACKAGE_luci-app-passwall2_Nftables_Transparent_Proxy=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy is not set
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Hysteria is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Hysteria is not set
 CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
 CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server=y
 CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
@@ -287,11 +312,11 @@ CONFIG_PACKAGE_kmod-tg3=y #Broadcom BCM57xx1GPCIe服务器/企业级网卡
 CONFIG_PACKAGE_kmod-vmxnet3=y  #VMware VMXNET3 (虚拟化)	10G虚拟ESXi虚拟机网卡
 
 # firmware
-CONFIG_PACKAGE_amd64-microcode=y（AMD CPU 微码）
-CONFIG_PACKAGE_bnx2-firmware=y（Broadcom NetXtreme II 千兆网卡固件）
-CONFIG_PACKAGE_bnx2x-firmware=y（Broadcom NetXtreme II 10G 网卡固件）
-CONFIG_PACKAGE_i915-firmware-dmc=y（Intel GPU 固件）
-CONFIG_PACKAGE_intel-microcode=y（Intel CPU 微码）
+CONFIG_PACKAGE_amd64-microcode=y# （AMD CPU 微码）
+CONFIG_PACKAGE_bnx2-firmware=y# （Broadcom NetXtreme II 千兆网卡固件）
+CONFIG_PACKAGE_bnx2x-firmware=y# （Broadcom NetXtreme II 10G 网卡固件）
+CONFIG_PACKAGE_i915-firmware-dmc=y# （Intel GPU 固件）
+CONFIG_PACKAGE_intel-microcode=y# （Intel CPU 微码）
 CONFIG_PACKAGE_amdgpu-firmware=y
 
 
