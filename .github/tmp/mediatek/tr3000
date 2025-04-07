@@ -249,8 +249,8 @@ CONFIG_PACKAGE_openssh-sftp-server=y
 
 # ==================== 无线驱动与固件 ====================
 # 启用正确驱动
-CONFIG_PACKAGE_kmod-mt7915e=y
-CONFIG_PACKAGE_mt7915-firmware=y
+# CONFIG_PACKAGE_kmod-mt7915e=y
+# CONFIG_PACKAGE_mt7915-firmware=y
 CONFIG_MTK_WED_SUPPORT=y          # 硬件加速（MU-MIMO/OFDMA）
 
 # ==================== 硬件 NAT 加速 ====================
