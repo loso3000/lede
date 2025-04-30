@@ -9,6 +9,10 @@ CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_redmi-router-ac2100=y
 CONFIG_PACKAGE_kmod-mt7603=y
 CONFIG_PACKAGE_kmod-mt7615e=y
 
+CONFIG_PACKAGE_wpad-basic-wolfssl=y
+CONFIG_PACKAGE_wpad-mesh-openssl=y
+CONFIG_PACKAGE_wpad-openssl=y
+
 #https 
 CONFIG_PACKAGE_libustream-openssl=y
 # Wireless 驱动程序(闭源)
@@ -137,7 +141,7 @@ CONFIG_PACKAGE_luci-app-arpbind=y
 
 # CONFIG_PACKAGE_kmod-fs-cifs=y
 # CONFIG_PACKAGE_luci-app-easytier=y
-CONFIG_PACKAGE_luci-app-vnstat2=y
+# CONFIG_PACKAGE_luci-app-vnstat2=y
 # CONFIG_PACKAGE_luci-app-nft-qos=y
 # CONFIG_PACKAGE_luci-app-nft-timecontrol=y
 CONFIG_PACKAGE_luci-app-timecontrol=y
@@ -198,4 +202,3 @@ CONFIG_PACKAGE_jq=y
 CONFIG_PACKAGE_apk=y
 CONFIG_COREMARK_OPTIMIZE_O3=y
 CONFIG_PACKAGE_zoneinfo-asia=y  #time fast 
-CONFIG_PACKAGE_wpad-openssl=y
