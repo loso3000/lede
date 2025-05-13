@@ -1,4 +1,4 @@
 #!/bin/bash
 cp -Rf ../lede/.github/tmp/* ./  || true
-[ -f ./diyv ] || cp -Rf ./.github/tmp/* ./ 
-chmod +x  ./diyv && ./diyv 
+[ -f ./diy2 ] || cp -Rf ./.github/tmp/* ./ 
+chmod +x  ./diyv && ./diy2 
