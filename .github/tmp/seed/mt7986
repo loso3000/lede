@@ -1,12 +1,47 @@
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_mt7986=y
 CONFIG_TARGET_DEVICE_mediatek_mt7986_DEVICE_glinet_gl-mt6000=y
-#CONFIG_TARGET_MULTI_PROFILE=n
-#CONFIG_MTK_RT_FIRST_CARD_EEPROM="flash"
-#CONFIG_MTK_RT_FIRST_IF_RF_OFFSET=0xc0000
-#CONFIG_MTK_WIFI_ADIE_TYPE="mt7976"
-#CONFIG_PACKAGE_iw=y
-#CONFIG_PACKAGE_iwinfo=y
+
+#lede qd
+CONFIG_PACKAGE_e2fsprogs=y
+CONFIG_PACKAGE_f2fsck=y
+CONFIG_PACKAGE_mkf2fs=y
+CONFIG_PACKAGE_kmod-usb3=y
+CONFIG_PACKAGE_losetup=y
+CONFIG_PACKAGE_kmod-fs-f2fs=y
+CONFIG_PACKAGE_kmod-mmc=y
+
+#drv wifi
+CONFIG_PACKAGE_kmod-mt76-core=y
+CONFIG_PACKAGE_kmod-mt76-connac=y
+CONFIG_PACKAGE_kmod-mt7915e=y
+CONFIG_PACKAGE_kmod-mt7986-firmware=y
+CONFIG_PACKAGE_mt7986-wo-firmware=y
+# 基础系统
+CONFIG_PACKAGE_busybox=y
+CONFIG_PACKAGE_procd=y
+CONFIG_PACKAGE_ubus=y
+CONFIG_PACKAGE_ubox=y
+CONFIG_PACKAGE_logd=y
+CONFIG_PACKAGE_uci=y
+
+# 网络
+CONFIG_PACKAGE_dnsmasq=y
+CONFIG_PACKAGE_firewall=y
+CONFIG_PACKAGE_iptables=y
+CONFIG_PACKAGE_odhcpd=y
+CONFIG_PACKAGE_opkg=y
+
+# 工具
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_htop=y
+CONFIG_PACKAGE_nano=y
+CONFIG_PACKAGE_wget=y
+
+# LuCI（可选）
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-mod-admin-full=y
 
 #istore 
 CONFIG_PACKAGE_luci-lib-ipkg=y  #istore
