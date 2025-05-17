@@ -25,12 +25,6 @@ CONFIG_PACKAGE_ubox=y
 CONFIG_PACKAGE_logd=y
 CONFIG_PACKAGE_uci=y
 
-# 网络
-CONFIG_PACKAGE_dnsmasq=y
-CONFIG_PACKAGE_firewall=y
-CONFIG_PACKAGE_iptables=y
-CONFIG_PACKAGE_odhcpd=y
-CONFIG_PACKAGE_opkg=y
 
 # 工具
 CONFIG_PACKAGE_bash=y
@@ -38,10 +32,6 @@ CONFIG_PACKAGE_curl=y
 CONFIG_PACKAGE_htop=y
 CONFIG_PACKAGE_nano=y
 CONFIG_PACKAGE_wget=y
-
-# LuCI（可选）
-CONFIG_PACKAGE_luci=y
-CONFIG_PACKAGE_luci-mod-admin-full=y
 
 #istore 
 CONFIG_PACKAGE_luci-lib-ipkg=y  #istore
@@ -97,10 +87,4 @@ CONFIG_PACKAGE_6in4=y
 CONFIG_PACKAGE_6rd=y
 CONFIG_PACKAGE_6to4=y
 
-#CONFIG_PACKAGE_mii_mgr=y
-#CONFIG_PACKAGE_miniupnpd=y
-CONFIG_PACKAGE_mtkhqos_util=y
-CONFIG_PACKAGE_mtwifi-cfg=y
-CONFIG_PACKAGE_openssh-keygen=y
 CONFIG_PACKAGE_openssh-sftp-server=y
-#CONFIG_PACKAGE_openssl-util=y
