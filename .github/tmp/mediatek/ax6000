@@ -199,10 +199,10 @@ CONFIG_PACKAGE_luci-app-watchdog=y
 CONFIG_PACKAGE_luci-app-eqosplus=y
 CONFIG_PACKAGE_luci-app-ota=n
 CONFIG_PACKAGE_luci-app-homeproxy=n
-CONFIG_PACKAGE_luci-app-tailscale=n
+CONFIG_PACKAGE_luci-app-tailscale=y
 
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set
-# CONFIG_PACKAGE_luci-app-zerotier=y
+CONFIG_PACKAGE_luci-app-zerotier=y
 # CONFIG_PACKAGE_luci-app-unblockneteasemusic is not set
 # CONFIG_PACKAGE_luci-app-unblockmusic is not set
 CONFIG_PACKAGE_luci-app-mwan3=n
