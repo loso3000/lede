@@ -115,7 +115,7 @@ CONFIG_PACKAGE_terminfo=y
 CONFIG_PACKAGE_wifi-dats=y
 CONFIG_PACKAGE_mtwifi-cfg=y
 CONFIG_PACKAGE_wireless-regdb=y
-CONFIG_PACKAGE_wireless-tools=y
+
 CONFIG_PACKAGE_mtk-smp=y
 CONFIG_PACKAGE_kmod-mediatek_hnat=y
 CONFIG_PACKAGE_kmod-mt_wifi=y
@@ -437,7 +437,6 @@ CONFIG_PACKAGE_tc-tiny=y
 CONFIG_PACKAGE_tcpdump=y
 CONFIG_PACKAGE_terminfo=y
 CONFIG_PACKAGE_wireless-regdb=y
-CONFIG_PACKAGE_wireless-tools=y
 
 # Other Appliciations
 CONFIG_COREMARK_OPTIMIZE_O3=y
@@ -489,8 +488,6 @@ CONFIG_PACKAGE_libcap-bin=y                  # 权限管理工具
 CONFIG_PACKAGE_kmod-crypto-aead=y            # 内核级加密算法支持
 CONFIG_PACKAGE_kmod-crypto-sha256=y          # SHA256 哈希算法（VPN 必需）
 
-# 选择Mediatek闭源WiFi驱动
-CONFIG_PACKAGE_kmod-mt_wifi=y
 
 # 可选配套工具（建议启用）
 CONFIG_PACKAGE_wireless-tools=y
