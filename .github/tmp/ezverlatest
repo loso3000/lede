@@ -1,14 +1,14 @@
 下面是具体更新内容：
 
-1.升级安全登陆管控luci-app-watchdog【看门狗】插件1.0.3版，优化代码【独家研发】。
-2.增加luci-app-chatgpt-web插件，可选择deepseek,openwai,gemini等5大常用平台【独家研发】。
-3.升级luci-app-DDNS-GO插件，JS版在OPENWRT24.10上效果更好。
-4.升级luci-app-netspeedtest插件，JS版支持Ookla SpeedTest测速更准确！
-5.修复保留配置升级，软件源导致不正常的问题。
-6.解决目前已知所有问题，更多细节优化请自行刷机体验。
+1. 升级KUCAT主题，优化手机效果：菜单不换行、自定义列表框显示不完整可横向移动、点击菜单白闪等问题，新版丝滑到你惊叹！【独家研发】
+2. 升级时间控制插件，修复脚本问题，解决某些情况下管控失效.【独家研发】
+3. 升级定时限速插件，更新限速算法和限速脚本，限速更精准。【独家研发】
+4. 升级首页网卡信息和后台快捷菜单网卡信息在多WAN口显示不正常问题.【感谢TG群：gg提供测试环境】
+5. 增加KMS服务和openlist服务，修复目前已知所有问题，具体请自行刷机体验。
 
 【注意】根据虚拟机和实际情况出发，WAN口绑定方案：单网口时eth0为LAN口，多网口最后一个口为WAN其余是LAN口
+【问题】有问题反馈，请提供截图、详细日志和可重现操作流程，否则一率不回复不处理
 【公告】欢迎定制各种特殊驱动固件和特殊需要插件以及各种路由器固件。
 <ul>
-    <li><a href="https://github.com/sirpdboy/openwrt/discussions/575" target="_blank">点击这里</a> 查看详情</li>
+    <li><a href="https://github.com/sirpdboy/openwrt/discussions/593" target="_blank">点击这里</a> 查看详情</li>
 </ul>
