@@ -97,17 +97,18 @@ sed -i 's/noinitrd/noinitrd mitigations=off/g' target/linux/x86/image/grub-efi.c
 # sed -i 's,@CMDLINE@ noinitrd,noinitrd mitigations=off,g' target/linux/x86/image/grub-pc.cfg
 
 # Realtek driver - R8168 & R8125 & R8126 & R8152 & R8101 & r8127
-rm -rf package/kernel/{r8168,r8101,r8125,r8126,r8127}
-git clone https://$github/sbwml/package_kernel_r8168 package/kernel/r8168
-git clone https://$github/sbwml/package_kernel_r8152 package/kernel/r8152
-git clone https://$github/sbwml/package_kernel_r8101 package/kernel/r8101
-git clone https://$github/sbwml/package_kernel_r8125 package/kernel/r8125
-git clone https://$github/sbwml/package_kernel_r8126 package/kernel/r8126
-git clone https://$github/sbwml/package_kernel_r8127 package/kernel/r8127
-rm -rf ./feeds/luci/applications/luci-app-openlist
-rm -rf  ./feeds/packages/net/openlist
+# rm -rf package/kernel/{r8168,r8101,r8125,r8126,r8127}
+# git clone https://$github/sbwml/package_kernel_r8168 package/kernel/r8168
+# git clone https://$github/sbwml/package_kernel_r8152 package/kernel/r8152
+# git clone https://$github/sbwml/package_kernel_r8101 package/kernel/r8101
+# git clone https://$github/sbwml/package_kernel_r8125 package/kernel/r8125
+# git clone https://$github/sbwml/package_kernel_r8126 package/kernel/r8126
+#  git clone https://$github/sbwml/package_kernel_r8127 package/kernel/r8127
+
+rm -rf ./feeds/luci/applications/luci-app-openlist2
+rm -rf  ./feeds/packages/net/openlist2
 # openlist
-git clone https://$github/sbwml/luci-app-openlist package/new/openlist
+git clone https://$github/sbwml/luci-app-openlist2 package/new/openlist2
 
 #删除冲突插件
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\|openclash\).*")
@@ -210,6 +211,8 @@ git clone https://$github/sbwml/packages_lang_golang -b 24.x feeds/packages/lang
 rm -rf ./feeds/packages/net/mwan3
 mv ./package/add/up/tool/mwan3 ./feeds/packages/net/mwan3
 
+rm -rf ./package/add/up/ddns-scripts
+# rm -rf  ./feeds/packages/net/ddns-scripts
 # rm -rf ./package/ssr/luci-app-passwall2/htdocs/luci-static/resources/
 # rm -rf ./package/ssr/luci-app-homeproxy
 #bypass
@@ -284,7 +287,7 @@ rm -rf ./feeds/packages/net/lua-neturl
 rm -rf ./feeds/packages/net/redsocks2
 rm -rf ./feeds/packages/net/shadow-tls
 
- rm -rf  ./feeds/luci/applications/luci-app-netdata
+# rm -rf  ./feeds/luci/applications/luci-app-netdata
 # mv -f ./package/add/up/netdata ./package/
 rm -rf ./feeds/luci/applications/luci-app-socat  ./package/feeds/luci/luci-app-socat
 rm -rf ./package/add/up/pass/naiveproxy
@@ -306,7 +309,7 @@ curl -fsSL  https://raw.githubusercontent.com/loso3000/oth/master/patch/board.d/
 # rm -rf $(find ./package/ -type d -regex ".*\(autocore\|automount\|autosamba\|default-settings\).*")
 rm -rf ./package/emortal/autocore ./package/emortal/automount  ./package/emortal/autosamba  ./package/emortal/default-settings 
 rm -rf ./package/lean/autocore ./package/lean/automount  ./package/lean/autosamba  ./package/lean/default-settings 
-rm -rf ./package/add/up/tool/autocore
+# rm -rf ./package/add/up/tool/autocore
 # rm -rf ./package/add/up/tool/automount
 # rm -rf ./package/add/up/tool/autosamba
 # rm -rf ./package/add/up/tool/default-settings
@@ -314,47 +317,14 @@ rm -rf ./package/add/up/tool/autocore
 # Docker
 # Add luci-app-dockerman
 
-# dockerman_repo="https://github.com/oppen321/luci-app-dockerman"
-# docker_repo="https://github.com/sbwml/packages_utils_docker"
-# dockerd_repo="https://github.com/sbwml/packages_utils_dockerd"
-# containerd_repo="https://github.com/sbwml/packages_utils_containerd"
-# runc_repo="https://github.com/sbwml/packages_utils_runc"
-# rm -rf ./feeds/luci/applications/luci-app-dockerman
-# git clone $dockerman_repo feeds/luci/applications/luci-app-dockerman
-# rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-# git clone $docker_repo feeds/packages/utils/docker
-# git clone $dockerd_repo feeds/packages/utils/dockerd
-# git clone $containerd_repo feeds/packages/utils/containerd
-# git clone $runc_repo feeds/packages/utils/runc
-# sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
-# sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
-# pushd feeds/packages
-#      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
-#      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
-#      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
-# popd
-
-# Docker
 rm -rf feeds/luci/applications/luci-app-dockerman
-# git clone https://git.cooluc.com/sbwml/luci-app-dockerman -b openwrt-24.10 feeds/luci/applications/luci-app-dockerman
-git clone https://github.com/sirpdboy/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
-# git clone https://$gitea/sbwml/luci-app-dockerman -b openwrt-24.10 feeds/luci/applications/luci-app-dockerman
+git clone https://git.cooluc.com/sbwml/luci-app-dockerman -b openwrt-24.10 feeds/luci/applications/luci-app-dockerman
+# git clone https://$github/sirpdboy/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
     git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
     git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
     git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
     git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
-    sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
-sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
-# pushd feeds/packages
-#     curl -s $mirror/openwrt/patch/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
-#     curl -s $mirror/openwrt/patch/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
-# popd
-pushd feeds/packages
-      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
-      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
-      curl -s https://raw.githubusercontent.com/oppen321/OpenWrt-Patch/refs/heads/kernel-6.6/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
-popd
 
 
 #istoreos-files
